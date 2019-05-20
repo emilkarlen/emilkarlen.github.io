@@ -1,0 +1,983 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>copyback Users Guide</title><link rel="stylesheet" type="text/css" href="html.css"><meta name="generator" content="DocBook XSL Stylesheets V1.79.1"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="article"><div class="titlepage"><div><div><h2 class="title"><a name="idm46086972266688"></a><span class="command"><strong>copyback</strong></span> Users Guide</h2></div></div><hr></div><div class="toc"><p><b>Table of Contents</b></p><dl class="toc"><dt><span class="section"><a href="#idm46086972262272">Introduction</a></span></dt><dd><dl><dt><span class="section"><a href="#idm46086972261632">What <span class="command"><strong>copyback</strong></span> is</a></span></dt><dt><span class="section"><a href="#idm46086969205952">What <span class="command"><strong>copyback</strong></span> is NOT</a></span></dt></dl></dd><dt><span class="section"><a href="#sect.synopsis">Invoking <span class="command"><strong>copyback</strong></span></a></span></dt><dd><dl><dt><span class="section"><a href="#idm46086968121936">General syntax</a></span></dt><dt><span class="section"><a href="#idm46086968345264">Commands that operate on a <a class="glossterm" href="#glossentry.project-directory"><em class="glossterm"><a class="glossterm" href="#glossentry.project-directory" title="project directory">project
+      directory</a></em></a></a></span></dt><dt><span class="section"><a href="#sect.synopsis.backup">Creating and updating backups</a></span></dt></dl></dd><dt><span class="section"><a href="#sect.tutorial">Tutorial</a></span></dt><dd><dl><dt><span class="section"><a href="#idm46086967020768">The Calculator example</a></span></dt><dt><span class="section"><a href="#idm46086967014560">Setting the <a class="glossterm" href="#glossentry.backup-root-directory"><em class="glossterm">backup root directory</em></a></a></span></dt><dt><span class="section"><a href="#idm46086966998192">Creating and listing a backup</a></span></dt><dt><span class="section"><a href="#idm46086966976480">Creating more backups</a></span></dt><dt><span class="section"><a href="#idm46086966960624">Listing backups, again</a></span></dt><dt><span class="section"><a href="#idm46086966946992">Updating backups</a></span></dt><dt><span class="section"><a href="#idm46086966927424">Removing old backups</a></span></dt><dt><span class="section"><a href="#idm46086966916400">Preventing backups from getting updated or removed</a></span></dt><dt><span class="section"><a href="#idm46086966886640">Excluding selected files</a></span></dt><dt><span class="section"><a href="#idm46086966857552">Using <span class="command"><strong>copyback</strong></span> conveniently</a></span></dt><dt><span class="section"><a href="#idm46086966820304">Organizing backups in directories</a></span></dt></dl></dd><dt><span class="section"><a href="#sect.descr">Description</a></span></dt><dd><dl><dt><span class="section"><a href="#idm46086966787216">The items <span class="command"><strong>copyback</strong></span> can backup</a></span></dt><dt><span class="section"><a href="#idm46086966778496">Representation of backups - backup files</a></span></dt><dd><dl><dt><span class="section"><a href="#idm46086966770192">Backup filenames</a></span></dt><dd><dl><dt><span class="section"><a href="#idm46086966744576">Backup filename extensions</a></span></dt></dl></dd></dl></dd><dt><span class="section"><a href="#sect.desc.storing-under-backup-root-directory">Storing all backups under a personal <a class="glossterm" href="#glossentry.backup-root-directory"><em class="glossterm">backup root
+      directory</em></a></a></span></dt><dd><dl><dt><span class="section"><a href="#idm46086966717440">A system-<a class="glossterm" href="#glossentry.global-backup-root-directory"><em class="glossterm">global backup root
+        directory</em></a></a></span></dt></dl></dd><dt><span class="section"><a href="#sect.description.organization-projects">Organization of backups using <a class="glossterm" href="#glossentry.project"><em class="glossterm"><a class="glossterm" href="#glossentry.project" title="project">projects</a></em></a></a></span></dt><dt><span class="section"><a href="#idm46086966675104">Overview of the parts making the <a class="glossterm" href="#glossentry.project-directory"><em class="glossterm"><a class="glossterm" href="#glossentry.project-directory" title="project directory">project
+      directory</a></em></a></a></span></dt><dt><span class="section"><a href="#sect.descr.naming-schemes">Project naming schemes</a></span></dt><dd><dl><dt><span class="section"><a href="#idm46086966643040">Default naming schemes for files and directories</a></span></dt><dt><span class="section"><a href="#idm46086966625152">No default naming scheme for program output</a></span></dt><dt><span class="section"><a href="#idm46086966620976">Custom naming schemes</a></span></dt></dl></dd><dt><span class="section"><a href="#sect.description.rsync-usage">Usage of <span class="command"><strong>rsync</strong></span></a></span></dt></dl></dd><dt><span class="section"><a href="#sect.cmd">Commands</a></span></dt><dd><dl><dt><span class="section"><a href="#sect.cmd.backup"><code class="literal">backup</code> - Creating and updating backups</a></span></dt><dd><dl><dt><span class="section"><a href="#sect.cmd.backup.synopsis">Synopsis of <code class="literal">backup</code></a></span></dt><dt><span class="section"><a href="#sect.cmd.backup.description">Description of <code class="literal">backup</code></a></span></dt><dt><span class="section"><a href="#sect.cmd.backup.options.default">Default options</a></span></dt><dt><span class="section"><a href="#sect.cmd.backup.options">Options for <code class="literal">backup</code></a></span></dt><dd><dl><dt><span class="section"><a href="#sect.cmd.backup.options.naming-scheme">Naming scheme options</a></span></dt><dt><span class="section"><a href="#sect.cmd.backup.options.rsync-forward">Options forwarded to <span class="command"><strong>rsync</strong></span></a></span></dt><dt><span class="section"><a href="#sect.cmd.backup.options.how-to-backup">Other options</a></span></dt></dl></dd></dl></dd><dt><span class="section"><a href="#sect.cmd.clean"><code class="literal">clean</code> - Removing old backups</a></span></dt><dd><dl><dt><span class="section"><a href="#sect.cmd.clean.synopsis">Synopsis of <code class="literal">clean</code></a></span></dt><dt><span class="section"><a href="#sect.cmd.clean.description">Description of <code class="literal">clean</code></a></span></dt><dt><span class="section"><a href="#sect.cmd.clean.options">Options for <code class="literal">clean</code></a></span></dt></dl></dd><dt><span class="section"><a href="#sect.cmd.find"><code class="literal">find</code> - Finding project directories</a></span></dt><dd><dl><dt><span class="section"><a href="#sect.cmd.find.synopsis">Synopsis of <code class="literal">find</code></a></span></dt><dt><span class="section"><a href="#sect.cmd.find.description">Description of <code class="literal">find</code></a></span></dt></dl></dd><dt><span class="section"><a href="#sect.cmd.list"><code class="literal">list</code> - Listing backups of a project</a></span></dt><dd><dl><dt><span class="section"><a href="#sect.cmd.list.synopsis">Synopsis of <code class="literal">list</code></a></span></dt><dt><span class="section"><a href="#sect.cmd.list.description">Description of <code class="literal">list</code></a></span></dt></dl></dd><dt><span class="section"><a href="#sect.cmd.lock"><code class="literal">lock</code> - Preventing backups from getting
+      updated</a></span></dt><dd><dl><dt><span class="section"><a href="#sect.cmd.lock.synopsis">Synopsis of <code class="literal">lock</code></a></span></dt><dt><span class="section"><a href="#sect.cmd.lock.description">Description of <code class="literal">lock</code></a></span></dt><dt><span class="section"><a href="#sect.cmd.lock.options">Options for <code class="literal">lock</code></a></span></dt></dl></dd><dt><span class="section"><a href="#sect.cmd.print-backup-root-directory"><code class="literal">backup-root-directory</code> - Printing the
+      <a class="glossterm" href="#glossentry.backup-root-directory"><em class="glossterm"><a class="glossterm" href="#glossentry.backup-root-directory" title="backup root directory">backup root
+      directory</a></em></a></a></span></dt><dd><dl><dt><span class="section"><a href="#idm46086966221504">Synopsis of <code class="literal">backup-root-directory</code></a></span></dt><dt><span class="section"><a href="#idm46086966216880">Description of
+        <code class="literal">print-backup-root-directory</code></a></span></dt></dl></dd><dt><span class="section"><a href="#sect.cmd.print-project-directory"><code class="literal">project-directory</code> - Printing the <a class="glossterm" href="#glossentry.project-directory"><em class="glossterm"><a class="glossterm" href="#glossentry.project-directory" title="project directory">project
+      directory</a></em></a></a></span></dt><dd><dl><dt><span class="section"><a href="#idm46086966211456">Synopsis of <code class="literal">project-directory</code></a></span></dt><dt><span class="section"><a href="#idm46086966208416">Description of <code class="literal">project-directory</code></a></span></dt></dl></dd><dt><span class="section"><a href="#sect.cmd.print-project-name"><code class="literal">project-name</code> - Printing the <a class="glossterm" href="#glossentry.project-name"><em class="glossterm"><a class="glossterm" href="#glossentry.project-name" title="project name">project name</a></em></a></a></span></dt><dd><dl><dt><span class="section"><a href="#idm46086966202992">Synopsis of <code class="literal">project-name</code></a></span></dt><dt><span class="section"><a href="#idm46086966199952">Description of <code class="literal">project-name</code></a></span></dt></dl></dd><dt><span class="section"><a href="#sect.cmd.tag"><code class="literal">tag</code> - Marking a backup with a tag
+      string</a></span></dt><dd><dl><dt><span class="section"><a href="#sect.cmd.tag.synopsis">Synopsis of <code class="literal">tag</code></a></span></dt><dt><span class="section"><a href="#sect.cmd.tag.description">Description of <code class="literal">tag</code></a></span></dt><dt><span class="section"><a href="#sect.cmd.tag.options">Options for <code class="literal">tag</code></a></span></dt></dl></dd><dt><span class="section"><a href="#sect.cmd.untag"><code class="literal">untag</code> - Removing a tag from a backup</a></span></dt><dd><dl><dt><span class="section"><a href="#sect.cmd.untag.synopsis">Synopsis of <code class="literal">untag</code></a></span></dt></dl></dd><dt><span class="section"><a href="#sect.cmd.unlock"><code class="literal">unlock</code> - Unlocking backups</a></span></dt></dl></dd><dt><span class="section"><a href="#sect.general-options">General options</a></span></dt><dd><dl><dt><span class="section"><a href="#sect.cmd.general-options.bak-root">Options for setting the <a class="glossterm" href="#glossentry.backup-root-directory"><em class="glossterm"><a class="glossterm" href="#glossentry.backup-root-directory" title="backup root directory">backup root
+      directory</a></em></a></a></span></dt><dt><span class="section"><a href="#sect.general-options.other">Other general options</a></span></dt></dl></dd><dt><span class="section"><a href="#sect.exit-status">Exit status</a></span></dt><dt><span class="section"><a href="#sect.files">Files</a></span></dt><dt><span class="section"><a href="#sect.environment">Environment</a></span></dt><dt><span class="section"><a href="#sect.author">Author</a></span></dt><dt><span class="section"><a href="#idm46086966049840">Bugs</a></span></dt><dt><span class="section"><a href="#sect.reporting-bugs">Reporting bugs</a></span></dt><dt><span class="section"><a href="#sect.copyright">Copyright</a></span></dt><dt><span class="glossary"><a href="#idm46086966043664">Glossary</a></span></dt></dl></div><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="idm46086972262272"></a>Introduction</h2></div></div></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a name="idm46086972261632"></a>What <span class="command"><strong>copyback</strong></span> is</h3></div></div></div><p><span class="command"><strong>copyback</strong></span> is a simple program for backing up
+      files, directories or the output from programs. It is simple because the
+      backups are just copies of the files and directories it is told to
+      backup. If the output from a program is backup up, that is also stored
+      in a plain file. It is simple also because it does not apply any
+      advanced algorithms for incremental updates of existing backups.
+      Instead, backups are updated simply by replacing modified files and
+      adding new files.</p><p><span class="command"><strong>copyback</strong></span> copies and updates files and
+      directories using the program <span class="command"><strong>rsync</strong></span>. It can therefore
+      be seen as a wrapper for <span class="command"><strong>rsync</strong></span>.</p><p>What <span class="command"><strong>copyback</strong></span> tries to be good at is organizing
+      backups of different sources using a logical and useful directory
+      layout. For example, by default the directory layout of files in a
+      user's home directory is preserved: a backup of a file
+      <code class="filename">~/a/b/file.txt</code> is stored in the directory
+      <code class="filename"><em class="replaceable"><code>COPYBACK_ROOT</code></em>/home/a/b/file.txt</code>.
+      Here <code class="filename"><em class="replaceable"><code>COPYBACK_ROOT</code></em></code> is
+      the directory where <span class="command"><strong>copyback</strong></span> stores all backups.
+      <code class="filename"><em class="replaceable"><code>COPYBACK_ROOT</code></em></code> is set
+      either by the environment variable with the same name or using the
+      command line option
+      <code class="option">--root</code>=<code class="filename"><em class="replaceable"><code>COPYBACK_ROOT</code></em></code>.</p><p>A goal in the design of <span class="command"><strong>copyback</strong></span> is that it
+      should be flexible in the way it chooses the directory layout for
+      storing backups. It tries to choose a good default, as well as letting
+      the user specify it if the default is not appropriate.</p><p><span class="command"><strong>copyback</strong></span>
+      can manage a many backups made at different times for a single source (a
+      source is a file, directory or the output from a program).</p><p><span class="command"><strong>copyback</strong></span> is quite easy and straight forward to
+      use.</p><div class="example"><a name="example.first-example-home"></a><p class="title"><b>Example 1. Backing up a file using <span class="command">copyback</span></b></p><div class="example-contents"><p>Suppose the environment variable <code class="envar">COPYBACK_ROOT</code> is
+        set to <code class="filename">~/my-backups</code> and that you have started a
+        shell with the current directory of <code class="filename">~/my-dir</code>. In
+        this directory there is a file <code class="filename">my-file-txt</code> that
+        you want to backup.</p><pre class="screen"><code class="prompt">~/my-dir$</code> <span class="command"><strong>copyback</strong></span> my-file.txt
+<code class="computeroutput">~/my-backups/home/my-dir/my-file.txt/copyback-20070506-1430</code></pre><p>The second line is the filename of the backup. This file is a
+        copy of <code class="filename">my-file.txt</code>. It also has got the same
+        mode and modification time. The string
+        <code class="literal">20070506-1430</code> in the filename is the date and time
+        of when the backup was created.</p></div></div><br class="example-break"><p>Some examples of when <span class="command"><strong>copyback</strong></span> may be
+      useful.</p><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>As a backup solution for a small project that you don't want
+          to set up a Version Control System for.</p></li><li class="listitem"><p>For making backups in between commits of a project that you
+          use a Version Control System for.</p></li><li class="listitem"><p>While experimenting with files and directories you later want
+          to backup using a Version Control System.</p></li><li class="listitem"><p>As a <span class="emphasis"><em>simple</em></span> backup solution for all files
+          you want to backup.</p></li></ul></div></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a name="idm46086969205952"></a>What <span class="command"><strong>copyback</strong></span> is NOT</h3></div></div></div><p><span class="command"><strong>copyback</strong></span> is not designed to replace existing
+      common backup tools and strategies. For example,
+      <span class="command"><strong>copyback</strong></span> is NOT ...</p><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>an advanced backup solution for systemwide incremental backups
+          (such as "dump" and "restore"),</p></li><li class="listitem"><p>a Version Control System (such as "cvs" and
+          "Subversion"),</p></li><li class="listitem"><p>a replacement for using a Version Control System.</p></li></ul></div></div></div><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="sect.synopsis"></a>Invoking <span class="command"><strong>copyback</strong></span></h2></div></div></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a name="idm46086968121936"></a>General syntax</h3></div></div></div><p>Each invocation of <span class="command"><strong>copyback</strong></span> executes one of
+      several <a class="glossterm" href="#glossentry.command"><em class="glossterm"><a class="glossterm" href="#glossentry.command" title="command">commands</a></em></a>.</p><p>The general syntax is</p><div class="cmdsynopsis"><p><code class="command">copyback</code>  [GENERAL-OPTIONS]  <em class="replaceable"><code>COMMAND</code></em>  [COMMAND-OPTIONS] [COMMAND-ARGUMENTS]</p></div><p>See "<a class="xref" href="#sect.cmd" title="Commands">Commands</a>" for a description of the syntax
+      and options accepted by each command.</p><p>Most commands has a (shorter) alias.</p></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a name="idm46086968345264"></a>Commands that operate on a <a class="glossterm" href="#glossentry.project-directory"><em class="glossterm"><a class="glossterm" href="#glossentry.project-directory" title="project directory">project
+      directory</a></em></a></h3></div></div></div><p>Many commands that operate on a <a class="glossterm" href="#glossentry.project-directory"><em class="glossterm"><a class="glossterm" href="#glossentry.project-directory" title="project directory">project directory</a></em></a>
+      (for example <code class="literal">list</code> and <code class="literal">clean</code>) has
+      two forms.</p><p>1. Give the project directory explicitly:</p><div class="cmdsynopsis"><p><code class="command">copyback</code>  [GENERAL-OPTIONS]  <em class="replaceable"><code>COMMAND</code></em>  [COMMAND-OPTIONS] [ <code class="option">--explicit</code>  |  [<code class="option">-e</code>]]  <em class="replaceable"><code>DIRECTORY</code></em> </p></div><p>2. Give the project directory implicitly by supplying the same
+      <em class="replaceable"><code>SOURCE</code></em> and backup options as was used when
+      creating the backup:</p><div class="cmdsynopsis"><p><code class="command">copyback</code>  [GENERAL-OPTIONS] [BACKUP-OPTIONS]  <em class="replaceable"><code>COMMAND</code></em>  [COMMAND-OPTIONS] [<em class="replaceable"><code>SOURCE</code></em>]</p></div><p>(Not all of the backup options are relevant here, only the "<a class="xref" href="#sect.cmd.backup.options.naming-scheme" title="Naming scheme options">Naming scheme options</a>".)</p><p>Generally, <em class="replaceable"><code>SOURCE</code></em> can be specified
+      either as an argument or using the option
+      <code class="option">--source</code>=<em class="replaceable"><code>SOURCE</code></em>.</p></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a name="sect.synopsis.backup"></a>Creating and updating backups</h3></div></div></div><p>The backup command is the default command. It can be left out as
+      long as the other arguments don't clash with any of the other command
+      names.</p><p>The simplest syntax for creating and updating backups:</p><div class="cmdsynopsis"><p><code class="command">copyback</code>  [GENERAL-OPTIONS] [BACKUP-OPTIONS]  <em class="replaceable"><code>SOURCE</code></em> </p></div><p>The following syntaxes are all equivalent to the one above, and
+      may be useful in different circumstances:</p><div class="cmdsynopsis"><p><code class="command">copyback</code>  [GENERAL-OPTIONS]  backup  [BACKUP-OPTIONS]  <em class="replaceable"><code>SOURCE</code></em> </p></div><div class="cmdsynopsis"><p><code class="command">copyback</code>  [GENERAL-OPTIONS] [BACKUP-OPTIONS]  <code class="option">--source</code>=<em class="replaceable"><code>SOURCE</code></em> </p></div><div class="cmdsynopsis"><p><code class="command">copyback</code>  [GENERAL-OPTIONS]  <code class="option">--source</code>=<em class="replaceable"><code>SOURCE</code></em>   backup  [BACKUP-OPTIONS]</p></div></div></div><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="sect.tutorial"></a>Tutorial</h2></div></div></div><p>The following sections explains copyback using some sample sessions.
+    Hopefully even newbies can understand it. Experienced users might find the
+    the explications a bit too clear, though!</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Note</h3><p>In the output from <span class="command"><strong>copyback</strong></span>, the character
+      <code class="literal">~</code> is used to denote the users home directory.</p><p>This is for making the output a bit clearer. In practice, the
+      actual directory name, such as <code class="filename">/home/scott</code>, will be
+      printed instead.</p></div><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Note</h3><p>Some blank lines are inserted into the computer output.</p><p>This is also not (usually) true in practice, but it makes the
+      example sessions a bit clearer.</p></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a name="idm46086967020768"></a>The Calculator example</h3></div></div></div><p>Suppose we are working on a calculator program in the the
+      directory <code class="filename">~/programs/Calculator</code>. Suppose that this
+      is the current directory in our shell so that we can use the name
+      '<code class="literal">.</code>' (dot) to refer to it.</p><p>First of all, let us use list the files of the our Calculator
+      using <span class="command"><strong>ls</strong></span>.</p><pre class="screen"><code class="prompt">~/programs/Calculator$</code> <span class="command"><strong>ls</strong></span>
+<code class="computeroutput">calc.c
+Makefile
+report.tex</code></pre></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a name="idm46086967014560"></a>Setting the <a class="glossterm" href="#glossentry.backup-root-directory"><em class="glossterm">backup root directory</em></a></h3></div></div></div><p>Before we can create backups we must tell
+      <span class="command"><strong>copyback</strong></span> in which directory it should store the
+      backups. The easiest way to do this is to set the environment variable
+      <code class="envar">COPYBACK_ROOT</code>. Suppose we want to store our backups under
+      the directory <code class="filename">~/my-backups</code>.</p><p>If we are using the <span class="command"><strong>bash</strong></span> or
+      <span class="command"><strong>sh</strong></span> shell, we can set <code class="envar">COPYBACK_ROOT</code>
+      with the following shell command:</p><pre class="screen"><code class="prompt">~/programs/Calculator$</code> <span class="bold"><strong>export</strong></span> COPYBACK_ROOT=~/my-backups</pre><p>If we are using the <span class="command"><strong>tcsh</strong></span> shell, we can set
+      <code class="envar">COPYBACK_ROOT</code> with the following shell command:</p><pre class="screen"><code class="prompt">~/programs/Calculator$</code> <span class="bold"><strong>setenv</strong></span> COPYBACK_ROOT ~/my-backups</pre><p>To check that <span class="command"><strong>copyback</strong></span> really uses this
+      directory we can issue the <span class="command"><strong>copyback</strong></span> command
+      <code class="literal">backup-root-directory</code>:</p><pre class="screen"><code class="prompt">~/programs/Calculator$</code> <span class="command"><strong>copyback</strong></span> backup-root-directory
+<code class="computeroutput">~/my-backups</code></pre><p>This directory is called the<a class="glossterm" href="#glossentry.backup-root-directory"><em class="glossterm"><a class="glossterm" href="#glossentry.backup-root-directory" title="backup root directory"> backup root
+      directory</a></em></a>. See "<a class="xref" href="#sect.desc.storing-under-backup-root-directory" title="Storing all backups under a personal backup root directory">Storing all backups under a personal backup root directory</a>" for a
+      detailed description of how to set it.</p></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a name="idm46086966998192"></a>Creating and listing a backup</h3></div></div></div><p>Now we want to make a backup of the Calculator directory. Since it
+      is the current directory, we can use '<code class="literal">.</code>' (dot) to
+      refer to it. Create a backup using the the <span class="command"><strong>copyback</strong></span>
+      command <code class="literal">backup</code>:</p><pre class="screen"><code class="prompt">~/programs/Calculator$</code> <span class="command"><strong>copyback</strong></span> backup .
+<code class="computeroutput">~/my-backups/home/programs/Calculator/copyback-20070205-1030</code></pre><p>The line printed by <span class="command"><strong>copyback</strong></span> is the name of the
+      directory that is the backup. The string
+      <code class="literal">20070205-1030</code> is the current date and time. It will
+      of course be different if <span class="command"><strong>copyback</strong></span> is run at a
+      different time!</p><p>We can use <span class="command"><strong>ls</strong></span> to check that it contains all our
+      files:</p><pre class="screen"><code class="prompt">~/programs/Calculator$</code> <span class="command"><strong>ls</strong></span> ~/my-backups/home/programs/Calculator/copyback-20070205-1030
+<code class="computeroutput">calc.c
+Makefile
+report.tex</code></pre><p>We can also let <span class="command"><strong>copyback</strong></span> confirm that we have
+      created a backup. Do this by listing existing backups using the
+      <span class="command"><strong>copyback</strong></span> command <code class="literal">list</code>:</p><pre class="screen"><code class="prompt">~/programs/Calculator$</code> <span class="command"><strong>copyback</strong></span> list .
+<code class="computeroutput">copyback-20070205-1030</code></pre><p><span class="command"><strong>copyback</strong></span> responds by listing all existing
+      backups of the directory <code class="filename">.</code> (dot), which in our
+      example is <code class="filename">~/programs/Calculator</code>. As expected, only
+      one date is printed, since we have only made one backup yet.</p><p><span class="command"><strong>copyback</strong></span> can also present the backup in a more
+      formatted way:</p><pre class="screen"><code class="prompt">~/programs/Calculator$</code> <span class="command"><strong>copyback</strong></span> --print-formatted list .
+<code class="computeroutput">2007-02-05 10:30</code></pre></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a name="idm46086966976480"></a>Creating more backups</h3></div></div></div><p>Suppose we work on the Calculator for a couple of hours until we
+      reach a version we want to be sure not to loose. At 11:15, we create one
+      more backup:</p><pre class="screen"><code class="prompt">~/programs/Calculator$</code> <span class="command"><strong>copyback</strong></span> b --tar --gzip .
+<code class="computeroutput">~/my-backups/home/programs/Calculator/copyback-20070205-1115.tar.gz</code></pre><p>The <span class="command"><strong>copyback</strong></span> command used is still
+      <code class="literal">backup</code>, but we use its shorter alias
+      '<code class="literal">b</code>'. Most commands and options have a shorter
+      alias.</p><p>The options <code class="option">--tar</code> and <code class="option">--gzip</code>
+      tells <span class="command"><strong>copyback</strong></span> to put all files in a
+      <span class="command"><strong>tar</strong></span> archive, and then to compress this archive using
+      <span class="command"><strong>gzip</strong></span>. The extension <code class="literal">.tar.gz</code> of the
+      backup reflects this.</p><p>The options <code class="option">--tar</code> and <code class="option">--gzip</code> has
+      the shorter aliases <code class="option">-T</code> and <code class="option">-z</code>,
+      respectively</p><p>Again, we want to check the contents of our backup. This time we
+      must use the program <span class="command"><strong>tar</strong></span> to view it since it is a
+      <span class="command"><strong>tar</strong></span> archive:</p><pre class="screen"><code class="prompt">~/programs/Calculator$</code> <span class="command"><strong>tar</strong></span> tzf ~/my-backups/home/programs/Calculator/copyback-20070205-1115.tar.gz
+<code class="computeroutput">calc.c
+Makefile
+report.tex</code></pre></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a name="idm46086966960624"></a>Listing backups, again</h3></div></div></div><p>We let <span class="command"><strong>copyback</strong></span> confirm that we created a new
+      backup in the last section. Now we use the short alias
+      '<code class="literal">l</code>' for <code class="literal">list</code>:</p><pre class="screen"><code class="prompt">~/programs/Calculator$</code> <span class="command"><strong>copyback</strong></span> l .
+<code class="computeroutput">copyback-20070205-1030
+copyback-20070205-1115.tar.gz</code></pre><p>We see that both our backups are present. They are listed one per
+      line and in creation time order. <span class="command"><strong>copyback</strong></span>
+      <code class="literal">list</code> always lists backups this way.</p><p>But each backup can be presented in some different manners. Use
+      one of the following options to decide the format: <code class="option">--print-filename</code>, <code class="option">--print-filename-extra</code>, <code class="option">--print-formatted</code>. These are general options
+      that apply to many commands, not only <code class="literal">list</code>.</p><p><code class="option">--print-formatted</code> presents each
+      backup in a clearer format:</p><pre class="screen"><code class="prompt">~/programs/Calculator$</code> <span class="command"><strong>copyback</strong></span> --print-formatted l .
+<code class="computeroutput">2007-02-05 10:30
+2007-02-05 11:15</code></pre></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a name="idm46086966946992"></a>Updating backups</h3></div></div></div><p>Suppose we are satisfied with our current version of the
+      calculator, except that we remember that it is good practice to have a
+      <code class="filename">README</code> file. We wish we had written the
+      <code class="filename">README</code> file <span class="emphasis"><em>before</em></span> we made the
+      last backup, so it had been included in it.</p><p>We could achieve this by creating a new backup and then deleting
+      the backup file <code class="filename">copyback-20070205-1115.tar.gz</code>
+      manually. But an easier ways is to let <span class="command"><strong>copyback</strong></span>
+      update the last backup.</p><p>Updating a backup modifies it to be an exact copy of the source.
+      This includes adding, modifying and removing files in the backup. The
+      date and time of the updated backup is set to the current date and
+      time.</p><p>Updating is done by adding the <code class="option">--update</code> option to the command
+      <code class="literal">backup</code>, together with specifying which backup to
+      update:</p><pre class="screen"><code class="prompt">~/programs/Calculator$</code> <span class="command"><strong>copyback</strong></span> backup --update --last .
+<code class="computeroutput">copyback: Updating backup: copyback-20070205-1115.tar.gz
+~/my-backups/home/programs/Calculator/copyback-20070205-1135</code></pre><p><span class="command"><strong>copyback</strong></span> prints a message informing us that it
+      updating an existing backup.</p><p>The updated backup is <code class="filename">copyback-20070205-1135</code>.
+      Note that this is not a <span class="command"><strong>gzip</strong></span>'ed
+      <span class="command"><strong>tar</strong></span> archive as the original backup was.
+      <span class="command"><strong>copyback</strong></span> only looks at the command line options to
+      decide how it create backups, never at old backups. You would have to
+      supply <code class="option">--tar</code> and <code class="option">--gzip</code> (or
+      <code class="option">-Tz</code>) to make the updated backup a
+      <span class="command"><strong>gzip</strong></span>'ed <span class="command"><strong>tar</strong></span> archive, too.</p><p>Use <span class="command"><strong>ls</strong></span> to check that the
+      <code class="filename">README</code> file is in the backup:</p><pre class="screen"><code class="prompt">~/programs/Calculator$</code> <span class="command"><strong>ls</strong></span> ~/my-backups/home/programs/Calculator/copyback-20070205-1135
+<code class="computeroutput">calc.c
+Makefile
+README
+report.tex</code></pre></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a name="idm46086966927424"></a>Removing old backups</h3></div></div></div><p>There is one <span class="command"><strong>copyback</strong></span> command to remove
+      existing backups. It is the command <code class="literal">clean</code>, which
+      removes all but the latest existing backups. If there is only one
+      backup, no backup is removed.</p><p>The following session first uses the command list to
+      <code class="literal">list</code> the existing backups, then
+      <span class="command"><strong>copyback</strong></span> <code class="literal">clean</code> is run, and then
+      the remaining backups are listed.</p><pre class="screen"><code class="prompt">~/programs/Calculator$</code> <span class="command"><strong>copyback</strong></span> list .
+<code class="computeroutput">copyback-20070205-1030
+copyback-20070205-1135
+</code>
+<code class="prompt">~/programs/Calculator$</code> <span class="command"><strong>copyback</strong></span> clean .
+<code class="computeroutput">copyback-20070205-1030</code>
+<code class="prompt">
+~/programs/Calculator$</code> <span class="command"><strong>copyback</strong></span> list .
+<code class="computeroutput">copyback-20070205-1135</code></pre></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a name="idm46086966916400"></a>Preventing backups from getting updated or removed</h3></div></div></div><p>A backup can be "locked" to prevent it from getting updated or
+      removed.</p><p>Suppose we still have the two backups we had before we
+      <code class="literal">clean</code>'ed our Calculator directory:</p><pre class="screen"><code class="prompt">~/programs/Calculator$</code> <span class="command"><strong>copyback</strong></span> list .
+<code class="computeroutput">copyback-20070205-1030
+copyback-20070205-1135</code></pre><p>We lock the backup <code class="filename">copyback-20070205-1030</code>
+      using the <span class="command"><strong>copyback</strong></span> command <code class="literal">lock</code>.
+      We use the <code class="option">--date</code> option to tell which
+      backup to lock:</p><pre class="screen"><code class="prompt">~/programs/Calculator$</code> <span class="command"><strong>copyback</strong></span> lock --date 20070205-1030 .</pre><p>Now we run the command <code class="literal">clean</code> again, and then
+      list the existing backups:</p><pre class="screen"><code class="prompt">~/programs/Calculator$</code> <span class="command"><strong>copyback</strong></span> clean .
+<code class="computeroutput">copyback: Skipping locked backup: copyback-20070205-1030
+</code>
+<code class="prompt">~/programs/Calculator$</code> <span class="command"><strong>copyback</strong></span> list .
+<code class="computeroutput">copyback-20070205-1030*
+copyback-20070205-1135</code></pre><p>No backup has been removed since the command
+      <code class="literal">clean</code> only removes non-locked backups and never
+      removes the last backup.</p><p>An asterisk - '*' - is printed after the backup
+      <code class="filename">copyback-20070205-1030</code> to inform us that it is
+      locked.</p><p>Locked backups are unlocked by the command
+      <code class="literal">unlock</code>:</p><pre class="screen"><code class="prompt">~/programs/Calculator$</code> <span class="command"><strong>copyback</strong></span> unlock --date 20070205-1030 .
+
+<code class="prompt">~/programs/Calculator$</code> <span class="command"><strong>copyback</strong></span> list .
+<code class="computeroutput">copyback-20070205-1030
+copyback-20070205-1135</code></pre><p>The last existing backup can be locked/unlocked using the option
+      <code class="option">--last</code> (or <code class="option">-l</code>):</p><pre class="screen"><code class="prompt">~/programs/Calculator$</code> <span class="command"><strong>copyback</strong></span> lock --last .
+<code class="computeroutput">copyback-20070205-1135
+
+</code><code class="prompt">~/programs/Calculator$</code> <span class="command"><strong>copyback</strong></span> list .
+<code class="computeroutput">copyback-20070205-1030
+copyback-20070205-1135*</code></pre><p>Locking affects updating using `<code class="code"><span class="command"><strong>copyback</strong></span>
+      backup <code class="option">--update</code></code>', and cleaning
+      using `<code class="code"><span class="command"><strong>copyback</strong></span> clean</code>'. Both of these
+      commands can be forced to operate even on locked backups using the
+      <code class="option">--force</code> (or <code class="option">-f</code>) option.</p></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a name="idm46086966886640"></a>Excluding selected files</h3></div></div></div><p>If there are selected files in the directory that you don't want
+      to have backups of, you can "exclude" these.</p><p>While working on our Calculator project, the files
+      `<code class="filename">calc</code>' and `<code class="filename">calc.o</code>' are
+      generated from `<code class="filename">calc.c</code>':</p><pre class="screen"><code class="prompt">~/programs/Calculator$</code> <span class="command"><strong>ls</strong></span>
+<code class="computeroutput">calc      calc.c  calc.o
+Makefile  README  report.tex</code></pre><p>We don't want these in our backups. We exclude them using the
+      option <code class="option">--exclude</code> (or <code class="option">-e</code>):</p><pre class="screen"><code class="prompt">~/programs/Calculator$</code> <span class="command"><strong>copyback</strong></span> backup <code class="option">--exclude</code>=calc <code class="option">--exclude</code>='*.o' .
+<code class="computeroutput">~/my-backups/home/programs/Calculator/copyback-20070205-1210</code>
+
+<code class="prompt">~/programs/Calculator$</code> <span class="command"><strong>ls</strong></span> ~/my-backups/home/programs/Calculator/copyback-20070205-1210
+<code class="computeroutput">calc.c
+Makefile
+README
+report.tex</code></pre><p><code class="code"><code class="option">--exclude</code>=calc</code> causes the file
+      `<code class="filename">calc</code>' to be excluded.
+      <code class="code"><code class="option">--exclude</code>='*.o'</code> causes all files ending
+      with `<code class="literal">.o</code>' to be excluded.</p><p>Since it is so common to exclude selected files
+      <span class="command"><strong>copyback</strong></span> will by default look for a hidden file
+      called `<code class="filename">.copyback-exclude</code>' and read exclude
+      "patterns" from it. A `<code class="filename">.copyback-exclude</code>' file for
+      excluding the files above looks like this:</p><pre class="programlisting">calc
+*.o</pre><p>If we create this file we can use
+      `<code class="code"><span class="command"><strong>copyback</strong></span> backup</code>' without the
+      <code class="option">--exclude</code> options. But since
+      <code class="filename">.copyback-exclude</code> is a hidden file, we need to use
+      the <span class="command"><strong>ls</strong></span> option <code class="option">-A</code> to see all files in
+      the backup:</p><pre class="screen"><code class="prompt">~/programs/Calculator$</code> <span class="command"><strong>copyback</strong></span> backup .
+<code class="computeroutput">~/my-backups/home/programs/Calculator/copyback-20070205-1215</code>
+
+<code class="prompt">~/programs/Calculator$</code> <span class="command"><strong>ls</strong></span> <code class="option">-A</code> ~/my-backups/home/programs/Calculator/copyback-20070205-1215
+<code class="computeroutput">calc.c
+Makefile
+README
+report.tex
+.copyback-exclude</code></pre><p><span class="command"><strong>copyback</strong></span> uses the <span class="command"><strong>rsync</strong></span>
+      program for creating backups, and these "patterns" are
+      <span class="command"><strong>rsync</strong></span> "exclude patterns". See "<a class="xref" href="#sect.cmd.backup.options.rsync-forward" title="Options forwarded to rsync">Options forwarded to rsync</a>" or the
+      <span class="command"><strong>rsync</strong></span> manual for details.</p></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a name="idm46086966857552"></a>Using <span class="command"><strong>copyback</strong></span> conveniently</h3></div></div></div><p>If a <em class="replaceable"><code>SOURCE</code></em> is backued up frequently it
+      is recommended to make a shell alias that does the job.</p><p>Lets say we want an alias `<code class="literal">cbc</code>' for backing up
+      the Calculator directory, and that we want each backup to be a
+      <span class="command"><strong>gzip</strong></span>'ed <span class="command"><strong>tar</strong></span> archive.</p><p>Using the bash or sh shell, you achieve this as follows:</p><pre class="screen"><code class="prompt">$ </code><span class="bold"><strong>alias</strong></span> cbc='copyback --tar --gzip --source ~/programs/Calculator'</pre><p>Using the tcsh shell use the following:</p><pre class="screen"><code class="prompt">$ </code><span class="bold"><strong>alias</strong></span> cbc 'copyback --tar --gzip --source ~/programs/Calculator'</pre><p>Now we can create backups like this:</p><pre class="screen"><code class="prompt">$</code> <span class="command"><strong>cbc</strong></span> b
+<code class="computeroutput">~/my-backups/home/programs/Calculator/copyback-20070205-1500.tar.gz</code></pre><p>Or even like this (because <code class="literal">backup</code> is the
+      default command):</p><pre class="screen"><code class="prompt">$</code> <span class="command"><strong>cbc</strong></span>
+<code class="computeroutput">~/my-backups/home/programs/Calculator/copyback-20070205-1500.tar.gz</code></pre><p>List the existing backups like this (using the sort alias
+      '<code class="literal">l</code>' for <code class="literal">list</code>):</p><pre class="screen"><code class="prompt">$</code> <span class="command"><strong>cbc</strong></span> l
+<code class="computeroutput">copyback-20070205-1135
+copyback-20070205-1500.tar.gz</code></pre><p>Update the last backup (using the short alias <code class="option">-u</code> for <code class="option">--update</code>, and <code class="option">-l</code> for <code class="option">--last</code>):</p><pre class="screen"><code class="prompt">$</code> <span class="command"><strong>cbc</strong></span> -ul
+<code class="computeroutput">copyback: Updating backup: copyback-20070205-1500.tar.gz
+~/my-backups/home/programs/Calculator/copyback-20070205-1505.tar.gz</code></pre><p>Lock all backups <code class="option">--all</code>, and list
+      them:</p><pre class="screen"><code class="prompt">$</code> <span class="command"><strong>cbc</strong></span> lock --all
+<code class="computeroutput">copyback-20070205-1135
+copyback-20070205-1505.tar.gz</code><code class="prompt">
+
+$ </code><span class="command"><strong>cbc</strong></span> l
+<code class="computeroutput">copyback-20070205-1135*
+copyback-20070205-1505.tar.gz*
+</code></pre><p>Do a <code class="literal">clean</code> and list the backups. An "ordinary"
+      <code class="literal">clean</code> will not remove any backups since they are all
+      locked. But adding the option <code class="option">--force</code> (or the short
+      alias <code class="option">-f</code>) will do:</p><pre class="screen"><code class="prompt">$ </code><span class="command"><strong>cbc</strong></span> clean
+<code class="computeroutput">copyback: Skipping locked backup: copyback-20070205-1135</code><code class="prompt">
+
+$ </code><span class="command"><strong>cbc</strong></span> l
+<code class="computeroutput">copyback-20070205-1135*
+copyback-20070205-1505.tar.gz*
+</code><code class="prompt">
+$ </code><span class="command"><strong>cbc</strong></span> clean --force
+<code class="computeroutput">copyback-20070205-1135</code></pre></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a name="idm46086966820304"></a>Organizing backups in directories</h3></div></div></div><p><span class="command"><strong>copyback</strong></span> has put all the backups of the
+      previous sections in the directory
+      <code class="filename">~/my-backups/home/programs/Calculator</code>.</p><p>You may now wonder how this directory was chosen.</p><p>The name consists of two parts: the <a class="glossterm" href="#glossentry.backup-root-directory"><em class="glossterm"><a class="glossterm" href="#glossentry.backup-root-directory" title="backup root directory">backup root
+      directory</a></em></a> and the <a lang="" class="glossterm" href="#glossentry.project-name"><em lang="" class="glossterm"><a lang="" class="glossterm" href="#glossentry.project-name" title="project name">project name</a></em></a>:</p><div class="variablelist"><dl class="variablelist"><dt><span class="term"><code class="literal">~/my-backups</code></span></dt><dd><p>This is the <a class="glossterm" href="#glossentry.backup-root-directory"><em class="glossterm"><a class="glossterm" href="#glossentry.backup-root-directory" title="backup root directory">backup root
+            directory</a></em></a> we set earlier using the environment
+            variable <code class="envar">COPYBACK_ROOT</code>.</p><p>See "<a class="xref" href="#sect.desc.storing-under-backup-root-directory" title="Storing all backups under a personal backup root directory">Storing all backups under a personal backup root directory</a>" for a
+            detailed description of how to set it.</p></dd><dt><span class="term"><code class="literal">home/programs/Calculator</code></span></dt><dd><p>This is the <a lang="" class="glossterm" href="#glossentry.project-name"><em lang="" class="glossterm"><a lang="" class="glossterm" href="#glossentry.project-name" title="project name">project name</a></em></a>.
+            <span class="command"><strong>copyback</strong></span> calls each item it creates backups of
+            for a <a class="glossterm" href="#glossentry.project"><em class="glossterm"><a class="glossterm" href="#glossentry.project" title="project">project</a></em></a>,
+            and each <a class="glossterm" href="#glossentry.project"><em class="glossterm"><a class="glossterm" href="#glossentry.project" title="project">project</a></em></a> has a <a lang="" class="glossterm" href="#glossentry.project-name"><em lang="" class="glossterm"><a lang="" class="glossterm" href="#glossentry.project-name" title="project name">project
+            name</a></em></a>. In this case the <a class="glossterm" href="#glossentry.project"><em class="glossterm"><a class="glossterm" href="#glossentry.project" title="project">project</a></em></a> is the directory
+            <code class="filename">~/programs/Calculator</code>.</p><p>In our example, <span class="command"><strong>copyback</strong></span> has chosen the
+            default project name since we have not specified one
+            ourselves.</p><p>The part <code class="literal">home</code> is chosen since the project
+            is a directory within the home directory ~. The part
+            <code class="literal">programs/Calculator</code> is of course chosen since
+            this is the name of the directory following the name of the home
+            directory.</p><p>See "<a class="xref" href="#sect.descr.naming-schemes" title="Project naming schemes">Project naming schemes</a>" for a
+            detailed description of how to set the <a lang="" class="glossterm" href="#glossentry.project-name"><em lang="" class="glossterm"><a lang="" class="glossterm" href="#glossentry.project-name" title="project name">project name</a></em></a>.</p></dd></dl></div><p>You can ask <span class="command"><strong>copyback</strong></span> to print these parts for
+      you:</p><pre class="screen"><code class="prompt">~/programs/Calculator$</code> <span class="command"><strong>copyback</strong></span> backup-root-directory
+<code class="computeroutput">~/my-backups</code>
+
+<code class="prompt">~/programs/Calculator$</code> <span class="command"><strong>copyback</strong></span> project-name .
+<code class="computeroutput">home/programs/Calculator</code></pre><p>The <a class="glossterm" href="#glossentry.backup-root-directory"><em class="glossterm"><a class="glossterm" href="#glossentry.backup-root-directory" title="backup root directory">backup
+      root directory</a></em></a> followed by the <a lang="" class="glossterm" href="#glossentry.project-name"><em lang="" class="glossterm"><a lang="" class="glossterm" href="#glossentry.project-name" title="project name">project name</a></em></a> is the
+      <a lang="" class="glossterm" href="#glossentry.project-directory"><em lang="" class="glossterm"><a lang="" class="glossterm" href="#glossentry.project-directory" title="project directory">project
+      directory</a></em></a>. This is where all backups for your project are
+      stored. You can ask <span class="command"><strong>copyback</strong></span> to print this for you
+      too:</p><pre class="screen"><code class="prompt">~/programs/Calculator$</code> <span class="command"><strong>copyback</strong></span> project-directory .
+<code class="computeroutput"><code class="computeroutput">~/my-backups</code>/home/programs/Calculator</code></pre></div></div><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="sect.descr"></a>Description</h2></div></div></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a name="idm46086966787216"></a>The items <span class="command"><strong>copyback</strong></span> can backup</h3></div></div></div><p><span class="command"><strong>copyback</strong></span> can backups three kinds of
+      items:</p><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>a file</p></li><li class="listitem"><p>a directory</p></li><li class="listitem"><p>program output</p></li></ul></div><p>These items are the <em class="replaceable"><code>SOURCE</code></em> argument to
+      <span class="command"><strong>copyback</strong></span>.</p><p>The "output" from a program means the output to the standard
+      output channel (stdout). In this case, <em class="replaceable"><code>SOURCE</code></em>
+      is the command line for running the program. A special case of program
+      output is '-' (dash). When <em class="replaceable"><code>SOURCE</code></em> is this
+      string, the contents of the standard input channel (stdin) is backed
+      up.</p></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a name="idm46086966778496"></a>Representation of backups - backup files</h3></div></div></div><p>A backup of a file/directory is a copy of that file/directory. A
+      backup of program output is a file storing the output.</p><p>Files and directories are copied using <span class="command"><strong>rsync</strong></span>.
+      See "<a class="xref" href="#sect.description.rsync-usage" title="Usage of rsync">Usage of rsync</a>" for details.</p><p>Directories can be archived in a single <span class="command"><strong>tar</strong></span>
+      archive (using <code class="option">--tar</code>).</p><p>Backup files and directories can be compressed using gzip (using
+      <code class="option">--gzip</code>). Compressing a directory means compressing all
+      files in it.</p><p>If a directory is both <span class="command"><strong>tar</strong></span>'ed and
+      <span class="command"><strong>gzip</strong></span>'ed, the result is of course a
+      <span class="command"><strong>gzip</strong></span>'ed <span class="command"><strong>tar</strong></span> archive.</p><div class="section"><div class="titlepage"><div><div><h4 class="title"><a name="idm46086966770192"></a>Backup filenames</h4></div></div></div><p>Each backup is stored in a file with a standard name, each
+        matching this extended regular expression:</p><p><code class="code">copyback-[[:digit:]]{8}-[[:digit:]]{4,6}(-[^/.*"]+)?($|\..+)</code></p><div class="warning" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Warning</h3><p>Source files matching this expression are not guarrantied to
+          be backed up correctly. The behaviour of trying to backup such files
+          is undefined.</p></div><div class="example"><a name="idm46086966767504"></a><p class="title"><b>Example 2. Example of backup filenames</b></p><div class="example-contents"><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p><code class="filename">copyback-20010203-1020</code></p></li><li class="listitem"><p><code class="filename">copyback-20010203-1130.tar</code></p></li><li class="listitem"><p><code class="filename">copyback-20010203-1230-version
+              1</code></p></li><li class="listitem"><p><code class="filename">copyback-20010203-123012-version
+              2.tar</code></p></li><li class="listitem"><p><code class="filename">copyback-20010203-123013.tar.gz</code></p></li><li class="listitem"><p><code class="filename">copyback-20010203-123012.gzs</code></p></li></ul></div></div></div><br class="example-break"><p>This name encodes the following information:</p><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>datetime of the creation of the backup</p></li><li class="listitem"><p>a "tag" string</p></li><li class="listitem"><p>type of backup file</p></li></ul></div><p>The format of the creation datetime is
+        <em class="replaceable"><code>YYYY</code></em><em class="replaceable"><code>MM</code></em><em class="replaceable"><code>DD</code></em>-<em class="replaceable"><code>hh</code></em><em class="replaceable"><code>mm</code></em>
+        or
+        <em class="replaceable"><code>YYYY</code></em><em class="replaceable"><code>MM</code></em><em class="replaceable"><code>DD</code></em>-<em class="replaceable"><code>hh</code></em><em class="replaceable"><code>mm</code></em><em class="replaceable"><code>ss</code></em>.
+        The second format is used if there already is a backup for the same
+        minute.</p><p><em class="replaceable"><code>YYYY</code></em>, <em class="replaceable"><code>MM</code></em>,
+        <em class="replaceable"><code>DD</code></em>, <em class="replaceable"><code>hh</code></em> and
+        <em class="replaceable"><code>mm</code></em> and <em class="replaceable"><code>ss</code></em> are
+        the current year, month, day-of-month, hour, minute and seconds,
+        respectively.</p><p>This encoded creation time is used for sorting the backups in
+        creation time order. This is used by some of the commands for locating
+        backups, so it is important.</p><div class="warning" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Warning</h3><p>Time-zones are ignored. These are not encoded in the
+          filename.</p></div><div class="warning" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Warning</h3><p><span class="command"><strong>copyback</strong></span> can only create one backup of a
+          source for each single second.</p></div><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Note</h3><p>The modification time is not used to store the creation time
+          since the modification time is an attribute that should be backed
+          up.</p></div><p>The "tag" string is a an optional string used for referring to
+        backups using <code class="option">--tag</code>. Each tag must be
+        unique among the backups for a single source.</p><p>The type of backup file is encoded in the filename
+        extension.</p><div class="section"><div class="titlepage"><div><div><h5 class="title"><a name="idm46086966744576"></a>Backup filename extensions</h5></div></div></div><p>The type of backup file is as usual encoded in the extension -
+          the part following the first dot.</p><p>By default, backup names have no extension.This indicates that
+          the backup is a plain copy of <em class="replaceable"><code>SOURCE</code></em> (if
+          it is a file or directory).</p><p>The following extensions are used by
+          <span class="command"><strong>copyback</strong></span> to identify different types of
+          "postprocessed" backups:</p><div class="variablelist"><dl class="variablelist"><dt><span class="term"><code class="literal">gz</code></span></dt><dd><p>A backup of a file or the output from a program. The
+                contents has been compressed using
+                <span class="command"><strong>gzip</strong></span>.</p></dd><dt><span class="term"><code class="literal">gzs</code></span></dt><dd><p>A backup of a directory. All files in it has been
+                compressed using <span class="command"><strong>gzip</strong></span>.</p></dd><dt><span class="term"><code class="literal">tar</code></span></dt><dd><p>A backup of a directory. All files in the directory has
+                been archived in a single <span class="command"><strong>tar</strong></span>
+                archive.</p></dd><dt><span class="term"><code class="literal">tar.gz</code></span></dt><dd><p>A backup of a directory. All files in the directory has
+                been archived in a single <span class="command"><strong>tar</strong></span> archive,
+                which has in turn been compressed using
+                <span class="command"><strong>gzip</strong></span>.</p></dd></dl></div><div class="warning" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Warning</h3><p>These extensions tell <span class="command"><strong>copyback</strong></span> how to
+            update a backup. Don't change them!</p></div></div></div></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a name="sect.desc.storing-under-backup-root-directory"></a>Storing all backups under a personal <a class="glossterm" href="#glossentry.backup-root-directory"><em class="glossterm">backup root
+      directory</em></a></h3></div></div></div><p>The backup of each item is stored as a file or directory under a
+      personal <a class="glossterm" href="#glossentry.backup-root-directory"><em class="glossterm"><a class="glossterm" href="#glossentry.backup-root-directory" title="backup root directory">backup
+      root directory</a></em></a>. This directory should
+      <span class="emphasis"><em>only</em></span> be used for storing
+      <span class="command"><strong>copyback</strong></span> backups.</p><p>The backups for each item are stored in a separate subdirectory of
+      the <a class="glossterm" href="#glossentry.backup-root-directory"><em class="glossterm"><a class="glossterm" href="#glossentry.backup-root-directory" title="backup root directory">backup root
+      directory</a></em></a>.</p><p>The <a class="glossterm" href="#glossentry.backup-root-directory"><em class="glossterm"><a class="glossterm" href="#glossentry.backup-root-directory" title="backup root directory">backup
+      root directory</a></em></a> is supposed to be personal. Each user should
+      have its own directory. (It is not impossible for several users to share
+      it, but then special care must be taken so that the different sources
+      are not stored in the same directory. This can lead to lost
+      information.)</p><p>The <a class="glossterm" href="#glossentry.backup-root-directory"><em class="glossterm"><a class="glossterm" href="#glossentry.backup-root-directory" title="backup root directory">backup
+      root directory</a></em></a> is most commonly set using the environment
+      variable <code class="envar">COPYBACK_ROOT</code>. It can also be specified on the
+      command line using the option
+      <code class="option">--root</code>=<em class="replaceable"><code>DIRECTORY</code></em>. The
+      <code class="option">--root</code> option overrides
+      <code class="envar">COPYBACK_ROOT</code>.</p><p>See <a class="xref" href="#sect.cmd.general-options.bak-root" title="Options for setting the backup root directory">Options for setting the backup root directory</a> and <a class="xref" href="#sect.environment" title="Environment">Environment</a> for details.</p><div class="section"><div class="titlepage"><div><div><h4 class="title"><a name="idm46086966717440"></a>A system-<a class="glossterm" href="#glossentry.global-backup-root-directory"><em class="glossterm">global backup root
+        directory</em></a></h4></div></div></div><p>A <a class="glossterm" href="#glossentry.global-backup-root-directory"><em class="glossterm"><a class="glossterm" href="#glossentry.global-backup-root-directory" title="global backup root directory">global backup root
+        directory</a></em></a> can be used if <span class="command"><strong>copyback</strong></span> is
+        used by many users on the system, and the backups for all these users
+        should be stored under a common directory. The <a class="glossterm" href="#glossentry.global-backup-root-directory"><em class="glossterm"><a class="glossterm" href="#glossentry.global-backup-root-directory" title="global backup root directory">global backup root
+        directory</a></em></a> is set using the environment variable
+        <code class="envar">COPYBACK_ROOT_GLOBAL</code> or the
+        <code class="option">--root-global</code>=<em class="replaceable"><code>DIRECTORY</code></em>
+        option.</p><p>The <a class="glossterm" href="#glossentry.backup-root-directory"><em class="glossterm"><a class="glossterm" href="#glossentry.backup-root-directory" title="backup root directory">backup
+        root directory</a></em></a> for each user will by default be set to
+        <code class="filename"><em class="replaceable"><code>DIRECTORY</code></em>/users/<em class="replaceable"><code>USER</code></em></code>.
+        <em class="replaceable"><code>USER</code></em> is the name of the (effective)
+        operating system user.</p><p>If
+        <code class="option">--root-global-suffix</code>=<em class="replaceable"><code>STRING</code></em>
+        is used, the <a class="glossterm" href="#glossentry.backup-root-directory"><em class="glossterm"><a class="glossterm" href="#glossentry.backup-root-directory" title="backup root directory">backup root
+        directory</a></em></a> for each user will be set to
+        <code class="filename"><em class="replaceable"><code>DIRECTORY</code></em>/<em class="replaceable"><code>STRING</code></em></code>.</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Note</h3><p>Each user can override this using <code class="envar">COPYBACK_ROOT</code>
+          or <code class="option">--root</code>.</p></div></div></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a name="sect.description.organization-projects"></a>Organization of backups using <a class="glossterm" href="#glossentry.project"><em class="glossterm"><a class="glossterm" href="#glossentry.project" title="project">projects</a></em></a></h3></div></div></div><p><span class="command"><strong>copyback</strong></span> can keep many backups from different
+      times of each <em class="replaceable"><code>SOURCE</code></em>. And of course, it can
+      keep backups of many different <em class="replaceable"><code>SOURCE</code></em>'s. To
+      do this it, organizes them into <a class="glossterm" href="#glossentry.project"><em class="glossterm"><a class="glossterm" href="#glossentry.project" title="project">projects</a></em></a>. Basically, each
+      <em class="replaceable"><code>SOURCE</code></em> is a <a class="glossterm" href="#glossentry.project"><em class="glossterm"><a class="glossterm" href="#glossentry.project" title="project">project</a></em></a>.</p><p>A <a class="glossterm" href="#glossentry.project"><em class="glossterm"><a class="glossterm" href="#glossentry.project" title="project">project</a></em></a>
+      consists of three things:</p><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>a <a class="glossterm" href="#glossentry.project-source"><em class="glossterm"><a class="glossterm" href="#glossentry.project-source" title="project source">project
+          source</a></em></a></p></li><li class="listitem"><p>a <a class="glossterm" href="#glossentry.project-directory"><em class="glossterm"><a class="glossterm" href="#glossentry.project-directory" title="project directory">project
+          directory</a></em></a></p></li><li class="listitem"><p>a <a class="glossterm" href="#glossentry.project-name"><em class="glossterm"><a class="glossterm" href="#glossentry.project-name" title="project name">project
+          name</a></em></a></p></li></ul></div><p>The <a class="glossterm" href="#glossentry.project-source"><em class="glossterm"><a class="glossterm" href="#glossentry.project-source" title="project source">project
+      source</a></em></a> is the same as <em class="replaceable"><code>SOURCE</code></em> -
+      the item to backup.</p><p>The <a class="glossterm" href="#glossentry.project-name"><em class="glossterm"><a class="glossterm" href="#glossentry.project-name" title="project name">project
+      name</a></em></a> is a unique name. The name is used for deriving the
+      <a class="glossterm" href="#glossentry.project-directory"><em class="glossterm"><a class="glossterm" href="#glossentry.project-directory" title="project directory">project
+      directory</a></em></a>.</p><p>The <a class="glossterm" href="#glossentry.project-directory"><em class="glossterm"><a class="glossterm" href="#glossentry.project-directory" title="project directory">project
+      directory</a></em></a> is a unique directory where all backups for the
+      <a class="glossterm" href="#glossentry.project"><em class="glossterm"><a class="glossterm" href="#glossentry.project" title="project">project</a></em></a> are stored.
+      The name of this directory is the <a class="glossterm" href="#glossentry.backup-root-directory"><em class="glossterm"><a class="glossterm" href="#glossentry.backup-root-directory" title="backup root directory">backup root
+      directory</a></em></a> appended by the <a class="glossterm" href="#glossentry.project-name"><em class="glossterm"><a class="glossterm" href="#glossentry.project-name" title="project name">project name</a></em></a>. The project
+      name can include slashes ('/') to specify subdirectories.</p><p>Usually you just have to supply the
+      <em class="replaceable"><code>SOURCE</code></em>. <span class="command"><strong>copyback</strong></span> will, by
+      default, derive the <a class="glossterm" href="#glossentry.project-name"><em class="glossterm"><a class="glossterm" href="#glossentry.project-name" title="project name">project
+      name</a></em></a> from the (absolute) filename of
+      <em class="replaceable"><code>SOURCE</code></em>. This name is then used to derive the
+      <a class="glossterm" href="#glossentry.project-directory"><em class="glossterm"><a class="glossterm" href="#glossentry.project-directory" title="project directory">project
+      directory</a></em></a>. This default behaviour will organize the backups
+      into a directory tree layout that resembles the directory tree storing
+      the <em class="replaceable"><code>SOURCE</code></em>s.</p><div class="warning" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Warning</h3><p>Each item must have a unique name.</p><p>Otherwise backups of different items will be stored in the same
+        directory, and <span class="command"><strong>copyback</strong></span> will not be able to
+        separate between them.</p></div><div class="warning" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Warning</h3><p>It is possible to backup a single item using different project
+        names.</p><p>This will cause the backups to be stored in different
+        directories. <span class="command"><strong>copyback</strong></span> is not able to tell if
+        backups in different directories originate from the same
+        source.</p></div><p>The <a class="glossterm" href="#glossentry.project-name"><em class="glossterm"><a class="glossterm" href="#glossentry.project-name" title="project name">project
+      name</a></em></a> needs only be unique among all the projects who's
+      backups are stored under the current <a class="glossterm" href="#glossentry.backup-root-directory"><em class="glossterm"><a class="glossterm" href="#glossentry.backup-root-directory" title="backup root directory">backup root
+      directory</a></em></a>. Since this directory is usually personal, you
+      don't have to care about other people's backups.</p><p><span class="command"><strong>copyback</strong></span> uses <a class="glossterm" href="#glossentry.project-naming-scheme"><em class="glossterm"><a class="glossterm" href="#glossentry.project-naming-scheme" title="project naming scheme">project naming
+      schemes</a></em></a> for determining <a class="glossterm" href="#glossentry.project-name"><em class="glossterm"><a class="glossterm" href="#glossentry.project-name" title="project name">project names</a></em></a>. It has a
+      default naming scheme, which uses part of the absolute filename of files
+      and directories. This naming scheme is sufficient most of the
+      time.</p><p>If the source is program output, a name has to be supplied
+      explicitly using
+      <code class="option">--constant</code>=<em class="replaceable"><code>NAME</code></em>.</p><p>See "<a class="xref" href="#sect.descr.naming-schemes" title="Project naming schemes">Project naming schemes</a>" for more
+      information on naming projects.</p></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a name="idm46086966675104"></a>Overview of the parts making the <a class="glossterm" href="#glossentry.project-directory"><em class="glossterm"><a class="glossterm" href="#glossentry.project-directory" title="project directory">project
+      directory</a></em></a></h3></div></div></div><p>The construction of the <a class="glossterm" href="#glossentry.project-directory"><em class="glossterm"><a class="glossterm" href="#glossentry.project-directory" title="project directory">project directory</a></em></a> can
+      seem a bit complicated. The purpose is of course flexibility.</p><p>For normal use of copyback, the <a class="glossterm" href="#glossentry.project-directory"><em class="glossterm"><a class="glossterm" href="#glossentry.project-directory" title="project directory">project directory</a></em></a> is
+      derived automatically - you don't have to care about it at all.</p><p>Anyway, the following picture tries to give an overview:</p><pre class="programlisting">|-----------------------------project-directory---------------------------|
+|--------------bak-root-----------------||----------prj-name--------------|
+                                         |-prj-name-head-||-prj-name-tail-|
+|-bak-root-global-||-users/USER---------||----------prj-name--------------|
+|-bak-root-global-||-global-root-suffix-||----------prj-name--------------|</pre><p>Each of these parts can be set by the user.</p><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>The backups of a project are stored in a <a class="glossterm" href="#glossentry.project-directory"><em class="glossterm"><a class="glossterm" href="#glossentry.project-directory" title="project directory">project
+          directory</a></em></a>.</p></li><li class="listitem"><p>The <a class="glossterm" href="#glossentry.project-directory"><em class="glossterm"><a class="glossterm" href="#glossentry.project-directory" title="project directory">project
+          directory</a></em></a> is constructed by adding the <a class="glossterm" href="#glossentry.backup-root-directory"><em class="glossterm">backup
+          root directory</em></a> and the <a class="glossterm" href="#glossentry.project-name"><em class="glossterm"><a class="glossterm" href="#glossentry.project-name" title="project name">project name</a></em></a>,
+          separated by a slash.</p></li><li class="listitem"><p>The <a class="glossterm" href="#glossentry.project-name"><em class="glossterm"><a class="glossterm" href="#glossentry.project-name" title="project name">project
+          name</a></em></a> is constructed by adding the<a class="glossterm" href="#glossentry.project-name-head"><em class="glossterm"><a class="glossterm" href="#glossentry.project-name-head" title="project name head">project name head</a></em></a>
+          and the <a class="glossterm" href="#glossentry.project-name-tail"><em class="glossterm"><a class="glossterm" href="#glossentry.project-name-tail" title="project name tail">project
+          name tail</a></em></a> to the , separated by a slash.</p></li><li class="listitem"><p>The <a class="glossterm" href="#glossentry.backup-root-directory"><em class="glossterm">backup root directory</em></a> is set by
+          either ...</p><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>the option
+              <code class="option">--root</code>=<em class="replaceable"><code>DIRECTORY</code></em></p></li><li class="listitem"><p>the environment variable
+              <code class="envar">COPYBACK_ROOT</code></p></li><li class="listitem"><p>adding the <a class="glossterm" href="#glossentry.global-backup-root-directory"><em class="glossterm"><a class="glossterm" href="#glossentry.global-backup-root-directory" title="global backup root directory">global backup
+              root directory</a></em></a> and
+              <code class="literal">users/<em class="replaceable"><code>USER</code></em></code>, where
+              <em class="replaceable"><code>USER</code></em> is the name of the operating
+              system user</p></li><li class="listitem"><p>adding the <a class="glossterm" href="#glossentry.global-backup-root-directory"><em class="glossterm"><a class="glossterm" href="#glossentry.global-backup-root-directory" title="global backup root directory">global backup
+              root directory</a></em></a> and the <a class="glossterm" href="#glossentry.global-root-suffix"><em class="glossterm"><a class="glossterm" href="#glossentry.global-root-suffix" title="global root suffix">global root
+              suffix</a></em></a>.</p></li></ul></div></li><li class="listitem"><p>The <a class="glossterm" href="#glossentry.global-backup-root-directory"><em class="glossterm"><a class="glossterm" href="#glossentry.global-backup-root-directory" title="global backup root directory">global backup root
+          directory</a></em></a> is set by either ...</p><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>the option
+              <code class="option">--root-global</code>=<em class="replaceable"><code>DIRECTORY</code></em></p></li><li class="listitem"><p>the environment variable
+              <code class="envar">COPYBACK_ROOT_GLOBAL</code></p></li></ul></div></li></ol></div></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a name="sect.descr.naming-schemes"></a>Project naming schemes</h3></div></div></div><p>The <a class="glossterm" href="#glossentry.project-name"><em class="glossterm"><a class="glossterm" href="#glossentry.project-name" title="project name">project
+      name</a></em></a> is constructed from the <a class="glossterm" href="#glossentry.project-name-head"><em class="glossterm"><a class="glossterm" href="#glossentry.project-name-head" title="project name head">project name head</a></em></a> and
+      the <a class="glossterm" href="#glossentry.project-name-tail"><em class="glossterm"><a class="glossterm" href="#glossentry.project-name-tail" title="project name tail">project name
+      tail</a></em></a> separated by a dash ('/').</p><p>The reason for having the <a class="glossterm" href="#glossentry.project-name-head"><em class="glossterm"><a class="glossterm" href="#glossentry.project-name-head" title="project name head">project name head</a></em></a> is
+      to reduce the risk of having the same <a class="glossterm" href="#glossentry.project-name"><em class="glossterm"><a class="glossterm" href="#glossentry.project-name" title="project name">project name</a></em></a> for different
+      source.</p><div class="warning" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Warning</h3><p>Giving two different sources the same name can cause
+        <span class="command"><strong>copyback</strong></span> to overwrite backups of one source with
+        backups of the other source.</p></div><div class="section"><div class="titlepage"><div><div><h4 class="title"><a name="idm46086966643040"></a>Default naming schemes for files and directories</h4></div></div></div><p><span class="command"><strong>copyback</strong></span> uses a default naming scheme for
+        sources that are files or directories:</p><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>If the file/directory is a file in a (a subdirectory of) the
+            users home directory. The <code class="option">--suffix-home</code> naming scheme will be
+            used.</p><p>The name will be</p><p><code class="literal">home</code> <code class="literal">/</code>
+            <em class="replaceable"><code>absolute-name-of-source-file-with-name-of-home-directory-removed</code></em></p><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p><code class="literal">home</code> is the <a class="glossterm" href="#glossentry.project-name-head"><em class="glossterm"><a class="glossterm" href="#glossentry.project-name-head" title="project name head">project name
+                head</a></em></a></p></li><li class="listitem"><p><em class="replaceable"><code>absolute-name-of-source-file-with-name-of-home-directory-removed</code></em>
+                is taken from the absolute filename of the source file. This
+                is the <a class="glossterm" href="#glossentry.project-name-tail"><em class="glossterm"><a class="glossterm" href="#glossentry.project-name-tail" title="project name tail">project name
+                tail</a></em></a>.</p></li></ul></div></li><li class="listitem"><p>If the file/directory is a file in a (a subdirectory of)
+            outside the users home directory. The <code class="option">--absolute</code> naming scheme will be
+            used.</p><p>The name will be</p><p><code class="literal">root</code> <code class="literal">/</code>
+            <em class="replaceable"><code>absolute-name-of-source-file</code></em></p><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p><code class="literal">root</code> is the <a class="glossterm" href="#glossentry.project-name-head"><em class="glossterm"><a class="glossterm" href="#glossentry.project-name-head" title="project name head">project name
+                head</a></em></a></p></li><li class="listitem"><p><em class="replaceable"><code>absolute-name-of-source-file</code></em>
+                is the absolute filename of the source file. This is the
+                <a class="glossterm" href="#glossentry.project-name-tail"><em class="glossterm"><a class="glossterm" href="#glossentry.project-name-tail" title="project name tail">project name
+                tail</a></em></a>.</p></li></ul></div></li></ol></div></div><div class="section"><div class="titlepage"><div><div><h4 class="title"><a name="idm46086966625152"></a>No default naming scheme for program output</h4></div></div></div><p>A <a class="glossterm" href="#glossentry.project-name-tail"><em class="glossterm"><a class="glossterm" href="#glossentry.project-name-tail" title="project name tail">project name
+        tail</a></em></a> must be supplied using
+        <em class="replaceable"><code>--constant</code></em>=<em class="replaceable"><code>NAME</code></em>.</p><p>By default, the <a class="glossterm" href="#glossentry.project-name-head"><em class="glossterm"><a class="glossterm" href="#glossentry.project-name-head" title="project name head">project name head</a></em></a>
+        is set to <code class="literal">other</code>.</p></div><div class="section"><div class="titlepage"><div><div><h4 class="title"><a name="idm46086966620976"></a>Custom naming schemes</h4></div></div></div><p>For any project, the name can be set by the user.</p><p>The <a class="glossterm" href="#glossentry.project-name-head"><em class="glossterm"><a class="glossterm" href="#glossentry.project-name-head" title="project name head">project
+        name head</a></em></a> can be set using
+        <code class="option">--project-name-head</code>=<em class="replaceable"><code>NAME</code></em>
+        or <code class="option">--pnh</code>=<em class="replaceable"><code>NAME</code></em>. It can also
+        be discarded by using these options without an argument.</p><p>See "<a class="xref" href="#sect.cmd.backup.options.naming-scheme" title="Naming scheme options">Naming scheme options</a>"
+        for different ways to set the <a class="glossterm" href="#glossentry.project-name-tail"><em class="glossterm"><a class="glossterm" href="#glossentry.project-name-tail" title="project name tail">project name
+        tail</a></em></a>.</p></div></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a name="sect.description.rsync-usage"></a>Usage of <span class="command"><strong>rsync</strong></span></h3></div></div></div><p>Files and directories are copied using
+      <span class="command"><strong>rsync</strong></span>.</p><p><span class="command"><strong>rsync</strong></span> is always given at least the option
+      <code class="option">--archive</code>. This copies directories recursively and
+      preserves most attributes. Symbolic links are copies as symbolic
+      links.</p><p>"<a class="xref" href="#sect.cmd.backup.options.rsync-forward" title="Options forwarded to rsync">Options forwarded to rsync</a>"
+      describes options that are forwarded from <span class="command"><strong>copyback</strong></span> to
+      <span class="command"><strong>rsync</strong></span> without modification.</p><p>If the source is a directory and this directory contains a file
+      called <code class="filename">.copyback-exclude</code>, then
+      <span class="command"><strong>rsync</strong></span> exclude patterns will be read from it. This is
+      equivalently to using
+      <code class="option">--exclude-from</code>=<em class="replaceable"><code>FILE</code></em>. Files
+      matching any of the patterns will be excluded from the backup. The
+      patterns are like shell patterns. See the <span class="command"><strong>rsync</strong></span>
+      manual for details.</p><p>If <code class="option">--update</code> is used,
+      <span class="command"><strong>rsync</strong></span> is also given the option
+      <code class="option">--delete-excluded</code>. This means that both files without
+      counterpart under SOURCE and excluded files are removed from the updated
+      backup.</p></div></div><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="sect.cmd"></a>Commands</h2></div></div></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a name="sect.cmd.backup"></a><code class="literal">backup</code> - Creating and updating backups</h3></div></div></div><p>Creates a new backup or updates an existing one.</p><div class="section"><div class="titlepage"><div><div><h4 class="title"><a name="sect.cmd.backup.synopsis"></a>Synopsis of <code class="literal">backup</code></h4></div></div></div><div class="cmdsynopsis"><p><code class="command">copyback</code>  [GENERAL-OPTIONS]  backup  [BACKUP-OPTIONS]  <em class="replaceable"><code>SOURCE</code></em> </p></div><div class="cmdsynopsis"><p><code class="command">copyback</code>  [GENERAL-OPTIONS] [BACKUP-OPTIONS]  backup   <em class="replaceable"><code>SOURCE</code></em> </p></div><div class="cmdsynopsis"><p><code class="command">copyback</code>  [GENERAL-OPTIONS] [BACKUP-OPTIONS]  <em class="replaceable"><code>SOURCE</code></em> </p></div><div class="cmdsynopsis"><p><code class="command">copyback</code>  [GENERAL-OPTIONS]  backup   <code class="option">--source</code>=<em class="replaceable"><code>SOURCE</code></em>  [BACKUP-OPTIONS]</p></div><div class="cmdsynopsis"><p><code class="command">copyback</code>  [GENERAL-OPTIONS] [BACKUP-OPTIONS]  <code class="option">--source</code>=<em class="replaceable"><code>SOURCE</code></em>   backup </p></div><p>Short alias: <code class="literal">b</code></p><p><em class="replaceable"><code>BACKUP-OPTIONS</code></em> can appear both before
+        and after the command name.</p><p>The backup command is the default command. This means that the
+        command name can be left out if the string
+        <em class="replaceable"><code>SOURCE</code></em> doesn't clash with any of the
+        command names or aliases.</p></div><div class="section"><div class="titlepage"><div><div><h4 class="title"><a name="sect.cmd.backup.description"></a>Description of <code class="literal">backup</code></h4></div></div></div><p>Creates a new backup or updates an existing backup of the source
+        and puts it in the <a class="glossterm" href="#glossentry.project-directory"><em class="glossterm"><a class="glossterm" href="#glossentry.project-directory" title="project directory">project
+        directory</a></em></a>.</p><p>The date and time of the backup filename is set to the current
+        date and time. This also applies to updated backups.</p><p>If <em class="replaceable"><code>SOURCE</code></em> is a file or directory
+        (<code class="option">--file</code> or <code class="option">--directory</code>), the backup
+        is a copy of it created with <span class="command"><strong>rsync</strong></span>. See "<a class="xref" href="#sect.description.rsync-usage" title="Usage of rsync">Usage of rsync</a>" and "<a class="xref" href="#sect.cmd.backup.options.rsync-forward" title="Options forwarded to rsync">Options forwarded to rsync</a>" for information
+        about how <span class="command"><strong>rsync</strong></span> is used.</p><p>If <em class="replaceable"><code>SOURCE</code></em> is a program
+        (<code class="option">--program</code>), the backup is a file with the contents
+        of what the program outputs to the standard output channel (stdout).
+        <em class="replaceable"><code>SOURCE</code></em> is expected to be a command line
+        that can be executed. If executed the program results in a non-zero
+        exit status, no backup is created. If
+        <em class="replaceable"><code>SOURCE</code></em> is '<code class="literal">-</code>' (dash),
+        the contents of standard input channel (stdin) is backed up.</p><p>By default, the filename of the backup file is printed (to
+        stdout) followed by asterisks if the backup is locked. This is the
+        output format specified by the general option <code class="option">--print-filename-extra</code>. To be sure that the
+        filename only is printed, the general option <code class="option">--print-filename</code> should be used.</p><p>Existing backups can be updated using --</p><p>"<a class="xref" href="#sect.cmd.backup.options.default" title="Default options">Default options</a>" describes
+        which default values for some options.</p></div><div class="section"><div class="titlepage"><div><div><h4 class="title"><a name="sect.cmd.backup.options.default"></a>Default options</h4></div></div></div><p>If the <a class="glossterm" href="#glossentry.source-type"><em class="glossterm"><a class="glossterm" href="#glossentry.source-type" title="source type">source
+        type</a></em></a> is not specified (using one of
+        <code class="option">--file</code>, <code class="option">--directory</code> and
+        <code class="option">--program</code>) it is assumed to be either file or
+        directory. <a class="glossterm" href="#glossentry.source"><em class="glossterm"><a class="glossterm" href="#glossentry.source" title="source">SOURCE</a></em></a>
+        will be checked to determine which of these it is.</p><p>If a <a class="glossterm" href="#glossentry.project-naming-scheme"><em class="glossterm"><a class="glossterm" href="#glossentry.project-naming-scheme" title="project naming scheme">project naming
+        scheme</a></em></a> is not specified, one will be derived from the
+        absolute filename of <a class="glossterm" href="#glossentry.source"><em class="glossterm"><a class="glossterm" href="#glossentry.source" title="source"><a class="glossterm" href="#glossentry.source"><em class="glossterm"><a class="glossterm" href="#glossentry.source" title="source">SOURCE</a></em></a></a></em></a>. This
+        requires the <a class="glossterm" href="#glossentry.source-type"><em class="glossterm"><a class="glossterm" href="#glossentry.source-type" title="source type">source
+        type</a></em></a> to be either file or directory.
+        <span class="command"><strong>copyback</strong></span> will not try to derive one automatically
+        if the <a class="glossterm" href="#glossentry.source-type"><em class="glossterm"><a class="glossterm" href="#glossentry.source-type" title="source type">source
+        type</a></em></a> is program. If the files absolute filename begins
+        with the name of the current user's home directory (as given by the
+        shell environment variable <code class="envar">HOME</code>),
+        <code class="option">--suffix-home</code> will be used. Otherwise
+        <code class="option">--absolute</code> will be used.</p></div><div class="section"><div class="titlepage"><div><div><h4 class="title"><a name="sect.cmd.backup.options"></a>Options for <code class="literal">backup</code></h4></div></div></div><div class="section"><div class="titlepage"><div><div><h5 class="title"><a name="sect.cmd.backup.options.naming-scheme"></a>Naming scheme options</h5></div></div></div><p>These options set the <a class="glossterm" href="#glossentry.project-name"><em class="glossterm"><a class="glossterm" href="#glossentry.project-name" title="project name">project name</a></em></a> (directly
+          or indirectly). This project name has the form of a directory and is
+          appended to the <a class="glossterm" href="#glossentry.backup-root-directory"><em class="glossterm">backup root directory</em></a> to form
+          the <a class="glossterm" href="#glossentry.project-directory"><em class="glossterm"><a class="glossterm" href="#glossentry.project-directory" title="project directory">project
+          directory</a></em></a>. All backups for a source (the project source)
+          are stored in this <a class="glossterm" href="#glossentry.project-directory"><em class="glossterm"><a class="glossterm" href="#glossentry.project-directory" title="project directory">project
+          directory</a></em></a>.</p><p>When the project source is the output from a program,
+          <code class="option">--constant</code> must be used.</p><div class="variablelist"><dl class="variablelist"><dt><span class="term"><code class="option">--absolute</code> | <code class="option">-a</code></span></dt><dd><p>The project name is the same as the absolute filename of
+                <em class="replaceable"><code>SOURCE</code></em>.</p><p>The <a class="glossterm" href="#glossentry.project-name-head"><em class="glossterm"><a class="glossterm" href="#glossentry.project-name-head" title="project name head">project name
+                head</a></em></a> will be defaulted to <code class="literal">root</code>
+                (equivalent to
+                <code class="code"><code class="option">--project-name-head</code>=root</code>).</p></dd><dt><span class="term"><code class="option">--basename</code> | <code class="option">-b</code></span></dt><dd><p>The project name is the basename of the (absolute
+                filename of) <em class="replaceable"><code>SOURCE</code></em>. (This is the
+                string following the last slash ('/').)</p><p>The <a class="glossterm" href="#glossentry.project-name-head"><em class="glossterm"><a class="glossterm" href="#glossentry.project-name-head" title="project name head">project name
+                head</a></em></a> will be defaulted to <code class="literal">other</code>
+                (equivalent to
+                <code class="code"><code class="option">--project-name-head</code>=other</code>).</p></dd><dt><span class="term"><code class="option">--constant</code>=<em class="replaceable"><code>NAME</code></em>
+              | <code class="option">-c</code> <em class="replaceable"><code>NAME</code></em></span></dt><dd><p>A constant project name (used just as it is, not derived
+                from any other information). name can't begin with a "/" or
+                use the relative path components "." or "..".</p><p>The <a class="glossterm" href="#glossentry.project-name-head"><em class="glossterm"><a class="glossterm" href="#glossentry.project-name-head" title="project name head">project name
+                head</a></em></a> will be defaulted to <code class="literal">other</code>
+                (equivalent to
+                <code class="code"><code class="option">--project-name-head</code>=other</code>).</p></dd><dt><span class="term"><code class="option">--suffix</code>=<em class="replaceable"><code>PREFIX-DIRECTORY</code></em>
+              | <code class="option">-s</code>
+              <em class="replaceable"><code>PREFIX-DIRECTORY</code></em></span></dt><dd><p>The project name is the absolute file name of the source
+                file with this prefix removed.
+                <em class="replaceable"><code>PREFIX-DIRECTORY</code></em> must really be a
+                prefix of the absolute source file name.
+                <em class="replaceable"><code>PREFIX-DIRECTORY</code></em> must also be an
+                existing directory. It is the absolute path of
+                <em class="replaceable"><code>PREFIX-DIRECTORY</code></em> that is used, not
+                <em class="replaceable"><code>PREFIX-DIRECTORY</code></em> itself.</p><p>The <a class="glossterm" href="#glossentry.project-name-head"><em class="glossterm"><a class="glossterm" href="#glossentry.project-name-head" title="project name head">project name
+                head</a></em></a> will be defaulted to <code class="literal">other</code>
+                (equivalent to
+                <code class="code"><code class="option">--project-name-head</code>=other</code>) if
+                the given prefix is not the users home directory. If it is, it
+                will be defaulted to <code class="literal">home</code>.</p></dd><dt><span class="term"><code class="option">--suffix-home</code> |
+              <code class="option">-h</code></span></dt><dd><p>Special case of <code class="option">--suffix</code>. The prefix is
+                automatically set to the home directory of the current
+                (effective) user.</p><p>This is the default naming scheme for files and
+                directories in the current users home directory.</p><p>The <a class="glossterm" href="#glossentry.project-name-head"><em class="glossterm"><a class="glossterm" href="#glossentry.project-name-head" title="project name head">project name
+                head</a></em></a> will be defaulted to <code class="literal">home</code>
+                (equivalent to
+                <code class="code"><code class="option">--project-name-head</code>=home</code>).</p><p>The current users home directory is read from the shell
+                environment variable <code class="envar">HOME</code>.</p></dd><dt><span class="term"><code class="option">--project-name-head</code>[=<em class="replaceable"><code>STRING</code></em>]
+              |
+              <code class="option">--pnh</code>[=<em class="replaceable"><code>STRING</code></em>]</span></dt><dd><p>With argument: sets the <a class="glossterm" href="#glossentry.project-name-head"><em class="glossterm"><a class="glossterm" href="#glossentry.project-name-head" title="project name head">project name
+                head</a></em></a> to <em class="replaceable"><code>STRING</code></em>.</p><p>Without argument: removes the <a class="glossterm" href="#glossentry.project-name-head"><em class="glossterm"><a class="glossterm" href="#glossentry.project-name-head" title="project name head">project name
+                head</a></em></a>. The project name will consist of only the
+                <a class="glossterm" href="#glossentry.project-name-tail"><em class="glossterm"><a class="glossterm" href="#glossentry.project-name-tail" title="project name tail">project name
+                tail</a></em></a>.</p><p>If <code class="option">--project-name-head</code> is not used, the
+                default value will be used. This default value depends on the
+                naming scheme used.</p></dd></dl></div></div><div class="section"><div class="titlepage"><div><div><h5 class="title"><a name="sect.cmd.backup.options.rsync-forward"></a>Options forwarded to <span class="command"><strong>rsync</strong></span></h5></div></div></div><p>The following options are <span class="command"><strong>rsync</strong></span> options
+          that <span class="command"><strong>copyback</strong></span> accept. <span class="command"><strong>copyback</strong></span>
+          forwards them to <span class="command"><strong>rsync</strong></span> without modification. A
+          short description is included here. Consult the
+          <span class="command"><strong>rsync</strong></span> manual for more information.</p><div class="variablelist"><dl class="variablelist"><dt><span class="term">--chmod=MODE</span></dt><dd><p>Apply one or more comma-separated "chmod" strings to the
+                permission of the source files. This is a way to modify the
+                permission of backed up files. For example, it is useful if
+                the source files are on a file system that don't handle
+                permissions well.</p></dd><dt><span class="term">--exclude=PATTERN</span></dt><dd><p>Exclude files matching the shell pattern
+                <em class="replaceable"><code>PATTERN</code></em>.</p></dd><dt><span class="term">--exclude-from=<em class="replaceable"><code>FILE</code></em></span></dt><dd><p>Read <span class="command"><strong>rsync</strong></span> exclude patterns from the
+                file <em class="replaceable"><code>FILE</code></em>.</p></dd><dt><span class="term">--include=<em class="replaceable"><code>PATTERN</code></em></span></dt><dd><p>Include files matching the shell pattern
+                <em class="replaceable"><code>PATTERN</code></em>.</p></dd><dt><span class="term">--include-from=<em class="replaceable"><code>FILE</code></em></span></dt><dd><p>Read <span class="command"><strong>rsync</strong></span> include patterns from the
+                file <em class="replaceable"><code>FILE</code></em>.</p></dd><dt><span class="term">--cvs-exclude</span></dt><dd><p>Use the same exclusion mechanism as
+                <span class="command"><strong>cvs</strong></span> does (The "Concurrent Versions
+                System"). Consult the <span class="command"><strong>cvs</strong></span> manual for more
+                information.</p></dd><dt><span class="term">--filter=<em class="replaceable"><code>RULE</code></em></span></dt><dd><p>This requires a version of <span class="command"><strong>rsync</strong></span> that
+                supports the option <code class="option">--filter</code>.</p><p>Add the <span class="command"><strong>rsync</strong></span> filtering rule
+                <em class="replaceable"><code>RULE</code></em>. Filter rules are a more
+                advanced way of specifying files to include and
+                exclude.</p><div class="example"><a name="idm46086966482320"></a><p class="title"><b>Example 3. Examples of filter rules</b></p><div class="example-contents"><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>To exclude all files that matches the shell
+                      pattern "*.o":</p><pre class="programlisting">- *.o</pre><p>This excludes all files that matches "*.o", in the
+                      current (where the <code class="filename">.rsync-filter</code>
+                      files is found) directory and all its
+                      subdirectories!</p></li><li class="listitem"><p>To exclude the file program, only from the current
+                      directory:</p><pre class="programlisting">- /program</pre></li></ul></div></div></div><br class="example-break"></dd><dt><span class="term"><code class="option">-F</code></span></dt><dd><p>Causes <span class="command"><strong>rsync</strong></span> (the program that copies
+                files and directories to backups) to read "filter rules" from
+                a file called <code class="filename">.rsync-filter</code>.</p><p><span class="command"><strong>rsync</strong></span> looks for this file in the
+                <em class="replaceable"><code>SOURCE</code></em> directory, and each of its
+                subdirectories. If there is one such file,
+                <span class="command"><strong>rsync</strong></span> include/exclude filters are read from
+                it and applies them to the files in the directory itself and
+                its subdirectories.</p><p>See the option <code class="option">--filter</code>
+                (or the <span class="command"><strong>rsync</strong></span> manual, of course) for a
+                description of <span class="command"><strong>rsync</strong></span> filter rules.</p><p>Only meaningful when <em class="replaceable"><code>SOURCE</code></em>
+                is a directory.</p><p>This runs <span class="command"><strong>rsync</strong></span> with the <code class="option">-F</code> option.</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Note</h3><p>This requires a version of <span class="command"><strong>rsync</strong></span>
+                  that supports the option <code class="option">--filter</code>.</p></div></dd></dl></div></div><div class="section"><div class="titlepage"><div><div><h5 class="title"><a name="sect.cmd.backup.options.how-to-backup"></a>Other options</h5></div></div></div><div class="variablelist"><dl class="variablelist"><dt><span class="term"><code class="option">--directory</code></span></dt><dd><p>Says that the source is a directory. With this options,
+                <span class="command"><strong>copyback</strong></span> fails if the source is not a
+                directory.</p><p>If none of the options <code class="option">--file</code>,
+                <code class="option">--directory</code> and <code class="option">--program</code>
+                are given, the source must be a file or directory.
+                <span class="command"><strong>copyback</strong></span> will look at the source to see
+                what it is.</p></dd><dt><span class="term"><code class="option">--extension</code>=<em class="replaceable"><code>EXTENSION</code></em>
+              | <code class="option">-E</code>
+              <em class="replaceable"><code>EXTENSION</code></em></span></dt><dd><p>Only available when the source is the output from a
+                program (<code class="option">--program</code>).</p><p><em class="replaceable"><code>EXTENSION</code></em> is appended,
+                together with a separating dot, to the backup file.</p></dd><dt><span class="term"><code class="option">--file</code></span></dt><dd><p>Says that the source is a file (not a directory). With
+                this options, <span class="command"><strong>copyback</strong></span> fails if the source
+                is not a file.</p><p>If none of the options <code class="option">--file</code>,
+                <code class="option">--directory</code> and <code class="option">--program</code>
+                are given, the source must be a file or directory.
+                <span class="command"><strong>copyback</strong></span> will look at the source to see
+                what it is.</p></dd><dt><span class="term"><code class="option">--force</code> | <code class="option">--f</code></span></dt><dd><p>Force. Makes <span class="command"><strong>copyback</strong></span> update locked
+                backups.</p><p>Updates (<code class="option">--update</code>) will
+                be able to operate on locked backups. If a locked backup is
+                updated, the resulting backup will also be locked.</p><p>Backups locked by write protected lock files are never
+                updated, not even using <code class="option">--force</code>.</p></dd><dt><span class="term"><code class="option">--gzip</code> | <code class="option">-z</code></span></dt><dd><p>Compress all backup files using
+                <span class="command"><strong>gzip</strong></span>.</p><p>If the project is a directory, and
+                <code class="option">--tar</code> is not also used, all files in the
+                directory will be compressed individually! If
+                <code class="option">--tar</code> is also used, the directory will first
+                be archived using <span class="command"><strong>tar</strong></span>, and then this file
+                will be compressed using <span class="command"><strong>gzip</strong></span>.</p></dd><dt><span class="term"><code class="option">--lock</code> | <code class="option">-L</code></span></dt><dd><p>Lock the backup, preventing some of the
+                <span class="command"><strong>copyback</strong></span> commands to operate on it (unless
+                <code class="option">--force</code>'d). But even if
+                <code class="option">--force</code> is used, backups with a
+                write-protected lock file will note be operated upon.</p><p>A backup is locked if there exists a corresponding lock
+                file. A lock file is an ordinary file in the same directory as
+                the backup. The name is the name of the backup, excluding any
+                extension, and with the new extension
+                "<code class="literal">.lock</code>" added.</p><p>Lock files are created with a permission that allows
+                writing.</p><p>A locked backup can be unlocked using
+                `<span class="command"><strong>copyback</strong></span> <code class="literal">unlock</code>', or by
+                removing its corresponding lock file manually.</p></dd><dt><span class="term"><code class="option">--no-delete</code> | <code class="option">-n</code></span></dt><dd><p>Only applicable together with <code class="option">--update</code> and when the source is a
+                directory.</p><p>Prevent files of the updated backup from being deleted.
+                This affects both files that are excluded from the backup
+                using <span class="command"><strong>rsync</strong></span> filters and files in the backup
+                without any counter part in
+                <em class="replaceable"><code>SOURCE</code></em>.</p></dd><dt><span class="term"><code class="option">--program</code></span></dt><dd><p>Says that the source is the output from a program.
+                <em class="replaceable"><code>SOURCE</code></em> is the program to run. The
+                output from it (to stdout) is backed up.</p><p>No backup is created if the program exits with non-zero
+                status.</p><p>The constant (<code class="option">--constant</code>) naming scheme
+                must be used.</p><p>If <em class="replaceable"><code>SOURCE</code></em> is
+                '<code class="literal">-</code>' (dash), the contents of stdin is backed
+                up.</p></dd><dt><span class="term">--rsync-filter</span></dt><dd><p>This requires a version of <span class="command"><strong>rsync</strong></span> that
+                supports the option <code class="option">--filter</code>.</p><p>Same as <code class="option">-F</code>. (See "<a class="xref" href="#sect.cmd.backup.options.rsync-forward" title="Options forwarded to rsync">Options forwarded to rsync</a>".)</p></dd><dt><span class="term"><code class="option">--source</code>=<em class="replaceable"><code>SOURCE</code></em></span></dt><dd><p>Sets the source file, directory or program to
+                <em class="replaceable"><code>SOURCE</code></em>.</p><p>This is an alternative to giving the source as the first
+                non-option argument.</p><p>The reason for having this option is to make shell
+                aliases more usefull.</p><p>For example, if a source <em class="replaceable"><code>X</code></em> is
+                often backed up, a shell alias <code class="code">cbx</code> could be
+                defined as</p><p><code class="code"><span class="command"><strong>copyback</strong></span>
+                <em class="replaceable"><code>GENERAL-OPTIONS</code></em>
+                <em class="replaceable"><code>BACKUP-OPTIONS</code></em>
+                <code class="option">--source</code>=<em class="replaceable"><code>X</code></em></code></p><p>where <em class="replaceable"><code>GENERAL-OPTIONS</code></em>
+                <em class="replaceable"><code>BACKUP-OPTIONS</code></em> are options used for
+                backing up <em class="replaceable"><code>X</code></em>.</p><p>Now, executing <code class="code">cbx</code> without arguments will
+                create a backup.</p><p>Listing backups of X using <code class="literal">list</code> will
+                be as easy as `<code class="code">cbx list</code>', because list uses the
+                backup options to figure out the "project directory". This
+                applies to all commands that accesses the project directory
+                and can derive it from the backup options. These include
+                <code class="literal">list</code>, <code class="literal">clean</code>,
+                <code class="literal">find</code>, <code class="literal">lock</code> and
+                <code class="literal">unlock</code>.</p></dd><dt><span class="term"><code class="option">--update</code> | <code class="option">-u</code></span></dt><dd><p>Updates an existing backup with the current contents of
+                the project.</p><p>Specify which backup to update using <code class="option">--last</code>, <code class="option">--date</code> or <code class="option">--tag</code>.</p><p>Locked backups will not be updated unless
+                <code class="option">--force</code> is given.</p><p>The backup to update is specified using
+                <code class="option">--last</code>, <code class="option">--date</code> or
+                <code class="option">--tag</code>.</p><p>The date and time is updated to the current date and
+                time.</p><p>Locked backups can be forced to be updated using
+                <code class="option">--force</code>. Then, if a locked backup is updated,
+                the resulting backup will also be locked (regardless of wether
+                <code class="option">--lock</code> is used or not).</p><p>The option <code class="option">--delete-excluded</code> is passed
+                to <span class="command"><strong>rsync</strong></span> if <code class="option">--no-delete</code> is
+                not used.</p></dd><dt><span class="term"><code class="option">--update-or-create</code> |
+              <code class="option">-U</code></span></dt><dd><p>Like --update, but also creates a new backup if no
+                existing is found.</p><p>Specify which backup to update using <code class="option">--last</code>, <code class="option">--date</code> or <code class="option">--tag</code>.</p></dd><dt><span class="term">--assign-tag=<em class="replaceable"><code>TAG</code></em> | -g
+              <em class="replaceable"><code>TAG</code></em></span></dt><dd><p>Marks the new or updated backup with this tag.</p><p>If a updated backup has a tag, it is replaced by this
+                new tag.</p></dd><dt><span class="term"><code class="option">--last</code> | <code class="option">-l</code></span></dt><dd><p>Used together with <code class="option">--update</code>. Updates the last
+                backup.</p></dd><dt><span class="term"><code class="option">--date</code>=<em class="replaceable"><code>DATE</code></em>
+              | <code class="option">-d</code>
+              <em class="replaceable"><code>DATE</code></em></span></dt><dd><p>Used together with <code class="option">--update</code>. Updates the backup for the
+                given datetime.</p><p><em class="replaceable"><code>DATE</code></em> can be in either the
+                format <code class="literal">YYYYMMDD-hhmm[ss]</code> or
+                <code class="literal">YYYY-MM-DD hh:mm[:ss]</code>.</p></dd><dt><span class="term"><code class="option">--tag</code>=<em class="replaceable"><code>TAG</code></em> |
+              <code class="option">-t</code>
+              <em class="replaceable"><code>TAG</code></em></span></dt><dd><p>Used together with <code class="option">--update</code>. Updates the backup with the
+                given tag <em class="replaceable"><code>TAG</code></em>.</p></dd><dt><span class="term"><code class="option">--tar</code> | <code class="option">-T</code></span></dt><dd><p>Only available when the source is a directory.</p><p>Store the backup in a <span class="command"><strong>tar</strong></span> archive
+                file.</p></dd></dl></div></div></div></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a name="sect.cmd.clean"></a><code class="literal">clean</code> - Removing old backups</h3></div></div></div><p>Removes all but the latest, non-locked, backups for a
+      project.</p><div class="section"><div class="titlepage"><div><div><h4 class="title"><a name="sect.cmd.clean.synopsis"></a>Synopsis of <code class="literal">clean</code></h4></div></div></div><div class="cmdsynopsis"><p><code class="command">copyback</code>  [GENERAL-OPTIONS]  clean  [CLEAN-OPTIONS] [ <code class="option">--explicit</code>  |   <code class="option">-e</code> ]  <em class="replaceable"><code>DIRECTORY</code></em> </p></div><div class="cmdsynopsis"><p><code class="command">copyback</code>  [GENERAL-AND-BACKUP-OPTIONS]  clean  [CLEAN-OPTIONS]  <em class="replaceable"><code>SOURCE</code></em> </p></div><div class="cmdsynopsis"><p><code class="command">copyback</code>  [GENERAL-AND-BACKUP-OPTIONS]  <code class="option">--source</code>=<em class="replaceable"><code>SOURCE</code></em>   clean  [CLEAN-OPTIONS]</p></div><p>The project directory can be given either explicitly (the first
+        syntax) or implicitly (the last two syntaxes). When giving it
+        implicitly, the same source and naming options used for creating
+        backups should be used. Other backup options are ignored.</p></div><div class="section"><div class="titlepage"><div><div><h4 class="title"><a name="sect.cmd.clean.description"></a>Description of <code class="literal">clean</code></h4></div></div></div><p>The basename of each backup removed is printed to standard
+        output (one per line).</p><p>The latest backup is never removed, regardless of whether it is
+        locked or not.</p><p>Locked backups can be cleaned using <code class="option">--force</code>.
+        But even using --force, if the backup cannot be unlocked (see <a class="link" href="#sect.cmd.unlock" title="unlock - Unlocking backups">unlock</a>), the backup will not be
+        removed.</p><p>To clean the given project directory and also all subdirectories
+        of it, use <code class="option">--recursive</code>.</p></div><div class="section"><div class="titlepage"><div><div><h4 class="title"><a name="sect.cmd.clean.options"></a>Options for <code class="literal">clean</code></h4></div></div></div><div class="variablelist"><dl class="variablelist"><dt><span class="term"><code class="option">--force</code> | <code class="option">-f</code></span></dt><dd><p>Also remove locked backups who's lock file is not
+              write-protected and can be removed successfully.</p></dd><dt><span class="term">--recursive | -r</span></dt><dd><p>Also clean all subdirectories of the given project
+              directory that contain backups.</p><p>Directories that are <span class="command"><strong>copyback</strong></span> backups
+              themselves are not cleaned.</p></dd></dl></div></div></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a name="sect.cmd.find"></a><code class="literal">find</code> - Finding project directories</h3></div></div></div><p>Look for directories that store <span class="command"><strong>copyback</strong></span>
+      backups, under a given directory, and print the name of these.</p><div class="section"><div class="titlepage"><div><div><h4 class="title"><a name="sect.cmd.find.synopsis"></a>Synopsis of <code class="literal">find</code></h4></div></div></div><p>Too look under the <a class="glossterm" href="#glossentry.backup-root-directory"><em class="glossterm">backup root
+        directory</em></a>:</p><div class="cmdsynopsis"><p><code class="command">copyback</code>  [GENERAL-OPTIONS]  find </p></div><p>Too look under an explicit directory or a <a class="glossterm" href="#glossentry.project-directory"><em class="glossterm"><a class="glossterm" href="#glossentry.project-directory" title="project directory">project
+        directory</a></em></a>:</p><div class="cmdsynopsis"><p><code class="command">copyback</code>  [GENERAL-OPTIONS]  find  [ <code class="option">--explicit</code>  |   <code class="option">-e</code> ]  <em class="replaceable"><code>DIRECTORY</code></em> </p></div><div class="cmdsynopsis"><p><code class="command">copyback</code>  [GENERAL-AND-BACKUP-OPTIONS]  find   <em class="replaceable"><code>SOURCE</code></em> </p></div><div class="cmdsynopsis"><p><code class="command">copyback</code>  [GENERAL-AND-BACKUP-OPTIONS]  <code class="option">--source</code>=<em class="replaceable"><code>SOURCE</code></em>   find </p></div><p>When giving the directory implicitly, use the same source and
+        naming options as for creating backups. Options other than those for
+        setting the <a class="glossterm" href="#glossentry.backup-root-directory"><em class="glossterm">backup root directory</em></a> and
+        <a class="glossterm" href="#glossentry.project-naming-scheme"><em class="glossterm"><a class="glossterm" href="#glossentry.project-naming-scheme" title="project naming scheme">project naming
+        scheme</a></em></a> are ignored.</p></div><div class="section"><div class="titlepage"><div><div><h4 class="title"><a name="sect.cmd.find.description"></a>Description of <code class="literal">find</code></h4></div></div></div><p><span class="command"><strong>copyback</strong></span> looks in all subdirectories of the
+        given <em class="replaceable"><code>DIRECTORY</code></em>, or the <a class="glossterm" href="#glossentry.backup-root-directory"><em class="glossterm"><a class="glossterm" href="#glossentry.backup-root-directory" title="backup root directory">backup root
+        directory</a></em></a> if no argument is given, for directories that
+        contain <span class="command"><strong>copyback</strong></span> backups. The names of these,
+        relative <em class="replaceable"><code>DIRECTORY</code></em>, are printed. If
+        <em class="replaceable"><code>DIRECTORY</code></em> stores backups itself, a dot
+        ('.') is printed.</p><p>The output is not sorted to any particular order.</p></div></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a name="sect.cmd.list"></a><code class="literal">list</code> - Listing backups of a project</h3></div></div></div><p>List the exisisting backups for a project in creation time
+      order.</p><div class="section"><div class="titlepage"><div><div><h4 class="title"><a name="sect.cmd.list.synopsis"></a>Synopsis of <code class="literal">list</code></h4></div></div></div><div class="cmdsynopsis"><p><code class="command">copyback</code>  [GENERAL-OPTIONS]  list  [ <code class="option">--explicit</code>  |   <code class="option">-e</code> ]  <em class="replaceable"><code>DIRECTORY</code></em> </p></div><div class="cmdsynopsis"><p><code class="command">copyback</code>  [GENERAL-AND-BACKUP-OPTIONS]  list   <em class="replaceable"><code>SOURCE</code></em> </p></div><div class="cmdsynopsis"><p><code class="command">copyback</code>  [GENERAL-AND-BACKUP-OPTIONS]  <code class="option">--source</code>=<em class="replaceable"><code>SOURCE</code></em>   list </p></div><p>Short alias: <code class="literal">l</code></p><p>Short alias: <code class="literal">lf</code>: Adds <code class="option">--print-formatted</code>.</p><p>The project directory can be given either explicitly (the first
+        syntax) or implicitly (the last two syntaxes). When giving it
+        implicitly, the same source and naming options used for creating
+        backups should be used. Other backup options are ignored.</p></div><div class="section"><div class="titlepage"><div><div><h4 class="title"><a name="sect.cmd.list.description"></a>Description of <code class="literal">list</code></h4></div></div></div><p>List the existing backups for a project in creation time
+        order.</p><p>An asterisks ('*') is appended to the name of locked backups:
+        One asterisk if the lock file is writable, two if it is not.</p><p>Each backup is presented with its filename, or in a formatted
+        manner, depending on <code class="option">--print-filename</code> and
+        <code class="option">--print-formatted</code>. <code class="option">--print-formatted</code>
+        is the default.</p></div></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a name="sect.cmd.lock"></a><code class="literal">lock</code> - Preventing backups from getting
+      updated</h3></div></div></div><p>Locks backups so that later <span class="command"><strong>copyback</strong></span>
+      invocations <span class="emphasis"><em>can not</em></span> update them (unless
+      <code class="option">--force</code> is used).</p><div class="section"><div class="titlepage"><div><div><h4 class="title"><a name="sect.cmd.lock.synopsis"></a>Synopsis of <code class="literal">lock</code></h4></div></div></div><p>Locking a single backup by giving the backup file name:</p><div class="cmdsynopsis"><p><code class="command">copyback</code>  [GENERAL-OPTIONS]  lock   <em class="replaceable"><code>BACKUP-FILE</code></em> </p></div><p>Locking by giving the project directory, together with options
+        that tell which backups to lock:</p><div class="cmdsynopsis"><p><code class="command">copyback</code>  [GENERAL-OPTIONS]  lock  {LOCK-OPTIONS} [ <code class="option">--explicit</code>  |   <code class="option">-e</code> ]  <em class="replaceable"><code>DIRECTORY</code></em> </p></div><div class="cmdsynopsis"><p><code class="command">copyback</code>  [GENERAL-AND-BACKUP-OPTIONS]  <code class="option">--source</code>=<em class="replaceable"><code>SOURCE</code></em>   lock   {LOCK-OPTIONS} </p></div><div class="cmdsynopsis"><p><code class="command">copyback</code>  [GENERAL-AND-BACKUP-OPTIONS]  lock   {LOCK-OPTIONS}   <em class="replaceable"><code>SOURCE</code></em> </p></div><p>The project directory can be given either explicitly (the first
+        syntax) or implicitly (the last two syntaxes). When giving it
+        implicitly, the same source and naming options used for creating
+        backups should be used. Other backup options are ignored.</p></div><div class="section"><div class="titlepage"><div><div><h4 class="title"><a name="sect.cmd.lock.description"></a>Description of <code class="literal">lock</code></h4></div></div></div><p>Locking backups prevents later invocations of
+        <span class="command"><strong>copyback</strong></span> to operate on them (unless forced to,
+        using <code class="option">--force</code>). But even if <code class="option">--force</code>
+        is used, backups with a write-protected lock file will note be
+        operated upon.</p><p>Whether the lock files created by <span class="command"><strong>copyback</strong></span> is
+        write-protected or not depends on the current "umask" - "the file
+        creation mask". This is usually set to give the user write-access to
+        files. In this case lock files will not be write-protected. In most
+        shells, you can type <span class="command"><strong>umask</strong></span> to see the current
+        "umask".</p><p>The name of all backup files that are locked are printed,
+        including names of backups that are already locked.</p><p>Nothing is printed to stdout if the project does not contain any
+        backups.</p><p>A lock is represented as a file in the same directory as the
+        backup file. The lock has the same filename as the backup file except
+        for the extension. Lock files have the the extension
+        "<code class="literal">.lock</code>".</p><p>The contents of a lock file is irrelevant. If there exists a
+        directory with the same name as a lock file would have, the behaviour
+        of <span class="command"><strong>copyback</strong></span> is undefined.</p><p>A lock can be removed using the <code class="literal">unlock</code>
+        command.</p></div><div class="section"><div class="titlepage"><div><div><h4 class="title"><a name="sect.cmd.lock.options"></a>Options for <code class="literal">lock</code></h4></div></div></div><div class="variablelist"><dl class="variablelist"><dt><span class="term"><code class="option">--last</code> | <code class="option">-l</code></span></dt><dd><p>Lock the last backup of a project.</p><p>The name of the last backup is printed, even if it was
+              already locked.</p></dd><dt><span class="term"><code class="option">--date</code>=<em class="replaceable"><code>DATE</code></em> |
+            <code class="option">-d</code> <em class="replaceable"><code>DATE</code></em></span></dt><dd><p>Lock the backup for the given date.</p></dd><dt><span class="term"><code class="option">--tag</code>=<em class="replaceable"><code>TAG</code></em> |
+            <code class="option">-t</code> <em class="replaceable"><code>TAG</code></em></span></dt><dd><p>Lock the backup with the given tag.</p></dd><dt><span class="term"><code class="option">--all</code></span></dt><dd><p>Lock all backups of a project.</p><p>The name of all backups are printed, even backups already
+              locked.</p></dd></dl></div></div></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a name="sect.cmd.print-backup-root-directory"></a><code class="literal">backup-root-directory</code> - Printing the
+      <a class="glossterm" href="#glossentry.backup-root-directory"><em class="glossterm"><a class="glossterm" href="#glossentry.backup-root-directory" title="backup root directory">backup root
+      directory</a></em></a></h3></div></div></div><p>Prints the <a class="glossterm" href="#glossentry.backup-root-directory"><em class="glossterm"><a class="glossterm" href="#glossentry.backup-root-directory" title="backup root directory">backup root
+      directory</a></em></a>.</p><div class="section"><div class="titlepage"><div><div><h4 class="title"><a name="idm46086966221504"></a>Synopsis of <code class="literal">backup-root-directory</code></h4></div></div></div><div class="cmdsynopsis"><p><code class="command">copyback</code>  [GENERAL-OPTIONS]  backup-root-directory </p></div><p>Short alias: 'brd'.</p></div><div class="section"><div class="titlepage"><div><div><h4 class="title"><a name="idm46086966216880"></a>Description of
+        <code class="literal">print-backup-root-directory</code></h4></div></div></div><p>Prints the <a class="glossterm" href="#glossentry.backup-root-directory"><em class="glossterm"><a class="glossterm" href="#glossentry.backup-root-directory" title="backup root directory">backup root
+        directory</a></em></a> that would be used if the same options and
+        environment variables were used together with a different
+        command.</p></div></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a name="sect.cmd.print-project-directory"></a><code class="literal">project-directory</code> - Printing the <a class="glossterm" href="#glossentry.project-directory"><em class="glossterm"><a class="glossterm" href="#glossentry.project-directory" title="project directory">project
+      directory</a></em></a></h3></div></div></div><p>Print the <a class="glossterm" href="#glossentry.project-directory"><em class="glossterm"><a class="glossterm" href="#glossentry.project-directory" title="project directory">project
+      directory</a></em></a>.</p><div class="section"><div class="titlepage"><div><div><h4 class="title"><a name="idm46086966211456"></a>Synopsis of <code class="literal">project-directory</code></h4></div></div></div><p>The syntax is the same as for the command
+        <code class="literal">backup</code>, except that any
+        <em class="replaceable"><code>BACKUP-OPTIONS</code></em> must precede the command
+        name.</p><p>Short alias: 'pd'.</p></div><div class="section"><div class="titlepage"><div><div><h4 class="title"><a name="idm46086966208416"></a>Description of <code class="literal">project-directory</code></h4></div></div></div><p>Prints the <a class="glossterm" href="#glossentry.project-directory"><em class="glossterm"><a class="glossterm" href="#glossentry.project-directory" title="project directory">project directory</a></em></a>
+        that would be used if the same options and environment variables were
+        used together with a different command.</p></div></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a name="sect.cmd.print-project-name"></a><code class="literal">project-name</code> - Printing the <a class="glossterm" href="#glossentry.project-name"><em class="glossterm"><a class="glossterm" href="#glossentry.project-name" title="project name">project name</a></em></a></h3></div></div></div><p>Prints the <a class="glossterm" href="#glossentry.project-name"><em class="glossterm"><a class="glossterm" href="#glossentry.project-name" title="project name">project
+      name</a></em></a>.</p><div class="section"><div class="titlepage"><div><div><h4 class="title"><a name="idm46086966202992"></a>Synopsis of <code class="literal">project-name</code></h4></div></div></div><p>The syntax is the same as for the command
+        <code class="literal">backup</code>, except that any
+        <em class="replaceable"><code>BACKUP-OPTIONS</code></em> must precede the command
+        name.</p><p>Short alias: 'pn'.</p></div><div class="section"><div class="titlepage"><div><div><h4 class="title"><a name="idm46086966199952"></a>Description of <code class="literal">project-name</code></h4></div></div></div><p>Prints the <a class="glossterm" href="#glossentry.project-name"><em class="glossterm"><a class="glossterm" href="#glossentry.project-name" title="project name">project
+        name</a></em></a> that would be used if the same options and
+        environment variables were used together with a different
+        command.</p></div></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a name="sect.cmd.tag"></a><code class="literal">tag</code> - Marking a backup with a tag
+      string</h3></div></div></div><p>Marks a backup with a unique string so that it can later be
+      referred to by this string.</p><div class="section"><div class="titlepage"><div><div><h4 class="title"><a name="sect.cmd.tag.synopsis"></a>Synopsis of <code class="literal">tag</code></h4></div></div></div><div class="cmdsynopsis"><p><code class="command">copyback</code>  [GENERAL-OPTIONS]  tag  [ <code class="option">--explicit</code>  |   <code class="option">-e</code> ] [TAG-OPTIONS]  <em class="replaceable"><code>STRING</code></em>   <em class="replaceable"><code>FILE</code></em> </p></div><div class="cmdsynopsis"><p><code class="command">copyback</code>  [GENERAL-AND-BACKUP-OPTIONS]  tag  [TAG-OPTIONS]  <em class="replaceable"><code>STRING</code></em>   <em class="replaceable"><code>SOURCE</code></em> </p></div><div class="cmdsynopsis"><p><code class="command">copyback</code>  [GENERAL-AND-BACKUP-OPTIONS]  <code class="option">--source</code>=<em class="replaceable"><code>SOURCE</code></em>   tag  [TAG-OPTIONS]  <em class="replaceable"><code>STRING</code></em> </p></div><p>The project directory can be given either explicitly (the first
+        syntax) or implicitly (the last two syntaxes). When giving it
+        implicitly, the same source and naming options used for creating
+        backups should be used. Other backup options are ignored.</p></div><div class="section"><div class="titlepage"><div><div><h4 class="title"><a name="sect.cmd.tag.description"></a>Description of <code class="literal">tag</code></h4></div></div></div><p>The backup can later be referred to using
+        <code class="option">--tag</code>=STRING, for example, when updating a backup.
+        The string is also shown by when listing backups with
+        <code class="literal">list</code>.</p><p>The tag string must be unique among all backups for each
+        project.</p></div><div class="section"><div class="titlepage"><div><div><h4 class="title"><a name="sect.cmd.tag.options"></a>Options for <code class="literal">tag</code></h4></div></div></div><div class="variablelist"><dl class="variablelist"><dt><span class="term"><code class="option">--last</code></span></dt><dd><p>Tags the last backup (of a project's backups).</p></dd><dt><span class="term"><code class="option">--date</code>=<em class="replaceable"><code>DATE</code></em></span></dt><dd><p>Tags the backup with the given date (of a project's
+              backups).</p></dd><dt><span class="term"><code class="option">--tag</code>=<em class="replaceable"><code>STRING</code></em></span></dt><dd><p>Tags the backup with the given tag (of a project's
+              backups).</p></dd></dl></div></div></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a name="sect.cmd.untag"></a><code class="literal">untag</code> - Removing a tag from a backup</h3></div></div></div><p>Removes a tag from a backup.</p><div class="section"><div class="titlepage"><div><div><h4 class="title"><a name="sect.cmd.untag.synopsis"></a>Synopsis of <code class="literal">untag</code></h4></div></div></div><div class="cmdsynopsis"><p><code class="command">copyback</code>  [GENERAL-OPTIONS]  untag  [ <code class="option">--explicit</code>  |   <code class="option">-e</code> ] [TAG-OPTIONS]  <em class="replaceable"><code>FILE</code></em> </p></div><div class="cmdsynopsis"><p><code class="command">copyback</code>  [GENERAL-AND-BACKUP-OPTIONS]  untag  [TAG-OPTIONS]  <em class="replaceable"><code>SOURCE</code></em> </p></div><div class="cmdsynopsis"><p><code class="command">copyback</code>  [GENERAL-AND-BACKUP-OPTIONS]  <code class="option">--source</code>=<em class="replaceable"><code>SOURCE</code></em>   untag  [TAG-OPTIONS]</p></div><p>The project directory can be given either explicitly (the first
+        syntax) or implicitly (the last two syntaxes). When giving it
+        implicitly, the same source and naming options used for creating
+        backups should be used. Other backup options are ignored.</p><p>The options are the same as <a class="xref" href="#sect.cmd.tag.options" title="Options for tag">Options for tag</a>.</p></div></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a name="sect.cmd.unlock"></a><code class="literal">unlock</code> - Unlocking backups</h3></div></div></div><p>Unlocks a backup so that later <span class="command"><strong>copyback</strong></span>
+      invocations <span class="emphasis"><em>can</em></span> operate on it. A backup will not be
+      unlocked if its lock file is write-protected. A write-protected lock
+      file must be removed manually.</p><p>The <code class="literal">unlock</code> command is the reverse of to the
+      <code class="literal">lock</code> command. It is used in the same way, so see
+      "<a class="xref" href="#sect.cmd.lock" title="lock - Preventing backups from getting updated">lock - Preventing existing backups from updating</a>" for details.</p></div></div><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="sect.general-options"></a>General options</h2></div></div></div><p>These general options are applicable to all commands.</p><div class="section"><div class="titlepage"><div><div><h3 class="title"><a name="sect.cmd.general-options.bak-root"></a>Options for setting the <a class="glossterm" href="#glossentry.backup-root-directory"><em class="glossterm"><a class="glossterm" href="#glossentry.backup-root-directory" title="backup root directory">backup root
+      directory</a></em></a></h3></div></div></div><p>If <code class="option">--root</code> or <code class="option">--root-global</code> is
+      not used, the environment variables <code class="envar">COPYBACK_ROOT</code> and
+      <code class="envar">COPYBACK_ROOT_GLOBAL</code> are used, if they exist.</p><div class="variablelist"><dl class="variablelist"><dt><span class="term"><code class="option">--root</code>=<em class="replaceable"><code>DIRECTORY</code></em></span></dt><dd><p>Sets the "backup root directory" to
+            <em class="replaceable"><code>DIRECTORY</code></em>.</p><p>Overrides the environment variables
+            <code class="envar">COPYBACK_ROOT</code> and
+            <code class="envar">COPYBACK_ROOT_GLOBAL</code>.</p></dd><dt><a name="option.general.global-root"></a><span class="term"><code class="option">--root-global</code>=<em class="replaceable"><code>DIRECTORY</code></em></span></dt><dd><p>Sets the "global backup root directory" to
+            <em class="replaceable"><code>DIRECTORY</code></em>.</p><p>If <code class="option">--root-global-suffix</code> is not given, the
+            "backup root directory" is set to
+            <code class="filename"><em class="replaceable"><code>DIRECTORY</code></em>/users/<em class="replaceable"><code>USER</code></em></code>.
+            <em class="replaceable"><code>USER</code></em> is the name of the current
+            (effective) operating system user.</p><p>If
+            <code class="option">--root-global-suffix</code>=<em class="replaceable"><code>SUFFIX</code></em>
+            is given, the backup root directory is set to
+            <code class="filename"><em class="replaceable"><code>DIRECTORY</code></em>/<em class="replaceable"><code>SUFFIX</code></em></code>.</p><p>Overrides the environment variables
+            <code class="envar">COPYBACK_ROOT</code> and
+            <code class="envar">COPYBACK_ROOT_GLOBAL</code>.</p></dd><dt><span class="term"><code class="option">--root-global-suffix</code>=<em class="replaceable"><code>SUFFIX</code></em></span></dt><dd><p>Only valid together with <code class="option">--root-global</code> or
+            the environment variable
+            <code class="envar">COPYBACK_ROOT_GLOBAL</code>.</p><p>Replaces the default string appended to the "global backup
+            root directory" to <em class="replaceable"><code>SUFFIX</code></em>. See the
+            option <a class="xref" href="#option.general.global-root">--global-root</a> for more
+            information.</p></dd></dl></div></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a name="sect.general-options.other"></a>Other general options</h3></div></div></div><div class="variablelist"><dl class="variablelist"><dt><span class="term"><code class="option">--print-filename</code> | <code class="option">--prfn</code></span></dt><dd><p>Present backups by printing their filename.</p></dd><dt><span class="term"><code class="option">--print-filename-extra</code> |
+          <code class="option">--prfne</code></span></dt><dd><p>Present backups by printing their filename followed by
+            asterisks indicating lock status.</p><p>This is the default.</p><p>One asterisk indicates a locked backup. Two asterisks
+            indicates that the lock file is write protected. (This means that
+            <span class="command"><strong>copyback</strong></span> won't modify or remove the backup, not
+            even using <code class="option">--force</code>).</p></dd><dt><span class="term"><code class="option">--print-formatted</code> | <code class="option">--prft</code></span></dt><dd><p>Present backups by printing formatted information.</p><p>One asterisk indicates a locked backup. Two asterisks
+            indicates that the lock file is write protected. (This means that
+            <span class="command"><strong>copyback</strong></span> won't modify or remove the backup, not
+            even using <code class="option">--force</code>).</p></dd><dt><span class="term"><code class="option">--version</code> | <code class="option">-V</code></span></dt><dd><p>Print program version and exit successfully.</p></dd><dt><span class="term"><code class="option">--help</code></span></dt><dd><p>Print help and exit successfully.</p></dd><dt><span class="term"><code class="option">--debug</code></span></dt><dd><p>Run the program in a special mode suitable for testing and
+            debugging.</p><div class="warning" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Warning</h3><p>This options modifies the command line syntax and the
+              behaviour of the commands.</p><p>Don't use it unless you are programming the
+              <span class="command"><strong>copyback</strong></span> program!</p></div></dd></dl></div></div></div><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="sect.exit-status"></a>Exit status</h2></div></div></div><div class="variablelist"><dl class="variablelist"><dt><span class="term">0</span></dt><dd><p>Success.</p></dd><dt><span class="term">1</span></dt><dd><p>Syntax or usage error.</p><p>Can be a syntax error reported by <span class="command"><strong>rsync</strong></span>.
+          Then it is one of the options forwarded to <span class="command"><strong>rsync</strong></span>
+          that causes the error (<a class="xref" href="#sect.cmd.backup.options.rsync-forward" title="Options forwarded to rsync">Options forwarded to rsync</a>).</p></dd><dt><span class="term">2</span></dt><dd><p>Error creating the backup. No backup has been created.</p><p>There are several reasons for this failure. The most common is
+          probably that <em class="replaceable"><code>SOURCE</code></em> is not an existing
+          file/directory. Another reason is If
+          <em class="replaceable"><code>SOURCE</code></em> should be a program
+          (<code class="option">--program</code>) and running it results in a non-zero
+          exit status.</p></dd><dt><span class="term">100</span></dt><dd><p>Feature not implemented.</p></dd><dt><span class="term">101</span></dt><dd><p>Internal error.</p></dd></dl></div></div><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="sect.files"></a>Files</h2></div></div></div><div class="variablelist"><dl class="variablelist"><dt><span class="term"><code class="filename">.rsync-filter</code></span></dt><dd><p>If the backup option <code class="option">-F</code> or
+          <code class="option">--rsync-filter</code> is given,
+          <span class="command"><strong>rsync</strong></span> will look for a file with this name in each
+          directory and read include/exclude filters from it if it is
+          found.</p><p>Requires a version of <span class="command"><strong>rsync</strong></span> that supports
+          the option <code class="option">-F</code>.</p></dd><dt><span class="term"><code class="filename">.copyback-exclude</code></span></dt><dd><p>If the source is a directory and this directory contains a
+          file by this name, then <span class="command"><strong>rsync</strong></span> exclude patterns
+          are read from it.</p><p>This is equivalent to using <code class="option">--exclude-from</code>=<code class="filename"><em class="replaceable"><code>SOURCE</code></em>/.copyback-exclude</code>
+          (where <em class="replaceable"><code>SOURCE</code></em> is the source
+          directory).</p><p>See the <span class="command"><strong>rsync</strong></span> manual for information about
+          include and exclude patterns.</p></dd></dl></div></div><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="sect.environment"></a>Environment</h2></div></div></div><p><span class="command"><strong>copyback</strong></span> can use either of two environment
+    variables for setting the <a class="glossterm" href="#glossentry.backup-root-directory"><em class="glossterm"><a class="glossterm" href="#glossentry.backup-root-directory" title="backup root directory">backup root
+    directory</a></em></a>.</p><div class="variablelist"><dl class="variablelist"><dt><span class="term"><code class="envar">COPYBACK_ROOT</code></span></dt><dd><p>If none of the options <code class="option">--root</code> or
+          <code class="option">--root-global</code> are used and
+          <code class="envar">COPYBACK_ROOT</code> is set, the effect is the same as using
+          <code class="option">--root</code> with the value of
+          <code class="envar">COPYBACK_ROOT</code>.</p><p><code class="envar">COPYBACK_ROOT</code> overrides
+          <code class="envar">COPYBACK_ROOT_GLOBAL</code>.</p></dd><dt><span class="term"><code class="envar">COPYBACK_ROOT_GLOBAL</code></span></dt><dd><p>If none of the options <code class="option">--root</code> or
+          <code class="option">--root-global</code> are used and
+          <code class="envar">COPYBACK_ROOT</code> is not set, and
+          <code class="envar">COPYBACK_ROOT_GLOBAL</code> is set, the effect is the same
+          as using <code class="option">--root-global</code> with the value of
+          <code class="envar">COPYBACK_ROOT_GLOBAL</code>.</p></dd></dl></div></div><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="sect.author"></a>Author</h2></div></div></div><p>Written by Emil Karlén.</p></div><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="idm46086966049840"></a>Bugs</h2></div></div></div><p>The behaviour is undefined for backups of files who's filename
+    contains non-printable characters or newlines.</p></div><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="sect.reporting-bugs"></a>Reporting bugs</h2></div></div></div><p>Report bugs to &lt;<a class="ulink" href="mailto:emilkarlen@aim.com" target="_top">emilkarlen@aim.com</a>&gt;.</p></div><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="sect.copyright"></a>Copyright</h2></div></div></div><p>Copyright © 2007, 2019 Emil Karlén.</p><p>This is free software. You may redistribute copies of it under the
+    terms of the GNU General Public License &lt;<a class="ulink" href="http://www.gnu.org/licenses/gpl.html" target="_top">http://www.gnu.org/licenses/gpl.html</a>&gt;.
+    There is NO WARRANTY, to the extent permitted by law.</p></div><div class="glossary"><div class="titlepage"><div><div><h2 class="title"><a name="idm46086966043664"></a>Glossary</h2></div></div></div><div class="glossdiv"><h3 class="title">Definition and explanation of terms</h3><dl><dt><a name="glossentry.global-backup-root-directory"></a><span class="glossterm">global backup root directory</span></dt><dd class="glossdef"><p>Set by the environment variable
+          <code class="envar">COPYBACK_ROOT_GLOBAL</code> or the command line option
+          <code class="option">--root-global</code>. The command line option overrides
+          the environment variable.</p><p>See Also <a class="glossseealso" href="#glossentry.global-root-suffix">global root suffix</a>.</p></dd><dt><a name="glossentry.global-root-suffix"></a><span class="glossterm">global root suffix</span></dt><dd class="glossdef"><p>Used when the <a class="glossterm" href="#glossentry.backup-root-directory"><em class="glossterm"><a class="glossterm" href="#glossentry.backup-root-directory" title="backup root directory">backup root
+          directory</a></em></a> is derived from a <a class="glossterm" href="#glossentry.global-backup-root-directory"><em class="glossterm"><a class="glossterm" href="#glossentry.global-backup-root-directory" title="global backup root directory">global backup root
+          directory</a></em></a>.</p><p>The global root suffix is appended to the <a class="glossterm" href="#glossentry.global-backup-root-directory"><em class="glossterm"><a class="glossterm" href="#glossentry.global-backup-root-directory" title="global backup root directory">global backup root
+          directory</a></em></a> to form the <a class="glossterm" href="#glossentry.backup-root-directory"><em class="glossterm"><a class="glossterm" href="#glossentry.backup-root-directory" title="backup root directory">backup root
+          directory</a></em></a>.</p><p>By default, the <a class="glossterm" href="#glossentry.global-root-suffix"><em class="glossterm">global root suffix</em></a> is
+          <code class="literal">users/<em class="replaceable"><code>USER</code></em></code>, where
+          <em class="replaceable"><code>USER</code></em> is the name of the (effective)
+          operating system user.</p><p>The option <code class="option">--root-global-suffix</code> can be used
+          to set the suffix to any string.</p><p>Slashes ('/') in the value creates subdirectories - the are
+          treated as slashes in normal filenames.</p></dd><dt><a name="glossentry.backup-root-directory"></a><span class="glossterm">backup root directory</span></dt><dd class="glossdef"><p>The root directory for storing a users backups. Each project
+          got it's own <a class="glossterm" href="#glossentry.project-directory"><em class="glossterm"><a class="glossterm" href="#glossentry.project-directory" title="project directory">project directory</a></em></a>
+          which is a subdirectory of the <a class="glossterm" href="#glossentry.backup-root-directory"><em class="glossterm">backup root
+          directory</em></a>.</p><p>Set by the environment variable <code class="envar">COPYBACK_ROOT</code>
+          or the command line option <code class="option">--root</code>. The command line
+          option overrides the environment variable.</p></dd><dt><a name="glossentry.project-directory"></a><span class="glossterm">project directory</span></dt><dd class="glossdef"><p>The directory where <span class="command"><strong>copyback</strong></span> stores the
+          backups of the project.</p><p>This is a subdirectory of the <a class="glossterm" href="#glossentry.backup-root-directory"><em class="glossterm"><a class="glossterm" href="#glossentry.backup-root-directory" title="backup root directory">backup root
+          directory</a></em></a>. It is constructed by appending the <a class="glossterm" href="#glossentry.project-name"><em class="glossterm"><a class="glossterm" href="#glossentry.project-name" title="project name">project name</a></em></a> to
+          <a class="glossterm" href="#glossentry.backup-root-directory"><em class="glossterm"><a class="glossterm" href="#glossentry.backup-root-directory" title="backup root directory">backup root
+          directory</a></em></a>.</p><p>See Also <a class="glossseealso" href="#glossentry.backup-root-directory">backup root directory</a>, <a class="glossseealso" href="#glossentry.project-name">project name</a>, <a class="glossseealso" href="#glossentry.source">source</a>.</p></dd><dt><a name="glossentry.backup-file"></a><span class="glossterm">backup file</span></dt><dd class="glossdef"><p>A file or directory that represents a backup for a <a class="glossterm" href="#glossentry.project"><em class="glossterm"><a class="glossterm" href="#glossentry.project" title="project">project</a></em></a>.</p><p>The basename of backup files match the following extended
+          regular expression:
+          <code class="literal">copyback-([[:digit:]]{8}-[[:digit:]]{4,6}))(-[^/.*"]+)?($|\..+)</code></p><p>The contents of the file is the contents of the <a class="glossterm" href="#glossentry.source"><em class="glossterm"><a class="glossterm" href="#glossentry.source" title="source">source</a></em></a>. If the source is a
+          file or directory the mode, modification time, user and group of the
+          backup file matches that of the source.</p><p>An exception to the above are "postprocessed" backup files.
+          "Postprocessing" a backup means storing it in a
+          <span class="command"><strong>tar</strong></span> archive or <span class="command"><strong>gzip</strong></span>'ing it.
+          The extension tells if, and how, the backup is
+          "postprocessed":</p><div class="variablelist"><dl class="variablelist"><dt><span class="term">.tar</span></dt><dd><p>The backup is a backup of a directory, which is
+                represented by a <span class="command"><strong>tar</strong></span> archive.</p></dd><dt><span class="term">.tar.gz</span></dt><dd><p>The backup is a backup of a directory, which is
+                represented by a <span class="command"><strong>gzip</strong></span>'ed
+                <span class="command"><strong>tar</strong></span> archive.</p></dd><dt><span class="term">.gz</span></dt><dd><p>The backup is a backup of a file or program output,
+                which is <span class="command"><strong>gzip</strong></span>'ed.</p></dd><dt><span class="term">.gzs</span></dt><dd><p>The backup is a backup of a directory. Each file in the
+                directory is <span class="command"><strong>gzip</strong></span>'ed.</p></dd></dl></div><p>The backup files of "program output" projects can also be
+          assigned a custom extension using
+          <code class="option">--extension</code>=<em class="replaceable"><code>EXTENSION</code></em>.</p><p>All backup files for a <a class="glossterm" href="#glossentry.project"><em class="glossterm"><a class="glossterm" href="#glossentry.project" title="project">project</a></em></a> are re stored in
+          the <a class="glossterm" href="#glossentry.project-directory"><em class="glossterm"><a class="glossterm" href="#glossentry.project-directory" title="project directory">project
+          directory</a></em></a>.</p></dd><dt><a name="glossentry.project-name"></a><span class="glossterm">project name</span></dt><dd class="glossdef"><p>The project names is appended to the <a class="glossterm" href="#glossentry.backup-root-directory"><em class="glossterm"><a class="glossterm" href="#glossentry.backup-root-directory" title="backup root directory">backup root
+          directory</a></em></a>, separated by a slash, to form the <a class="glossterm" href="#glossentry.project-directory"><em class="glossterm"><a class="glossterm" href="#glossentry.project-directory" title="project directory">project
+          directory</a></em></a>.</p><p>Project must be given unique names so that their backups are
+          stored in unique <a class="glossterm" href="#glossentry.project-directory"><em class="glossterm"><a class="glossterm" href="#glossentry.project-directory" title="project directory">project
+          directories</a></em></a>. <span class="command"><strong>copyback</strong></span> assumes that
+          all backups in a <a class="glossterm" href="#glossentry.project-directory"><em class="glossterm"><a class="glossterm" href="#glossentry.project-directory" title="project directory">project directory</a></em></a>
+          are backups of the same source.</p><p>The project name consists of the <a class="glossterm" href="#glossentry.project-name-head"><em class="glossterm"><a class="glossterm" href="#glossentry.project-name-head" title="project name head">project name head</a></em></a>
+          and <a class="glossterm" href="#glossentry.project-name-tail"><em class="glossterm"><a class="glossterm" href="#glossentry.project-name-tail" title="project name tail">project name
+          tail</a></em></a> separated by a slash.</p></dd><dt><a name="glossentry.project-name-head"></a><span class="glossterm">project name head</span></dt><dd class="glossdef"><p>The first part of the <a class="glossterm" href="#glossentry.project-name"><em class="glossterm"><a class="glossterm" href="#glossentry.project-name" title="project name">project name</a></em></a> (the
+          second is the <a class="glossterm" href="#glossentry.project-name-tail"><em class="glossterm"><a class="glossterm" href="#glossentry.project-name-tail" title="project name tail">project name
+          tail</a></em></a>).</p><p>Set by
+          <code class="option">--project-name-head</code>=<em class="replaceable"><code>STRING</code></em>
+          or <code class="option">--pnh</code>=<em class="replaceable"><code>STRING</code></em>.
+          <em class="replaceable"><code>STRING</code></em> can be left out to skip the tail.
+          Then the <a class="glossterm" href="#glossentry.project-name"><em class="glossterm"><a class="glossterm" href="#glossentry.project-name" title="project name">project
+          name</a></em></a> will be equal to the <a class="glossterm" href="#glossentry.project-name-tail"><em class="glossterm"><a class="glossterm" href="#glossentry.project-name-tail" title="project name tail">project name
+          tail</a></em></a>.</p><p>If the above options are not given, a default value will be
+          used. This value depends on the naming scheme and the absolute name
+          of the source file. See "<a class="xref" href="#sect.descr.naming-schemes" title="Project naming schemes">Project naming schemes</a>" for details.</p><p>If you only backup files and directories under you home
+          directory, the project name head can savely be skiped.</p></dd><dt><a name="glossentry.project-name-tail"></a><span class="glossterm">project name tail</span></dt><dd class="glossdef"><p>The second part of the <a class="glossterm" href="#glossentry.project-name"><em class="glossterm"><a class="glossterm" href="#glossentry.project-name" title="project name">project name</a></em></a> (the
+          first is the <a class="glossterm" href="#glossentry.project-name-tail"><em class="glossterm"><a class="glossterm" href="#glossentry.project-name-tail" title="project name tail">project name
+          tail</a></em></a>).</p><p>See "<a class="xref" href="#sect.descr.naming-schemes" title="Project naming schemes">Project naming schemes</a>" for
+          details.</p></dd><dt><a name="glossentry.project-source"></a><span class="glossterm">project source</span></dt><dd class="glossdef"><p>The item that <span class="command"><strong>copyback</strong></span> is told to make a
+          backup of. Each source is one of the following:</p><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>a file,</p></li><li class="listitem"><p>a directory,</p></li><li class="listitem"><p>the program output (on stdout) from a program.</p></li></ul></div><p>Each backup is a file or directory that contains a copy of the
+          source.</p><p>The type of source is specified using <code class="option">--file</code>,
+          <code class="option">--directory</code> or <code class="option">--program</code>. If the
+          source is a file or directory, <span class="command"><strong>copyback</strong></span> can
+          determine this automatically.</p><p>If the type of source is program output, and the SOURCE is
+          '-', the data to backup is read from stdin.</p><p>The source is the <em class="replaceable"><code>SOURCE</code></em> in the
+          command line syntax. It can be given as an argument or using the
+          option
+          <code class="option">--source</code>=<em class="replaceable"><code>SOURCE</code></em>.</p></dd><dt><a name="glossentry.source-type"></a><span class="glossterm">source type</span></dt><dd class="glossdef"><p>The type item that <span class="command"><strong>copyback</strong></span> is told to make
+          a backup of. One of</p><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>a file,</p></li><li class="listitem"><p>a directory,</p></li><li class="listitem"><p>the program output (on stdout) from a program.</p></li></ul></div><p>The type of source is specified using <code class="option">--file</code>,
+          <code class="option">--directory</code> or <code class="option">--program</code>. If the
+          source is a file or directory, <span class="command"><strong>copyback</strong></span> can
+          determine this automatically.</p></dd><dt><a name="glossentry.project"></a><span class="glossterm">project</span></dt><dd class="glossdef"><p><span class="command"><strong>copyback</strong></span> considers each source it is told
+          to backup a project.</p><p>A <a class="glossterm" href="#glossentry.project"><em class="glossterm"><a class="glossterm" href="#glossentry.project" title="project">project</a></em></a>
+          consists of three things:</p><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>a <a class="glossterm" href="#glossentry.project-source"><em class="glossterm"><a class="glossterm" href="#glossentry.project-source" title="project source">project
+              source</a></em></a></p></li><li class="listitem"><p>a <a class="glossterm" href="#glossentry.project-directory"><em class="glossterm"><a class="glossterm" href="#glossentry.project-directory" title="project directory">project
+              directory</a></em></a></p></li><li class="listitem"><p>a <a class="glossterm" href="#glossentry.project-name"><em class="glossterm"><a class="glossterm" href="#glossentry.project-name" title="project name">project
+              name</a></em></a></p></li></ul></div><p>See "<a class="xref" href="#sect.description.organization-projects" title="Organization of backups using projects">Organization of backups using projects</a>"
+          for details.</p></dd><dt><a name="glossentry.source"></a><span class="glossterm">source</span></dt><dd class="glossdef"><p>The same as the <a class="glossterm" href="#glossentry.project-source"><em class="glossterm"><a class="glossterm" href="#glossentry.project-source" title="project source">project
+          source</a></em></a>.</p></dd><dt><a name="glossentry.project-naming-scheme"></a><span class="glossterm">project naming scheme</span></dt><dd class="glossdef"><p>The way the <a class="glossterm" href="#glossentry.project-name"><em class="glossterm"><a class="glossterm" href="#glossentry.project-name" title="project name">project name</a></em></a> is
+          derived.</p><p>See "<a class="xref" href="#sect.descr.naming-schemes" title="Project naming schemes">Project naming schemes</a>" for
+          details.</p></dd><dt><a name="glossentry.command"></a><span class="glossterm">command</span></dt><dd class="glossdef"><p>Each invocation of <span class="command"><strong>copyback</strong></span> runs a
+          command.</p><p>The command line syntax is individual for each command, and
+          each accepts its own options.</p><p>The general syntax for running the command
+          <em class="replaceable"><code>COMMAND</code></em> is</p><div class="cmdsynopsis"><p><code class="command">copyback</code>  [GENERAL-OPTIONS]  <em class="replaceable"><code>COMMAND</code></em>  [BACKUP-OPTIONS] [COMMAND-ARGUMENTS]</p></div><p>Many commands have a shorter "alias".</p><p><code class="literal">backup</code> is the default command. The command
+          name <code class="literal">backup</code> can be left out as long as the
+          following argument doesn't clash with a command name (or
+          alias).</p><p>See "<a class="xref" href="#sect.cmd" title="Commands">Commands</a>" for a description of each
+          command.</p></dd></dl></div></div></div></body></html>
