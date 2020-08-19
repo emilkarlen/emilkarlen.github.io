@@ -1,0 +1,11 @@
+pre.literal-block {
+  background-color : #EEFFCC;
+  border: 1px solid #cEdFaC;
+  padding: 7px;
+}
+
+pre.literal-block.terminal {
+  background-color : #F0F0F0;
+  border: none;
+  /* border: 1px solid #cEdFaC; */
+}

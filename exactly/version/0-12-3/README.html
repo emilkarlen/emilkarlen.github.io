@@ -1,0 +1,1056 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.15.2: http://docutils.sourceforge.net/" />
+<title>README.rst</title>
+<style type="text/css">
+
+/*
+:Author: David Goodger (goodger@python.org)
+:Id: $Id: html4css1.css 7952 2016-07-26 18:15:59Z milde $
+:Copyright: This stylesheet has been placed in the public domain.
+
+Default cascading style sheet for the HTML output of Docutils.
+
+See http://docutils.sf.net/docs/howto/html-stylesheets.html for how to
+customize this style sheet.
+*/
+
+/* used to remove borders from tables and images */
+.borderless, table.borderless td, table.borderless th {
+  border: 0 }
+
+table.borderless td, table.borderless th {
+  /* Override padding for "table.docutils td" with "! important".
+     The right padding separates the table cells. */
+  padding: 0 0.5em 0 0 ! important }
+
+.first {
+  /* Override more specific margin styles with "! important". */
+  margin-top: 0 ! important }
+
+.last, .with-subtitle {
+  margin-bottom: 0 ! important }
+
+.hidden {
+  display: none }
+
+.subscript {
+  vertical-align: sub;
+  font-size: smaller }
+
+.superscript {
+  vertical-align: super;
+  font-size: smaller }
+
+a.toc-backref {
+  text-decoration: none ;
+  color: black }
+
+blockquote.epigraph {
+  margin: 2em 5em ; }
+
+dl.docutils dd {
+  margin-bottom: 0.5em }
+
+object[type="image/svg+xml"], object[type="application/x-shockwave-flash"] {
+  overflow: hidden;
+}
+
+/* Uncomment (and remove this text!) to get bold-faced definition list terms
+dl.docutils dt {
+  font-weight: bold }
+*/
+
+div.abstract {
+  margin: 2em 5em }
+
+div.abstract p.topic-title {
+  font-weight: bold ;
+  text-align: center }
+
+div.admonition, div.attention, div.caution, div.danger, div.error,
+div.hint, div.important, div.note, div.tip, div.warning {
+  margin: 2em ;
+  border: medium outset ;
+  padding: 1em }
+
+div.admonition p.admonition-title, div.hint p.admonition-title,
+div.important p.admonition-title, div.note p.admonition-title,
+div.tip p.admonition-title {
+  font-weight: bold ;
+  font-family: sans-serif }
+
+div.attention p.admonition-title, div.caution p.admonition-title,
+div.danger p.admonition-title, div.error p.admonition-title,
+div.warning p.admonition-title, .code .error {
+  color: red ;
+  font-weight: bold ;
+  font-family: sans-serif }
+
+/* Uncomment (and remove this text!) to get reduced vertical space in
+   compound paragraphs.
+div.compound .compound-first, div.compound .compound-middle {
+  margin-bottom: 0.5em }
+
+div.compound .compound-last, div.compound .compound-middle {
+  margin-top: 0.5em }
+*/
+
+div.dedication {
+  margin: 2em 5em ;
+  text-align: center ;
+  font-style: italic }
+
+div.dedication p.topic-title {
+  font-weight: bold ;
+  font-style: normal }
+
+div.figure {
+  margin-left: 2em ;
+  margin-right: 2em }
+
+div.footer, div.header {
+  clear: both;
+  font-size: smaller }
+
+div.line-block {
+  display: block ;
+  margin-top: 1em ;
+  margin-bottom: 1em }
+
+div.line-block div.line-block {
+  margin-top: 0 ;
+  margin-bottom: 0 ;
+  margin-left: 1.5em }
+
+div.sidebar {
+  margin: 0 0 0.5em 1em ;
+  border: medium outset ;
+  padding: 1em ;
+  background-color: #ffffee ;
+  width: 40% ;
+  float: right ;
+  clear: right }
+
+div.sidebar p.rubric {
+  font-family: sans-serif ;
+  font-size: medium }
+
+div.system-messages {
+  margin: 5em }
+
+div.system-messages h1 {
+  color: red }
+
+div.system-message {
+  border: medium outset ;
+  padding: 1em }
+
+div.system-message p.system-message-title {
+  color: red ;
+  font-weight: bold }
+
+div.topic {
+  margin: 2em }
+
+h1.section-subtitle, h2.section-subtitle, h3.section-subtitle,
+h4.section-subtitle, h5.section-subtitle, h6.section-subtitle {
+  margin-top: 0.4em }
+
+h1.title {
+  text-align: center }
+
+h2.subtitle {
+  text-align: center }
+
+hr.docutils {
+  width: 75% }
+
+img.align-left, .figure.align-left, object.align-left, table.align-left {
+  clear: left ;
+  float: left ;
+  margin-right: 1em }
+
+img.align-right, .figure.align-right, object.align-right, table.align-right {
+  clear: right ;
+  float: right ;
+  margin-left: 1em }
+
+img.align-center, .figure.align-center, object.align-center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+table.align-center {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.align-left {
+  text-align: left }
+
+.align-center {
+  clear: both ;
+  text-align: center }
+
+.align-right {
+  text-align: right }
+
+/* reset inner alignment in figures */
+div.align-right {
+  text-align: inherit }
+
+/* div.align-center * { */
+/*   text-align: left } */
+
+.align-top    {
+  vertical-align: top }
+
+.align-middle {
+  vertical-align: middle }
+
+.align-bottom {
+  vertical-align: bottom }
+
+ol.simple, ul.simple {
+  margin-bottom: 1em }
+
+ol.arabic {
+  list-style: decimal }
+
+ol.loweralpha {
+  list-style: lower-alpha }
+
+ol.upperalpha {
+  list-style: upper-alpha }
+
+ol.lowerroman {
+  list-style: lower-roman }
+
+ol.upperroman {
+  list-style: upper-roman }
+
+p.attribution {
+  text-align: right ;
+  margin-left: 50% }
+
+p.caption {
+  font-style: italic }
+
+p.credits {
+  font-style: italic ;
+  font-size: smaller }
+
+p.label {
+  white-space: nowrap }
+
+p.rubric {
+  font-weight: bold ;
+  font-size: larger ;
+  color: maroon ;
+  text-align: center }
+
+p.sidebar-title {
+  font-family: sans-serif ;
+  font-weight: bold ;
+  font-size: larger }
+
+p.sidebar-subtitle {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+p.topic-title {
+  font-weight: bold }
+
+pre.address {
+  margin-bottom: 0 ;
+  margin-top: 0 ;
+  font: inherit }
+
+pre.literal-block, pre.doctest-block, pre.math, pre.code {
+  margin-left: 2em ;
+  margin-right: 2em }
+
+pre.code .ln { color: grey; } /* line numbers */
+pre.code, code { background-color: #eeeeee }
+pre.code .comment, code .comment { color: #5C6576 }
+pre.code .keyword, code .keyword { color: #3B0D06; font-weight: bold }
+pre.code .literal.string, code .literal.string { color: #0C5404 }
+pre.code .name.builtin, code .name.builtin { color: #352B84 }
+pre.code .deleted, code .deleted { background-color: #DEB0A1}
+pre.code .inserted, code .inserted { background-color: #A3D289}
+
+span.classifier {
+  font-family: sans-serif ;
+  font-style: oblique }
+
+span.classifier-delimiter {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+span.interpreted {
+  font-family: sans-serif }
+
+span.option {
+  white-space: nowrap }
+
+span.pre {
+  white-space: pre }
+
+span.problematic {
+  color: red }
+
+span.section-subtitle {
+  /* font-size relative to parent (h1..h6 element) */
+  font-size: 80% }
+
+table.citation {
+  border-left: solid 1px gray;
+  margin-left: 1px }
+
+table.docinfo {
+  margin: 2em 4em }
+
+table.docutils {
+  margin-top: 0.5em ;
+  margin-bottom: 0.5em }
+
+table.footnote {
+  border-left: solid 1px black;
+  margin-left: 1px }
+
+table.docutils td, table.docutils th,
+table.docinfo td, table.docinfo th {
+  padding-left: 0.5em ;
+  padding-right: 0.5em ;
+  vertical-align: top }
+
+table.docutils th.field-name, table.docinfo th.docinfo-name {
+  font-weight: bold ;
+  text-align: left ;
+  white-space: nowrap ;
+  padding-left: 0 }
+
+/* "booktabs" style (no vertical lines) */
+table.docutils.booktabs {
+  border: 0px;
+  border-top: 2px solid;
+  border-bottom: 2px solid;
+  border-collapse: collapse;
+}
+table.docutils.booktabs * {
+  border: 0px;
+}
+table.docutils.booktabs th {
+  border-bottom: thin solid;
+  text-align: left;
+}
+
+h1 tt.docutils, h2 tt.docutils, h3 tt.docutils,
+h4 tt.docutils, h5 tt.docutils, h6 tt.docutils {
+  font-size: 100% }
+
+ul.auto-toc {
+  list-style-type: none }
+
+</style>
+<style type="text/css">
+
+pre.literal-block {
+  background-color : #EEFFCC;
+  border: 1px solid #cEdFaC;
+  padding: 7px;
+}
+
+pre.literal-block.terminal {
+  background-color : #F0F0F0;
+  border: none;
+  /* border: 1px solid #cEdFaC; */
+}
+
+</style>
+</head>
+<body>
+<div class="document">
+
+
+<p>Tests a command line program by executing it in a temporary sandbox directory and inspecting its result.</p>
+<p>Or tests properties of existing files, directories etc.</p>
+<p>Supports individual test cases and test suites.</p>
+<p>Support for referencing predefined files and files created in the temporary sandbox.</p>
+<p>Exactly has a  built in help system,
+which can, among other things,
+generate this <a class="reference external" href="https://emilkarlen.github.io/exactly/version/0-12-3/reference-manual.html">Reference manual</a>.</p>
+<div class="contents topic" id="contents">
+<p class="topic-title first">Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#test-cases" id="id1">TEST CASES</a><ul>
+<li><a class="reference internal" href="#testing-stdin-stdout-stderr-exit-code" id="id2">Testing stdin, stdout, stderr, exit code</a></li>
+<li><a class="reference internal" href="#testing-side-effects-on-files-and-directories" id="id3">Testing side effects on files and directories</a></li>
+<li><a class="reference internal" href="#referencing-files" id="id4">Referencing files</a></li>
+<li><a class="reference internal" href="#testing-and-transforming-the-contents-of-files" id="id5">Testing and transforming the contents of files</a></li>
+<li><a class="reference internal" href="#using-external-programs" id="id6">Using external programs</a></li>
+<li><a class="reference internal" href="#testing-existing-os-environment-tests-without-act" id="id7">Testing existing OS environment - tests without <tt class="docutils literal">[act]</tt></a></li>
+<li><a class="reference internal" href="#testing-source-code-files" id="id8">Testing source code files</a></li>
+<li><a class="reference internal" href="#testing-source-code" id="id9">Testing source code</a></li>
+<li><a class="reference internal" href="#print-output-from-the-tested-program" id="id10">Print output from the tested program</a></li>
+<li><a class="reference internal" href="#testing-a-git-commit-hook" id="id11">Testing a git commit hook</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#organizing-tests" id="id12">ORGANIZING TESTS</a><ul>
+<li><a class="reference internal" href="#file-inclusion" id="id13">File inclusion</a></li>
+<li><a class="reference internal" href="#test-suites" id="id14">Test suites</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#more-examples" id="id15">MORE EXAMPLES</a></li>
+<li><a class="reference internal" href="#installing" id="id16">INSTALLING</a></li>
+<li><a class="reference internal" href="#development-status" id="id17">DEVELOPMENT STATUS</a><ul>
+<li><a class="reference internal" href="#future-development" id="id18">Future development</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#author" id="id19">AUTHOR</a></li>
+<li><a class="reference internal" href="#thanks" id="id20">THANKS</a></li>
+<li><a class="reference internal" href="#dedication" id="id21">DEDICATION</a></li>
+</ul>
+</div>
+<div class="section" id="test-cases">
+<h1><a class="toc-backref" href="#id1">TEST CASES</a></h1>
+<p>A test case is written as a plain text file.</p>
+<div class="section" id="testing-stdin-stdout-stderr-exit-code">
+<h2><a class="toc-backref" href="#id2">Testing stdin, stdout, stderr, exit code</a></h2>
+<p>The following checks that your new <tt class="docutils literal"><span class="pre">my-contacts-program</span></tt> reads a contact list from stdin,
+and is able to find the email of a person:</p>
+<pre class="literal-block">
+[setup]
+
+stdin = -file some-test-contacts.txt
+
+[act]
+
+my-contacts-program get-email-of --name 'Pablo Gauss'
+
+[assert]
+
+exit-code == 0
+
+stdout equals &lt;&lt;EOF
+pablo&#64;gauss.org
+EOF
+
+stderr empty
+</pre>
+<p>If the file 'contacts.case' contains this test case, then Exactly can execute it:</p>
+<pre class="terminal literal-block">
+ &gt; exactly contacts.case
+ <strong>PASS</strong>
+</pre>
+<p>&quot;PASS&quot; means that all assertions were satisfied.</p>
+<p>If the actual email address of &quot;Pablo Gauss&quot; is not the expected one,
+then Exactly will <em>report failure</em>. For example:</p>
+<pre class="terminal literal-block">
+ &gt; exactly contacts.case
+ <strong>FAIL</strong>
+ In [assert]
+ contacts.case, line 13
+
+   stdout equals &lt;&lt;EOF
+   pablo&#64;gauss.org
+   EOF
+
+
+ Unexpected contents of stdout from [act]
+
+   &#64;[EXACTLY_RESULT]&#64;/stdout
+
+
+ <strong>(F) equals</strong>
+       <em>Expected</em>
+         STRING
+           'pablo&#64;gauss.org\n'
+       <em>Diff</em>
+ --- Expected
+
+ +++ Actual
+
+ &#64;&#64; -1 +1 &#64;&#64;
+
+ -pablo&#64;gauss.org
+
+ +pablo.gauss&#64;masters.org
+</pre>
+<p>This test assumes that</p>
+<blockquote>
+<ul class="simple">
+<li>the system under test - <tt class="docutils literal"><span class="pre">my-contacts-program</span></tt> - is is found in the same directory as the test case file</li>
+<li>the file &quot;some-test-contacts.txt&quot; (that is referenced from the test case) is found in the same directory as the test case file</li>
+</ul>
+</blockquote>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The <tt class="docutils literal">home</tt> and <tt class="docutils literal"><span class="pre">act-home</span></tt> instructions can be used to change the directories where Exactly looks for files referenced from the test case.</p>
+</div>
+</div>
+<div class="section" id="testing-side-effects-on-files-and-directories">
+<h2><a class="toc-backref" href="#id3">Testing side effects on files and directories</a></h2>
+<p>When the execution of a test case starts,
+the current directory is set to a temporary directory.
+This gives the test case a sandbox where it can create and manipulate files.</p>
+<p>The sandbox - and all files within it - are removed when the execution ends.</p>
+<p>The following tests a program that classifies
+files as either good or bad, by moving them to the
+appropriate directory:</p>
+<pre class="literal-block">
+[setup]
+
+file input/a.txt     = 'GOOD contents'
+file input/b.txt     = 'bad contents'
+file input/sub/c.txt = 'more bad contents'
+
+dir output/good
+dir output/bad
+
+[act]
+
+classify-files-by-moving-to-appropriate-dir GOOD input/ output/
+
+[assert]
+
+dir-contents input        empty
+
+dir-contents output/good  matches -full { a.txt : type file }
+
+dir-contents output/bad   matches -full
+    {
+        b.txt : type file
+        sub   : type dir &amp;&amp; dir-contents matches -full
+                {
+                    c.txt : type file
+                }
+    }
+</pre>
+<p><tt class="docutils literal">file</tt> and <tt class="docutils literal">dir</tt> makes files in the current directory (by default).</p>
+</div>
+<div class="section" id="referencing-files">
+<h2><a class="toc-backref" href="#id4">Referencing files</a></h2>
+<p>The <strong>home directory structure</strong> is directories containing
+predefined files involved in a test case:</p>
+<dl class="docutils">
+<dt><em>act-home</em></dt>
+<dd>Location of the program file being tested</dd>
+<dt><em>home</em></dt>
+<dd>Location of arbitrary test resources</dd>
+</dl>
+<p>Both of them defaults to the directory
+that contains the test case file,
+but can be changed via <tt class="docutils literal">[conf]</tt>.</p>
+<p>The <strong>sandbox directory structure</strong> is temporary directories for
+files involved in a single execution of a test case:</p>
+<dl class="docutils">
+<dt><em>act</em></dt>
+<dd>The current directory, when execution begins</dd>
+<dt><em>result</em></dt>
+<dd>Stores the output from the tested program</dd>
+<dt><em>tmp</em></dt>
+<dd>A directory for arbitrary temporary files</dd>
+</dl>
+<p>There are options for making paths relative to all of these.</p>
+<p><tt class="docutils literal"><span class="pre">-rel-home</span></tt> refers to the <em>home</em> directory,
+and <tt class="docutils literal"><span class="pre">-rel-act</span></tt> to the <em>act</em> directory, for example:</p>
+<pre class="literal-block">
+[conf]
+
+act-home = ../bin/
+
+home     = data/
+
+[setup]
+
+copy  -rel-home input.txt  -rel-act actual.txt
+
+[act]
+
+my-grep-tool &quot;text to find&quot; actual.txt
+
+[assert]
+
+contents -rel-act actual.txt
+         equals
+         -file -rel-home expected.txt
+</pre>
+<p>These &quot;relativity&quot; options have defaults designed to minimize the
+need for them.
+The following case does the same thing as the one above:</p>
+<pre class="literal-block">
+[conf]
+
+act-home = ../bin/
+
+home     = data/
+
+[setup]
+
+copy input.txt actual.txt
+
+[act]
+
+my-grep-tool &quot;text to find&quot; actual.txt
+
+[assert]
+
+contents actual.txt
+         equals
+         -file expected.txt
+</pre>
+</div>
+<div class="section" id="testing-and-transforming-the-contents-of-files">
+<h2><a class="toc-backref" href="#id5">Testing and transforming the contents of files</a></h2>
+<p>Use <tt class="docutils literal">contents</tt> to test the contents of a file,
+or a transformed version of it,
+by applying a &quot;string transformer&quot;.</p>
+<p>Such a &quot;string transformer&quot; may be given a name
+using the <tt class="docutils literal">def</tt> instruction
+to make the test easier to read.</p>
+<p>The following case
+tests that &quot;timing lines&quot; are output as part of a log file &quot;log.txt&quot;.</p>
+<p>The challenge is that the (fictive) log file contains
+non-timing lines that the test is not interested in,
+and that timing lines contains a time stamp of the form
+&quot;NN:NN&quot;, who's exact value also is not interesting.</p>
+<p>A &quot;string transformer&quot; is used to extract all timing lines
+and to replace &quot;NN:NN&quot; time stamps with the constant string <tt class="docutils literal">TIMESTAMP</tt>:</p>
+<pre class="literal-block">
+[setup]
+
+def line-matcher       IS_TIMING_LINE     = matches ^timing
+
+def string-transformer REPLACE_TIMESTAMPS = replace [0-9]{2}:[0-9]{2} TIMESTAMP
+
+def string-transformer GET_TIMING_LINES   = filter IS_TIMING_LINE | REPLACE_TIMESTAMPS
+
+[act]
+
+program-that-writes-log-file
+
+[assert]
+
+contents log.txt
+         -transformed-by GET_TIMING_LINES
+         equals &lt;&lt;EOF
+timing TIMESTAMP begin
+timing TIMESTAMP preprocessing
+timing TIMESTAMP validation
+timing TIMESTAMP execution
+timing TIMESTAMP end
+EOF
+</pre>
+<p>The <tt class="docutils literal"><span class="pre">-transformed-by</span></tt> option does not modify the tested file,
+it just applies the assertion to a transformed version of it.</p>
+</div>
+<div class="section" id="using-external-programs">
+<h2><a class="toc-backref" href="#id6">Using external programs</a></h2>
+<p>External programs can help with setup, assertions etc.</p>
+<p>Exactly can run executable files, shell commands and programs in the OS PATH,
+using <tt class="docutils literal">run</tt>, <tt class="docutils literal">$</tt>, <tt class="docutils literal">%</tt>.</p>
+<p>The following case shows some examples, but <em>doesn't make sense</em> tough:</p>
+<pre class="literal-block">
+[setup]
+
+run my-setup-helper-program first &quot;second arg&quot;
+
+def list DB_ARGS = -uu -pp -hlocalhost -Dd
+
+run % mysql &#64;[DB_ARGS]&#64; --batch --execute &quot;create table my_table(id int)&quot;
+
+def list MYSQL_BATCH = &#64;[DB_ARGS]&#64; --batch --execute
+
+file interesting-records.txt =
+     -stdout-from
+      % mysql &#64;[MYSQL_BATCH]&#64; :&gt; select * from a_table where name = &quot;interesting&quot;
+
+$ touch file
+
+file root-files.txt =
+     -stdout-from
+      % ls /
+      -transformed-by
+          run my-string-transformer-program
+
+run  -ignore-exit-code  % stat optional-file.txt
+
+[act]
+
+$ echo ${PATH} &gt; output.txt
+
+[assert]
+
+run my-assert-helper-program
+
+$ test -f root-files.txt
+
+exists output.txt : (
+       type file
+       &amp;&amp;
+       run -python &#64;[EXACTLY_HOME]&#64;/my-file-matcher.py arg1
+       &amp;&amp;
+       contents run -python &#64;[EXACTLY_HOME]&#64;/my-string-matcher.py arg1 &quot;arg 2&quot;
+       )
+
+stdout -from
+       $ echo 'Interesting output'
+       equals
+&lt;&lt;EOF
+Interesting output
+EOF
+
+[cleanup]
+
+run % mysql &#64;[MYSQL_BATCH]&#64; :&gt; drop table my_table
+</pre>
+<p>A program executed in <tt class="docutils literal">[assert]</tt> becomes an assertion that depends on the exit code.</p>
+<p>Program values can be defined for reuse using <tt class="docutils literal">def</tt> and run using <tt class="docutils literal">&#64;</tt>:</p>
+<pre class="literal-block">
+[setup]
+
+def program RUN_MYSQL   = % mysql -uu -pp -hlocalhost -Dd
+def program EXECUTE_SQL = &#64; RUN_MYSQL --skip-column-names --batch --execute
+
+
+run &#64; EXECUTE_SQL &quot;create table my_table(id int)&quot;
+
+[act]
+
+system-under-test
+
+[assert]
+
+stdout -from
+       &#64; EXECUTE_SQL &quot;select * from my_table&quot;
+       ! empty
+
+[cleanup]
+
+run &#64; EXECUTE_SQL :&gt; drop table my_table
+</pre>
+</div>
+<div class="section" id="testing-existing-os-environment-tests-without-act">
+<h2><a class="toc-backref" href="#id7">Testing existing OS environment - tests without <tt class="docutils literal">[act]</tt></a></h2>
+<p>A test case does not need to have an <tt class="docutils literal">[act]</tt> phase.
+This way, Exactly can be used to check existing files and directories, for example.</p>
+<p>The following case checks your hierarchy of software projects.</p>
+<p>The projects are rooted at the directory 'my-projects'.
+Each 'project' sub directory contains a project,
+and must contain a 'Makefile' with a target 'all':</p>
+<pre class="literal-block">
+[assert]
+
+exists &#64;[MY_PROJECTS_ROOT_DIR]&#64; : type dir &amp;&amp; &#64;[ALL_PROJECT_DIRS_ARE_VALID]&#64;
+
+[setup]
+
+def path   MY_PROJECTS_ROOT_DIR = -rel-act-home my-projects
+def string MY_PROJECT_DIR_NAME  = project
+
+def file-matcher IS_VALID_MAKEFILE =
+
+    type file &amp;&amp;
+    contents
+      -transformed-by
+        filter matches '^all:'
+        num-lines == 1
+
+
+def file-matcher IS_VALID_PROJECT_DIR =
+
+    type dir &amp;&amp;
+    dir-contents
+       matches { Makefile : &#64;[IS_VALID_MAKEFILE]&#64; }
+
+
+def file-matcher ALL_PROJECT_DIRS_ARE_VALID =
+
+    dir-contents -recursive
+      -selection name &#64;[MY_PROJECT_DIR_NAME]&#64;
+        every file : &#64;[IS_VALID_PROJECT_DIR]&#64;
+</pre>
+</div>
+<div class="section" id="testing-source-code-files">
+<h2><a class="toc-backref" href="#id8">Testing source code files</a></h2>
+<p>The <tt class="docutils literal">actor</tt> instruction can specify an interpreter to test a source code file:</p>
+<pre class="literal-block">
+[conf]
+
+actor = -file python
+
+[act]
+
+my-python-program.py 'an argument' second third
+
+[assert]
+
+stdout equals
+&lt;&lt;EOF
+Argument: an argument
+Argument: second
+Argument: third
+EOF
+</pre>
+</div>
+<div class="section" id="testing-source-code">
+<h2><a class="toc-backref" href="#id9">Testing source code</a></h2>
+<p>The <tt class="docutils literal">actor</tt> instruction can specify an interpreter to test source code in <tt class="docutils literal">[act]</tt>:</p>
+<pre class="literal-block">
+[conf]
+
+actor = -source python
+
+[act]
+
+import sys
+sys.stdout.write('Hello\n')
+sys.stdout.write('world!\n')
+
+[assert]
+
+stdout equals
+&lt;&lt;-
+Hello
+world!
+-
+</pre>
+</div>
+<div class="section" id="print-output-from-the-tested-program">
+<h2><a class="toc-backref" href="#id10">Print output from the tested program</a></h2>
+<p>If <tt class="docutils literal"><span class="pre">--act</span></tt> is used, the output of the &quot;act&quot; phase (the &quot;action to check&quot;)
+will become the output of <tt class="docutils literal">exactly</tt> -
+stdout, stderr and exit code</p>
+<pre class="literal-block">
+[setup]
+
+dir  a-dir
+file a-file
+
+[act]
+
+$ ls
+
+[assert]
+
+stdout num-lines == 314
+</pre>
+<pre class="terminal literal-block">
+ &gt; exactly --act my-test.case
+ a-dir
+ a-file
+</pre>
+<p>The test case is executed in a temporary sandbox, as usual,
+but assertions are ignored.</p>
+</div>
+<div class="section" id="testing-a-git-commit-hook">
+<h2><a class="toc-backref" href="#id11">Testing a git commit hook</a></h2>
+<p>The following tests a git commit hook (<cite>prepare-commit-msg</cite>).</p>
+<p>The hook should add the issue id in the branch name,
+to commit messages:</p>
+<pre class="literal-block">
+[setup]
+
+
+def string ISSUE_ID            = ABC-123
+def string MESSAGE_WO_ISSUE_ID = &quot;commit message without issue id&quot;
+
+def program GET_LOG_MESSAGE_OF_LAST_COMMIT = % git log -1 --format=%s
+
+
+## Setup a (non empty) git repo.
+
+$ git init
+
+file file-in-repo = &quot;A file in the repo&quot;
+
+$ git add file-in-repo
+
+$ git commit -m &quot;commit of file already in repo&quot;
+
+
+## Install the commit hook to test.
+
+copy prepare-commit-msg .git/hooks
+
+
+## Setup a branch, with issue number in its name,
+# and a file to commit.
+
+$ git checkout -b &quot;&#64;[ISSUE_ID]&#64;-branch-with-issue-id&quot;
+
+file file-to-add = &quot;A file to add on the branch&quot;
+
+$ git add file-to-add
+
+
+[act]
+
+
+$ git commit -m &quot;&#64;[MESSAGE_WO_ISSUE_ID]&#64;&quot;
+
+
+[assert]
+
+
+stdout -from
+       &#64; GET_LOG_MESSAGE_OF_LAST_COMMIT
+       equals
+&lt;&lt;-
+&#64;[ISSUE_ID]&#64; : &#64;[MESSAGE_WO_ISSUE_ID]&#64;
+-
+</pre>
+</div>
+</div>
+<div class="section" id="organizing-tests">
+<h1><a class="toc-backref" href="#id12">ORGANIZING TESTS</a></h1>
+<div class="section" id="file-inclusion">
+<h2><a class="toc-backref" href="#id13">File inclusion</a></h2>
+<p>Test case contents can be included from external files:</p>
+<pre class="literal-block">
+[setup]
+
+including my-dir-symbols.def
+
+including my-common-setup-and-cleanup.xly
+</pre>
+</div>
+<div class="section" id="test-suites">
+<h2><a class="toc-backref" href="#id14">Test suites</a></h2>
+<p>Tests can be grouped in suites:</p>
+<pre class="literal-block">
+first.case
+second.case
+</pre>
+<p>or:</p>
+<pre class="literal-block">
+[cases]
+
+helloworld.case
+*.case
+**/*.case
+
+
+[suites]
+
+sub-suite.suite
+*.suite
+pkg/suite.suite
+**/*.suite
+</pre>
+<p>If the file <tt class="docutils literal"><span class="pre">my-suite.suite</span></tt> contains this text, then Exactly can run it:</p>
+<pre class="terminal literal-block">
+ &gt; exactly suite my-suite.suite
+ ...
+ <strong>OK</strong>
+</pre>
+<p>The result of a suite can be reported as
+simple progress information,
+or JUnit XML.</p>
+<p>Suites can contain test case functionality that is common
+to all cases in the suite. For example:</p>
+<pre class="literal-block">
+[cases]
+
+*.case
+
+[conf]
+
+act-home = ../bin/
+
+[setup]
+
+def string CONF_FILE = my.conf
+
+file &#64;[CONF_FILE]&#64; =
+&lt;&lt;EOF
+common = configuration
+EOF
+</pre>
+<p>The common functionality is included in each test case.</p>
+</div>
+</div>
+<div class="section" id="more-examples">
+<h1><a class="toc-backref" href="#id15">MORE EXAMPLES</a></h1>
+<p>The <tt class="docutils literal">examples/</tt> directory of the source distribution contains more examples.</p>
+</div>
+<div class="section" id="installing">
+<h1><a class="toc-backref" href="#id16">INSTALLING</a></h1>
+<p>Exactly is written in Python and does not require any external libraries.</p>
+<p>Exactly requires Python &gt;= 3.5.4.</p>
+<p>Use <tt class="docutils literal">pip</tt> or <tt class="docutils literal">pip3</tt> to install:</p>
+<pre class="terminal literal-block">
+ &gt; pip3 install exactly
+</pre>
+<p>The program can also be run from a source distribution:</p>
+<pre class="terminal literal-block">
+ &gt; python3 src/default-main-program-runner.py
+</pre>
+</div>
+<div class="section" id="development-status">
+<h1><a class="toc-backref" href="#id17">DEVELOPMENT STATUS</a></h1>
+<p>Current version is fully functional, but some syntax and semantics is inconsistent:</p>
+<ul class="simple">
+<li>Some instructions allow arguments to span multiple lines, some do not.</li>
+<li>Support for escapes characters in strings is missing.</li>
+</ul>
+<p>Incompatible changes to syntax and semantics may occur in every 0.x release.</p>
+<p>Comments are welcome!</p>
+<div class="section" id="future-development">
+<h2><a class="toc-backref" href="#id18">Future development</a></h2>
+<p>More functionality is needed, smaller and larger.
+Including (but not limited to):</p>
+<ul class="simple">
+<li>Possibility to set stdin for processes other than the &quot;action to check&quot;</li>
+<li>Separate sets of environment variables for &quot;action to check&quot; and other processes</li>
+<li>Improved string character escaping</li>
+<li>Improved syntax and semantics of expressions, using precedences</li>
+<li>Type <cite>REG-EX</cite></li>
+<li>Type <cite>INTEGER-MATCHER</cite></li>
+<li>Support for non-terminating programs (e.g. as <tt class="docutils literal"><span class="pre">string-transformer</span></tt>)</li>
+<li>Symbol substitution in files</li>
+<li>Dynamic symbol values - e.g. contents of dir, current date</li>
+<li>Macros and functions</li>
+<li>More string transformers, matchers, etc</li>
+<li>Ability to embed Python code in test cases</li>
+<li>Python library for running cases and suites from within Python as a DSEL</li>
+</ul>
+</div>
+</div>
+<div class="section" id="author">
+<h1><a class="toc-backref" href="#id19">AUTHOR</a></h1>
+<p>Emil Karlén</p>
+<p><a class="reference external" href="mailto:emil&#64;member.fsf.org">emil&#64;member.fsf.org</a></p>
+</div>
+<div class="section" id="thanks">
+<h1><a class="toc-backref" href="#id20">THANKS</a></h1>
+<p>The Python IDE
+<a class="reference external" href="https://www.jetbrains.com/pycharm/">PyCharm</a>
+from
+<a class="reference external" href="https://www.jetbrains.com/">JetBrains</a>
+has greatly helped the development of this software.</p>
+<p>Thanks for the great</p>
+<ul class="simple">
+<li>Python language</li>
+<li>GNU/Linux</li>
+<li>GNU Emacs</li>
+<li>git</li>
+<li>Docker</li>
+<li>Rembrandt Harmenszoon van Rijn's &quot;De Staalmeesters&quot;</li>
+</ul>
+</div>
+<div class="section" id="dedication">
+<h1><a class="toc-backref" href="#id21">DEDICATION</a></h1>
+<p>Aron Karlén</p>
+<p>Tommy Karlsson</p>
+<p>Götabergsgatan 10, lägenhet 4</p>
+</div>
+</div>
+</body>
+</html>
