@@ -1,18 +1,23 @@
-.PHONY: help README
+.PHONY: help readme ref-man all
 
 help:
-	@echo README
+	@echo readme ref-man all
 
-README: version/latest/README.html
+V = next
+VER = version/$(V)
 
-V = latest
+readme: $(VER)/README.html
 
-version/$(V)/README.rst: ${EXACTLY_REPO_DIR}/README.rst
-	cp -a ${EXACTLY_REPO_DIR}/README.rst version/$(V)
+ref-man: $(VER)/reference-manual.html
 
-version/$(V)/README.html: version/$(V)/README.rst exactly.css
-	python3 tools/rst2html4.py version/$(V)/README.rst > version/$(V)/README.html
+all: readme ref-man
 
-$(V)/reference-manual.html:
-	python3 ${EXACTLY_REPO_DIR}/src/default-main-program-runner.py help htmldoc > $(V)/reference-manual.html
+$(VER)/README.rst: ${EXACTLY_REPO_DIR}/README.rst
+	cp -a ${EXACTLY_REPO_DIR}/README.rst $(VER)
+
+$(VER)/README.html: $(VER)/README.rst exactly.css
+	python3 tools/rst2html4.py $(VER)/README.rst > $(VER)/README.html
+
+$(VER)/reference-manual.html:
+	python3 ${EXACTLY_REPO_DIR}/src/default-main-program-runner.py help htmldoc > $(VER)/reference-manual.html
 
