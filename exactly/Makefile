@@ -1,10 +1,10 @@
-.PHONY: help readme ref-man all
+V = next
+VER = version/$(V)
+
+.PHONY: help readme ref-man all $(VER)/reference-manual.html
 
 help:
 	@echo readme ref-man all
-
-V = next
-VER = version/$(V)
 
 readme: $(VER)/README.html
 
