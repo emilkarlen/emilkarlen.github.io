@@ -783,7 +783,7 @@ def file-matcher ALL_PROJECT_DIRS_ARE_VALID =
 <pre class="literal-block">
 [conf]
 
-actor = -file python
+actor = -file % python
 
 [act]
 
@@ -805,7 +805,7 @@ EOF
 <pre class="literal-block">
 [conf]
 
-actor = -source python
+actor = -source % python
 
 [act]
 
@@ -1010,7 +1010,6 @@ Including (but not limited to):</p>
 <li>Possibility to set stdin for processes other than the &quot;action to check&quot;</li>
 <li>Separate sets of environment variables for &quot;action to check&quot; and other processes</li>
 <li>Improved string character escaping</li>
-<li>Improved syntax and semantics of expressions, using precedences</li>
 <li>Type <cite>REG-EX</cite></li>
 <li>Type <cite>INTEGER-MATCHER</cite></li>
 <li>Support for non-terminating programs (e.g. as <tt class="docutils literal"><span class="pre">string-transformer</span></tt>)</li>

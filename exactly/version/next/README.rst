@@ -428,7 +428,7 @@ The ``actor`` instruction can specify an interpreter to test a source code file:
 
     [conf]
 
-    actor = -file python
+    actor = -file % python
 
     [act]
 
@@ -451,7 +451,7 @@ The ``actor`` instruction can specify an interpreter to test source code in ``[a
 
     [conf]
 
-    actor = -source python
+    actor = -source % python
 
     [act]
 
@@ -701,7 +701,6 @@ Including (but not limited to):
 * Possibility to set stdin for processes other than the "action to check"
 * Separate sets of environment variables for "action to check" and other processes
 * Improved string character escaping
-* Improved syntax and semantics of expressions, using precedences
 * Type `REG-EX`
 * Type `INTEGER-MATCHER`
 * Support for non-terminating programs (e.g. as ``string-transformer``)
