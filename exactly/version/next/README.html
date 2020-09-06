@@ -671,7 +671,9 @@ file interesting-records.txt =
      -stdout-from
       % mysql &#64;[MYSQL_BATCH]&#64; :&gt; select * from a_table where name = &quot;interesting&quot;
 
-$ touch file
+% touch file
+
+$ ls *.txt
 
 file root-files.txt =
      -stdout-from
@@ -688,6 +690,8 @@ $ echo ${PATH} &gt; output.txt
 [assert]
 
 run my-assert-helper-program
+
+% stat root-files.txt
 
 $ test -f root-files.txt
 
@@ -708,7 +712,7 @@ EOF
 
 [cleanup]
 
-run % mysql &#64;[MYSQL_BATCH]&#64; :&gt; drop table my_table
+% mysql &#64;[MYSQL_BATCH]&#64; :&gt; drop table my_table
 </pre>
 <p>A program executed in <tt class="docutils literal">[assert]</tt> becomes an assertion that depends on the exit code.</p>
 <p>Program values can be defined for reuse using <tt class="docutils literal">def</tt> and run using <tt class="docutils literal">&#64;</tt>:</p>
@@ -866,13 +870,13 @@ def program GET_LOG_MESSAGE_OF_LAST_COMMIT = % git log -1 --format=%s
 
 ## Setup a (non empty) git repo.
 
-$ git init
+% git init
 
 file file-in-repo = &quot;A file in the repo&quot;
 
-$ git add file-in-repo
+% git add file-in-repo
 
-$ git commit -m &quot;commit of file already in repo&quot;
+% git commit -m &quot;commit of file already in repo&quot;
 
 
 ## Install the commit hook to test.
@@ -883,17 +887,17 @@ copy prepare-commit-msg .git/hooks
 ## Setup a branch, with issue number in its name,
 # and a file to commit.
 
-$ git checkout -b &quot;&#64;[ISSUE_ID]&#64;-branch-with-issue-id&quot;
+% git checkout -b &#64;[ISSUE_ID]&#64;-branch-with-issue-id
 
 file file-to-add = &quot;A file to add on the branch&quot;
 
-$ git add file-to-add
+% git add file-to-add
 
 
 [act]
 
 
-$ git commit -m &quot;&#64;[MESSAGE_WO_ISSUE_ID]&#64;&quot;
+% git commit -m &#64;[MESSAGE_WO_ISSUE_ID]&#64;
 
 
 [assert]
