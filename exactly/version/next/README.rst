@@ -428,7 +428,7 @@ The ``actor`` instruction can specify an interpreter to test a source code file:
 
     [conf]
 
-    actor = -file % python
+    actor = file % python
 
     [act]
 
@@ -451,7 +451,7 @@ The ``actor`` instruction can specify an interpreter to test source code in ``[a
 
     [conf]
 
-    actor = -source % python
+    actor = source % python
 
     [act]
 
@@ -660,7 +660,7 @@ INSTALLING
 
 Exactly is written in Python and does not require any external libraries.
 
-Exactly requires Python >= 3.5.4.
+Exactly requires Python >= 3.5.9.
 
 Use ``pip`` or ``pip3`` to install:
 
