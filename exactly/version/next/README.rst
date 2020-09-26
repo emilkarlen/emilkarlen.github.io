@@ -2,13 +2,16 @@ Tests a command line program by executing it in a temporary sandbox directory an
 
 Or tests properties of existing files, directories etc.
 
+A test may have setup and cleanup actions.
+Assertions are expressed in a declarative style, using a specialized type system.
+
 Supports individual test cases and test suites.
 
-Support for referencing predefined files and files created in the temporary sandbox.
+Supports easy referencing of predefined files and files created in the temporary sandbox.
 
 Exactly has a  built in help system,
 which can, among other things,
-generate this `Reference manual
+generate this `Reference Manual
 <https://emilkarlen.github.io/exactly/version/next/reference-manual.html>`_.
 
 
@@ -58,6 +61,14 @@ If the file 'contacts.case' contains this test case, then Exactly can execute it
 "PASS" means that all assertions were satisfied.
 
 
+This test assumes that
+
+ * the system under test - ``my-contacts-program`` - is is found in the same directory as the test case file
+ * the file "some-test-contacts.txt" (that is referenced from the test case) is found in the same directory as the test case file
+
+.. note:: The directories where Exactly looks for files can be changed using the  ``home`` and ``act-home`` instructions.
+
+
 If the actual email address of "Pablo Gauss" is not the expected one,
 then Exactly will *report failure*. For example:
 
@@ -93,14 +104,6 @@ then Exactly will *report failure*. For example:
     -pablo\@gauss.org
 
     +pablo.gauss\@masters.org
-
-
-This test assumes that
-
- * the system under test - ``my-contacts-program`` - is is found in the same directory as the test case file
- * the file "some-test-contacts.txt" (that is referenced from the test case) is found in the same directory as the test case file
-
-.. note:: The ``home`` and ``act-home`` instructions can be used to change the directories where Exactly looks for files referenced from the test case.
 
 
 Testing side effects on files and directories
@@ -139,7 +142,8 @@ appropriate directory::
     dir-contents output/bad   matches -full
         {
             b.txt : type file
-            sub   : type dir && dir-contents matches -full
+            sub   : type dir &&
+                    dir-contents matches -full
                     {
                         c.txt : type file
                     }
@@ -147,89 +151,6 @@ appropriate directory::
 
 
 ``file`` and ``dir`` makes files in the current directory (by default).
-
-
-Referencing files
-------------------------------------------------------------
-
-The **home directory structure** is directories containing
-predefined files involved in a test case:
-
-*act-home*
- Location of the program file being tested
-
-*home*
-  Location of arbitrary test resources
-
-
-Both of them defaults to the directory
-that contains the test case file,
-but can be changed via ``[conf]``.
-
-
-The **sandbox directory structure** is temporary directories for
-files involved in a single execution of a test case:
-
-*act*
- The current directory, when execution begins
-
-*result*
-  Stores the output from the tested program
-
-*tmp*
-  A directory for arbitrary temporary files
-
-
-There are options for making paths relative to all of these.
-
-``-rel-home`` refers to the *home* directory,
-and ``-rel-act`` to the *act* directory, for example::
-
-
-    [conf]
-
-    act-home = ../bin/
-
-    home     = data/
-
-    [setup]
-
-    copy  -rel-home input.txt  -rel-act actual.txt
-
-    [act]
-
-    my-grep-tool "text to find" actual.txt
-
-    [assert]
-
-    contents -rel-act actual.txt
-             equals
-             -file -rel-home expected.txt
-
-
-These "relativity" options have defaults designed to minimize the
-need for them.
-The following case does the same thing as the one above::
-
-    [conf]
-
-    act-home = ../bin/
-
-    home     = data/
-
-    [setup]
-
-    copy input.txt actual.txt
-
-    [act]
-
-    my-grep-tool "text to find" actual.txt
-
-    [assert]
-
-    contents actual.txt
-             equals
-             -file expected.txt
 
 
 Testing and transforming the contents of files
@@ -282,7 +203,6 @@ and to replace "NN:NN" time stamps with the constant string ``TIMESTAMP``::
 
 The ``-transformed-by`` option does not modify the tested file,
 it just applies the assertion to a transformed version of it.
-
 
 
 Using external programs
@@ -478,8 +398,7 @@ Print output from the tested program
 
 If ``--act`` is used, the output of the "act" phase (the "action to check")
 will become the output of ``exactly`` -
-stdout, stderr and exit code
-::
+stdout, stderr and exit code::
 
 
     [setup]
@@ -557,6 +476,89 @@ to commit messages::
     <<-
     @[ISSUE_ID]@ : @[MESSAGE_WO_ISSUE_ID]@
     -
+
+
+Referencing files
+------------------------------------------------------------
+
+The **home directory structure** is directories containing
+predefined files involved in a test case:
+
+*act-home*
+ Location of the program file being tested
+
+*home*
+  Location of arbitrary test resources
+
+
+Both of them defaults to the directory
+that contains the test case file,
+but can be changed via ``[conf]``.
+
+
+The **sandbox directory structure** is temporary directories for
+files involved in a single execution of a test case:
+
+*act*
+ The current directory, when execution begins
+
+*result*
+  Stores the output from the tested program
+
+*tmp*
+  A directory for arbitrary temporary files
+
+
+There are options for making paths relative to all of these.
+
+``-rel-home`` refers to the *home* directory,
+and ``-rel-act`` to the *act* directory, for example::
+
+
+    [conf]
+
+    act-home = ../bin/
+
+    home     = data/
+
+    [setup]
+
+    copy  -rel-home input.txt  -rel-act actual.txt
+
+    [act]
+
+    my-grep-tool "text to find" actual.txt
+
+    [assert]
+
+    contents -rel-act actual.txt
+             equals
+             -file -rel-home expected.txt
+
+
+These "relativity" options have defaults designed to minimize the
+need for them.
+The following case does the same thing as the one above::
+
+    [conf]
+
+    act-home = ../bin/
+
+    home     = data/
+
+    [setup]
+
+    copy input.txt actual.txt
+
+    [act]
+
+    my-grep-tool "text to find" actual.txt
+
+    [assert]
+
+    contents actual.txt
+             equals
+             -file expected.txt
 
 
 ORGANIZING TESTS
@@ -655,7 +657,7 @@ INSTALLING
 
 Exactly is written in Python and does not require any external libraries.
 
-Exactly requires Python >= 3.5.9.
+Exactly requires Python >= 3.5.4.
 
 Use ``pip`` or ``pip3`` to install:
 

@@ -380,25 +380,27 @@ pre.literal-block.terminal {
 
 <p>Tests a command line program by executing it in a temporary sandbox directory and inspecting its result.</p>
 <p>Or tests properties of existing files, directories etc.</p>
+<p>A test may have setup and cleanup actions.
+Assertions are expressed in a declarative style, using a specialized type system.</p>
 <p>Supports individual test cases and test suites.</p>
-<p>Support for referencing predefined files and files created in the temporary sandbox.</p>
+<p>Supports easy referencing of predefined files and files created in the temporary sandbox.</p>
 <p>Exactly has a  built in help system,
 which can, among other things,
-generate this <a class="reference external" href="https://emilkarlen.github.io/exactly/version/next/reference-manual.html">Reference manual</a>.</p>
+generate this <a class="reference external" href="https://emilkarlen.github.io/exactly/version/next/reference-manual.html">Reference Manual</a>.</p>
 <div class="contents topic" id="contents">
 <p class="topic-title">Contents</p>
 <ul class="simple">
 <li><a class="reference internal" href="#test-cases" id="id1">TEST CASES</a><ul>
 <li><a class="reference internal" href="#testing-stdin-stdout-stderr-exit-code" id="id2">Testing stdin, stdout, stderr, exit code</a></li>
 <li><a class="reference internal" href="#testing-side-effects-on-files-and-directories" id="id3">Testing side effects on files and directories</a></li>
-<li><a class="reference internal" href="#referencing-files" id="id4">Referencing files</a></li>
-<li><a class="reference internal" href="#testing-and-transforming-the-contents-of-files" id="id5">Testing and transforming the contents of files</a></li>
-<li><a class="reference internal" href="#using-external-programs" id="id6">Using external programs</a></li>
-<li><a class="reference internal" href="#testing-existing-os-environment-tests-without-act" id="id7">Testing existing OS environment - tests without <tt class="docutils literal">[act]</tt></a></li>
-<li><a class="reference internal" href="#testing-source-code-files" id="id8">Testing source code files</a></li>
-<li><a class="reference internal" href="#testing-source-code" id="id9">Testing source code</a></li>
-<li><a class="reference internal" href="#print-output-from-the-tested-program" id="id10">Print output from the tested program</a></li>
-<li><a class="reference internal" href="#testing-a-git-commit-hook" id="id11">Testing a git commit hook</a></li>
+<li><a class="reference internal" href="#testing-and-transforming-the-contents-of-files" id="id4">Testing and transforming the contents of files</a></li>
+<li><a class="reference internal" href="#using-external-programs" id="id5">Using external programs</a></li>
+<li><a class="reference internal" href="#testing-existing-os-environment-tests-without-act" id="id6">Testing existing OS environment - tests without <tt class="docutils literal">[act]</tt></a></li>
+<li><a class="reference internal" href="#testing-source-code-files" id="id7">Testing source code files</a></li>
+<li><a class="reference internal" href="#testing-source-code" id="id8">Testing source code</a></li>
+<li><a class="reference internal" href="#print-output-from-the-tested-program" id="id9">Print output from the tested program</a></li>
+<li><a class="reference internal" href="#testing-a-git-commit-hook" id="id10">Testing a git commit hook</a></li>
+<li><a class="reference internal" href="#referencing-files" id="id11">Referencing files</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#organizing-tests" id="id12">ORGANIZING TESTS</a><ul>
@@ -449,6 +451,17 @@ stderr empty
  <strong>PASS</strong>
 </pre>
 <p>&quot;PASS&quot; means that all assertions were satisfied.</p>
+<p>This test assumes that</p>
+<blockquote>
+<ul class="simple">
+<li>the system under test - <tt class="docutils literal"><span class="pre">my-contacts-program</span></tt> - is is found in the same directory as the test case file</li>
+<li>the file &quot;some-test-contacts.txt&quot; (that is referenced from the test case) is found in the same directory as the test case file</li>
+</ul>
+</blockquote>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The directories where Exactly looks for files can be changed using the  <tt class="docutils literal">home</tt> and <tt class="docutils literal"><span class="pre">act-home</span></tt> instructions.</p>
+</div>
 <p>If the actual email address of &quot;Pablo Gauss&quot; is not the expected one,
 then Exactly will <em>report failure</em>. For example:</p>
 <pre class="terminal literal-block">
@@ -482,17 +495,6 @@ then Exactly will <em>report failure</em>. For example:</p>
 
  +pablo.gauss&#64;masters.org
 </pre>
-<p>This test assumes that</p>
-<blockquote>
-<ul class="simple">
-<li>the system under test - <tt class="docutils literal"><span class="pre">my-contacts-program</span></tt> - is is found in the same directory as the test case file</li>
-<li>the file &quot;some-test-contacts.txt&quot; (that is referenced from the test case) is found in the same directory as the test case file</li>
-</ul>
-</blockquote>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">The <tt class="docutils literal">home</tt> and <tt class="docutils literal"><span class="pre">act-home</span></tt> instructions can be used to change the directories where Exactly looks for files referenced from the test case.</p>
-</div>
 </div>
 <div class="section" id="testing-side-effects-on-files-and-directories">
 <h2><a class="toc-backref" href="#id3">Testing side effects on files and directories</a></h2>
@@ -526,7 +528,8 @@ dir-contents output/good  matches -full { a.txt : type file }
 dir-contents output/bad   matches -full
     {
         b.txt : type file
-        sub   : type dir &amp;&amp; dir-contents matches -full
+        sub   : type dir &amp;&amp;
+                dir-contents matches -full
                 {
                     c.txt : type file
                 }
@@ -534,80 +537,8 @@ dir-contents output/bad   matches -full
 </pre>
 <p><tt class="docutils literal">file</tt> and <tt class="docutils literal">dir</tt> makes files in the current directory (by default).</p>
 </div>
-<div class="section" id="referencing-files">
-<h2><a class="toc-backref" href="#id4">Referencing files</a></h2>
-<p>The <strong>home directory structure</strong> is directories containing
-predefined files involved in a test case:</p>
-<dl class="docutils">
-<dt><em>act-home</em></dt>
-<dd>Location of the program file being tested</dd>
-<dt><em>home</em></dt>
-<dd>Location of arbitrary test resources</dd>
-</dl>
-<p>Both of them defaults to the directory
-that contains the test case file,
-but can be changed via <tt class="docutils literal">[conf]</tt>.</p>
-<p>The <strong>sandbox directory structure</strong> is temporary directories for
-files involved in a single execution of a test case:</p>
-<dl class="docutils">
-<dt><em>act</em></dt>
-<dd>The current directory, when execution begins</dd>
-<dt><em>result</em></dt>
-<dd>Stores the output from the tested program</dd>
-<dt><em>tmp</em></dt>
-<dd>A directory for arbitrary temporary files</dd>
-</dl>
-<p>There are options for making paths relative to all of these.</p>
-<p><tt class="docutils literal"><span class="pre">-rel-home</span></tt> refers to the <em>home</em> directory,
-and <tt class="docutils literal"><span class="pre">-rel-act</span></tt> to the <em>act</em> directory, for example:</p>
-<pre class="literal-block">
-[conf]
-
-act-home = ../bin/
-
-home     = data/
-
-[setup]
-
-copy  -rel-home input.txt  -rel-act actual.txt
-
-[act]
-
-my-grep-tool &quot;text to find&quot; actual.txt
-
-[assert]
-
-contents -rel-act actual.txt
-         equals
-         -file -rel-home expected.txt
-</pre>
-<p>These &quot;relativity&quot; options have defaults designed to minimize the
-need for them.
-The following case does the same thing as the one above:</p>
-<pre class="literal-block">
-[conf]
-
-act-home = ../bin/
-
-home     = data/
-
-[setup]
-
-copy input.txt actual.txt
-
-[act]
-
-my-grep-tool &quot;text to find&quot; actual.txt
-
-[assert]
-
-contents actual.txt
-         equals
-         -file expected.txt
-</pre>
-</div>
 <div class="section" id="testing-and-transforming-the-contents-of-files">
-<h2><a class="toc-backref" href="#id5">Testing and transforming the contents of files</a></h2>
+<h2><a class="toc-backref" href="#id4">Testing and transforming the contents of files</a></h2>
 <p>Use <tt class="docutils literal">contents</tt> to test the contents of a file,
 or a transformed version of it,
 by applying a &quot;string transformer&quot;.</p>
@@ -651,7 +582,7 @@ EOF
 it just applies the assertion to a transformed version of it.</p>
 </div>
 <div class="section" id="using-external-programs">
-<h2><a class="toc-backref" href="#id6">Using external programs</a></h2>
+<h2><a class="toc-backref" href="#id5">Using external programs</a></h2>
 <p>External programs can help with setup, assertions etc.</p>
 <p>Exactly can run executable files, shell commands and programs in the OS PATH,
 using <tt class="docutils literal">run</tt>, <tt class="docutils literal">$</tt>, <tt class="docutils literal">%</tt>.</p>
@@ -741,7 +672,7 @@ run &#64; EXECUTE_SQL :&gt; drop table my_table
 </pre>
 </div>
 <div class="section" id="testing-existing-os-environment-tests-without-act">
-<h2><a class="toc-backref" href="#id7">Testing existing OS environment - tests without <tt class="docutils literal">[act]</tt></a></h2>
+<h2><a class="toc-backref" href="#id6">Testing existing OS environment - tests without <tt class="docutils literal">[act]</tt></a></h2>
 <p>A test case does not need to have an <tt class="docutils literal">[act]</tt> phase.
 This way, Exactly can be used to check existing files and directories, for example.</p>
 <p>The following case checks your hierarchy of software projects.</p>
@@ -782,7 +713,7 @@ def file-matcher ALL_PROJECT_DIRS_ARE_VALID =
 </pre>
 </div>
 <div class="section" id="testing-source-code-files">
-<h2><a class="toc-backref" href="#id8">Testing source code files</a></h2>
+<h2><a class="toc-backref" href="#id7">Testing source code files</a></h2>
 <p>The <tt class="docutils literal">actor</tt> instruction can specify an interpreter to test a source code file:</p>
 <pre class="literal-block">
 [conf]
@@ -804,7 +735,7 @@ EOF
 </pre>
 </div>
 <div class="section" id="testing-source-code">
-<h2><a class="toc-backref" href="#id9">Testing source code</a></h2>
+<h2><a class="toc-backref" href="#id8">Testing source code</a></h2>
 <p>The <tt class="docutils literal">actor</tt> instruction can specify an interpreter to test source code in <tt class="docutils literal">[act]</tt>:</p>
 <pre class="literal-block">
 [conf]
@@ -827,10 +758,10 @@ world!
 </pre>
 </div>
 <div class="section" id="print-output-from-the-tested-program">
-<h2><a class="toc-backref" href="#id10">Print output from the tested program</a></h2>
+<h2><a class="toc-backref" href="#id9">Print output from the tested program</a></h2>
 <p>If <tt class="docutils literal"><span class="pre">--act</span></tt> is used, the output of the &quot;act&quot; phase (the &quot;action to check&quot;)
 will become the output of <tt class="docutils literal">exactly</tt> -
-stdout, stderr and exit code</p>
+stdout, stderr and exit code:</p>
 <pre class="literal-block">
 [setup]
 
@@ -854,7 +785,7 @@ stdout num-lines == 314
 but assertions are ignored.</p>
 </div>
 <div class="section" id="testing-a-git-commit-hook">
-<h2><a class="toc-backref" href="#id11">Testing a git commit hook</a></h2>
+<h2><a class="toc-backref" href="#id10">Testing a git commit hook</a></h2>
 <p>The following tests a git commit hook (<cite>prepare-commit-msg</cite>).</p>
 <p>The hook should add the issue id in the branch name,
 to commit messages:</p>
@@ -900,6 +831,78 @@ stdout -from
 &lt;&lt;-
 &#64;[ISSUE_ID]&#64; : &#64;[MESSAGE_WO_ISSUE_ID]&#64;
 -
+</pre>
+</div>
+<div class="section" id="referencing-files">
+<h2><a class="toc-backref" href="#id11">Referencing files</a></h2>
+<p>The <strong>home directory structure</strong> is directories containing
+predefined files involved in a test case:</p>
+<dl class="docutils">
+<dt><em>act-home</em></dt>
+<dd>Location of the program file being tested</dd>
+<dt><em>home</em></dt>
+<dd>Location of arbitrary test resources</dd>
+</dl>
+<p>Both of them defaults to the directory
+that contains the test case file,
+but can be changed via <tt class="docutils literal">[conf]</tt>.</p>
+<p>The <strong>sandbox directory structure</strong> is temporary directories for
+files involved in a single execution of a test case:</p>
+<dl class="docutils">
+<dt><em>act</em></dt>
+<dd>The current directory, when execution begins</dd>
+<dt><em>result</em></dt>
+<dd>Stores the output from the tested program</dd>
+<dt><em>tmp</em></dt>
+<dd>A directory for arbitrary temporary files</dd>
+</dl>
+<p>There are options for making paths relative to all of these.</p>
+<p><tt class="docutils literal"><span class="pre">-rel-home</span></tt> refers to the <em>home</em> directory,
+and <tt class="docutils literal"><span class="pre">-rel-act</span></tt> to the <em>act</em> directory, for example:</p>
+<pre class="literal-block">
+[conf]
+
+act-home = ../bin/
+
+home     = data/
+
+[setup]
+
+copy  -rel-home input.txt  -rel-act actual.txt
+
+[act]
+
+my-grep-tool &quot;text to find&quot; actual.txt
+
+[assert]
+
+contents -rel-act actual.txt
+         equals
+         -file -rel-home expected.txt
+</pre>
+<p>These &quot;relativity&quot; options have defaults designed to minimize the
+need for them.
+The following case does the same thing as the one above:</p>
+<pre class="literal-block">
+[conf]
+
+act-home = ../bin/
+
+home     = data/
+
+[setup]
+
+copy input.txt actual.txt
+
+[act]
+
+my-grep-tool &quot;text to find&quot; actual.txt
+
+[assert]
+
+contents actual.txt
+         equals
+         -file expected.txt
 </pre>
 </div>
 </div>
@@ -978,7 +981,7 @@ EOF
 <div class="section" id="installing">
 <h1><a class="toc-backref" href="#id16">INSTALLING</a></h1>
 <p>Exactly is written in Python and does not require any external libraries.</p>
-<p>Exactly requires Python &gt;= 3.5.9.</p>
+<p>Exactly requires Python &gt;= 3.5.4.</p>
 <p>Use <tt class="docutils literal">pip</tt> or <tt class="docutils literal">pip3</tt> to install:</p>
 <pre class="terminal literal-block">
  &gt; pip3 install exactly
