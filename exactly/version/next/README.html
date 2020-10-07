@@ -556,7 +556,7 @@ and to replace &quot;NN:NN&quot; time stamps with the constant string <tt class=
 <pre class="literal-block">
 [setup]
 
-def line-matcher       IS_TIMING_LINE     = matches ^timing
+def line-matcher       IS_TIMING_LINE     = contents matches ^timing
 
 def string-transformer REPLACE_TIMESTAMPS = replace [0-9]{2}:[0-9]{2} TIMESTAMP
 
@@ -611,6 +611,12 @@ file root-files.txt =
       % ls /
       -transformed-by
           run my-string-transformer-program
+
+file interesting-pgm-output.txt =
+     -stdout-from
+      -python &#64;[EXACTLY_HOME]&#64;/my-text-generating-program.py
+      -transformed-by
+          strip-trailing-new-lines
 
 run  -ignore-exit-code  % stat optional-file.txt
 
@@ -694,7 +700,7 @@ def file-matcher IS_VALID_MAKEFILE =
     type file &amp;&amp;
     contents
       -transformed-by
-        filter matches '^all:'
+        filter contents matches '^all:'
         num-lines == 1
 
 
@@ -1009,7 +1015,6 @@ Including (but not limited to):</p>
 <li>Separate sets of environment variables for &quot;action to check&quot; and other processes</li>
 <li>Improved string character escaping</li>
 <li>Type <cite>REG-EX</cite></li>
-<li>Type <cite>INTEGER-MATCHER</cite></li>
 <li>Support for non-terminating programs (e.g. as <tt class="docutils literal"><span class="pre">string-transformer</span></tt>)</li>
 <li>Symbol substitution in files</li>
 <li>Dynamic symbol values - e.g. contents of dir, current date</li>

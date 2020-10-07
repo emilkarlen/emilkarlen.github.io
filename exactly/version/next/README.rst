@@ -178,7 +178,7 @@ and to replace "NN:NN" time stamps with the constant string ``TIMESTAMP``::
 
     [setup]
 
-    def line-matcher       IS_TIMING_LINE     = matches ^timing
+    def line-matcher       IS_TIMING_LINE     = contents matches ^timing
 
     def string-transformer REPLACE_TIMESTAMPS = replace [0-9]{2}:[0-9]{2} TIMESTAMP
 
@@ -238,6 +238,12 @@ The following case shows some examples, but *doesn't make sense* tough::
           % ls /
           -transformed-by
               run my-string-transformer-program
+
+    file interesting-pgm-output.txt =
+         -stdout-from
+          -python @[EXACTLY_HOME]@/my-text-generating-program.py
+          -transformed-by
+              strip-trailing-new-lines
 
     run  -ignore-exit-code  % stat optional-file.txt
 
@@ -327,7 +333,7 @@ and must contain a 'Makefile' with a target 'all'::
         type file &&
         contents
           -transformed-by
-            filter matches '^all:'
+            filter contents matches '^all:'
             num-lines == 1
 
 
@@ -699,7 +705,6 @@ Including (but not limited to):
 * Separate sets of environment variables for "action to check" and other processes
 * Improved string character escaping
 * Type `REG-EX`
-* Type `INTEGER-MATCHER`
 * Support for non-terminating programs (e.g. as ``string-transformer``)
 * Symbol substitution in files
 * Dynamic symbol values - e.g. contents of dir, current date
