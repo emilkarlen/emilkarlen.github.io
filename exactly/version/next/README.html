@@ -592,6 +592,12 @@ using <tt class="docutils literal">run</tt>, <tt class="docutils literal">$</tt>
 
 run my-setup-helper-program first &quot;second arg&quot;
 
+run my-setup-helper-program arg
+    -stdin 'the stdin of the program'
+
+run -ignore-exit-code my-setup-helper-program
+
+
 def list DB_ARGS = -uu -pp -hlocalhost -Dd
 
 run % mysql &#64;[DB_ARGS]&#64; --batch --execute &quot;create table my_table(id int)&quot;
@@ -600,7 +606,8 @@ def list MYSQL_BATCH = &#64;[DB_ARGS]&#64; --batch --execute
 
 file interesting-records.txt =
      -stdout-from
-      % mysql &#64;[MYSQL_BATCH]&#64; :&gt; select * from a_table where name = &quot;interesting&quot;
+       % mysql &#64;[MYSQL_BATCH]&#64; :&gt; select * from a_table where name = &quot;interesting&quot;
+
 
 % touch file
 
@@ -617,8 +624,6 @@ file interesting-pgm-output.txt =
       -python &#64;[EXACTLY_HOME]&#64;/my-text-generating-program.py
       -transformed-by
           strip -trailing-new-lines
-
-run  -ignore-exit-code  % stat optional-file.txt
 
 [act]
 
