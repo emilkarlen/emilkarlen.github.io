@@ -586,7 +586,7 @@ it just applies the assertion to a transformed version of it.</p>
 <p>External programs can help with setup, assertions etc.</p>
 <p>Exactly can run executable files, shell commands and programs in the OS PATH,
 using <tt class="docutils literal">run</tt>, <tt class="docutils literal">$</tt>, <tt class="docutils literal">%</tt>.</p>
-<p>The following case shows some examples, but <em>doesn't make sense</em> tough:</p>
+<p>The following case shows some examples, but <strong>doesn't make sense</strong> as a realistic test case, tough:</p>
 <pre class="literal-block">
 [setup]
 
@@ -601,6 +601,8 @@ run -ignore-exit-code my-setup-helper-program
 def list DB_ARGS = -uu -pp -hlocalhost -Dd
 
 run % mysql &#64;[DB_ARGS]&#64; --batch --execute &quot;create table my_table(id int)&quot;
+
+run % mysql &#64;[DB_ARGS]&#64; --batch --execute :&gt; create table my_table(id int)
 
 def list MYSQL_BATCH = &#64;[DB_ARGS]&#64; --batch --execute
 
@@ -637,6 +639,12 @@ run my-assert-helper-program
 
 $ test -f root-files.txt
 
+stdout -from $ echo 'Interesting output'
+       equals &quot;Interesting output&#64;[NEW_LINE]&#64;&quot;
+
+exit-code -from my-assert-helper-program
+          == 0
+
 exists output.txt : (
        type file
        &amp;&amp;
@@ -644,13 +652,6 @@ exists output.txt : (
        &amp;&amp;
        contents run -python &#64;[EXACTLY_HOME]&#64;/my-string-matcher.py arg1 &quot;arg 2&quot;
        )
-
-stdout -from
-       $ echo 'Interesting output'
-       equals
-&lt;&lt;EOF
-Interesting output
-EOF
 
 [cleanup]
 
