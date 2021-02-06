@@ -2,12 +2,17 @@ Tests a command line program by executing it in a temporary sandbox directory an
 
 Or tests properties of existing files, directories etc.
 
-A test may have setup and cleanup actions.
 Assertions are expressed in a declarative style, using a specialized type system.
+
+Syntax is inspired by shell script, but thoroughly specialized.
+
+A test may have setup and cleanup actions.
 
 Supports individual test cases and test suites.
 
 Supports easy referencing of predefined files and files created in the temporary sandbox.
+
+Supports execution of arbitrary programs, as well as checking their result.
 
 Exactly has a  built in help system,
 which can, among other things,
@@ -32,11 +37,11 @@ and is able to find the email of a person::
 
     [setup]
 
-    stdin = -file some-test-contacts.txt
+    stdin = -contents-of some-test-contacts.txt
 
     [act]
 
-    my-contacts-program get-email-of --name 'Pablo Gauss'
+    my-contacts-program get-email --name 'Pablo Gauss'
 
     [assert]
 
@@ -46,7 +51,7 @@ and is able to find the email of a person::
     pablo@gauss.org
     EOF
 
-    stderr empty
+    stderr is-empty
 
 
 If the file 'contacts.case' contains this test case, then Exactly can execute it:
@@ -85,7 +90,7 @@ then Exactly will *report failure*. For example:
       EOF
 
 
-    Unexpected contents of stdout from [act]
+    Unexpected contents of stdout from the "action to check"
 
       @[EXACTLY_RESULT]@/stdout
 
@@ -96,13 +101,9 @@ then Exactly will *report failure*. For example:
               'pablo\@gauss.org\\n'
           *Diff*
     --- Expected
-
     +++ Actual
-
     @@ -1 +1 @@
-
     -pablo\@gauss.org
-
     +pablo.gauss\@masters.org
 
 
@@ -135,11 +136,11 @@ appropriate directory::
 
     [assert]
 
-    dir-contents input        empty
+    dir-contents input       : is-empty
 
-    dir-contents output/good  matches -full { a.txt : type file }
+    dir-contents output/good : matches -full { a.txt : type file }
 
-    dir-contents output/bad   matches -full
+    dir-contents output/bad  : matches -full
         {
             b.txt : type file
             sub   : type dir &&
@@ -190,7 +191,7 @@ and to replace "NN:NN" time stamps with the constant string ``TIMESTAMP``::
 
     [assert]
 
-    contents log.txt
+    contents log.txt :
              -transformed-by GET_TIMING_LINES
              equals <<EOF
     timing TIMESTAMP begin
@@ -243,16 +244,15 @@ The following case shows some examples, but **doesn't make sense** as a realisti
     $ ls *.txt
 
     file root-files.txt =
-         -stdout-from
-          % ls /
-          -transformed-by
-              run my-string-transformer-program
+         -stdout-from % ls /
+           -transformed-by
+             run my-string-transformer-program
 
     file interesting-pgm-output.txt =
          -stdout-from
-          -python @[EXACTLY_HOME]@/my-text-generating-program.py
-          -transformed-by
-              strip -trailing-new-lines
+           -python @[EXACTLY_HOME]@/my-text-generating-program.py
+           -transformed-by
+             strip -trailing-new-lines
 
     [act]
 
@@ -288,7 +288,7 @@ The following case shows some examples, but **doesn't make sense** as a realisti
 A program executed in ``[assert]`` becomes an assertion that depends on the exit code.
 
 
-Program values can be defined for reuse using ``def`` and run using ``@``::
+Program values can be defined for reuse using ``def``, and referenced using ``@``::
 
     [setup]
 
@@ -306,12 +306,19 @@ Program values can be defined for reuse using ``def`` and run using ``@``::
 
     stdout -from
            @ EXECUTE_SQL "select * from my_table"
-           ! empty
+           ! is-empty
 
     [cleanup]
 
     run @ EXECUTE_SQL :> drop table my_table
 
+
+Programs can also be referenced in ``[act]``::
+
+
+    [act]
+
+    @ EXECUTE_SQL :> CALL MyStoredProcedure()
 
 Testing existing OS environment - tests without ``[act]``
 ----------------------------------------------------------------------
@@ -543,9 +550,9 @@ and ``-rel-act`` to the *act* directory, for example::
 
     [assert]
 
-    contents -rel-act actual.txt
+    contents -rel-act actual.txt :
              equals
-             -file -rel-home expected.txt
+             -contents-of -rel-home expected.txt
 
 
 These "relativity" options have defaults designed to minimize the
@@ -568,9 +575,9 @@ The following case does the same thing as the one above::
 
     [assert]
 
-    contents actual.txt
+    contents actual.txt :
              equals
-             -file expected.txt
+             -contents-of expected.txt
 
 
 ORGANIZING TESTS
@@ -705,19 +712,22 @@ Future development
 ------------------------------------
 
 More functionality is needed, smaller and larger.
-Including (but not limited to):
+Including (but by no means limited to):
 
-* Possibility to set stdin for processes other than the "action to check"
-* Separate sets of environment variables for "action to check" and other processes
+* Separate environment variables for ``[act]`` and other phases
 * Improved string character escaping
-* Type `REG-EX`
-* Support for non-terminating programs (e.g. as ``string-transformer``)
+* Improved syntax using parentheses
+* Concurrent execution of processes
+* Support for non-terminating processes
+* Windows port (most features work, but have not been thoroughly tested)
 * Symbol substitution in files
-* Dynamic symbol values - e.g. contents of dir, current date
-* Macros and functions
-* More string transformers, matchers, etc
-* Ability to embed Python code in test cases
-* Python library for running cases and suites from within Python as a DSEL
+* More matchers, string transformers, etc
+* Long term goals
+
+  - Dynamic symbol values (contents of dir, current date, e.g.)
+  - Macros and functions
+  - Embedding of Python code in test cases
+  - Python library for running cases and suites from within Python as a DSEL
 
 
 AUTHOR
