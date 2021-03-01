@@ -1,4 +1,4 @@
-V = next
+V = 0-14-0
 VER = version/$(V)
 
 .PHONY: help readme ref-man all $(VER)/reference-manual.html
