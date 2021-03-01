@@ -398,10 +398,10 @@ generate this <a class="reference external" href="https://emilkarlen.github.io/e
 <li><a class="reference internal" href="#testing-and-transforming-the-contents-of-files" id="id4">Testing and transforming the contents of files</a></li>
 <li><a class="reference internal" href="#using-external-programs" id="id5">Using external programs</a></li>
 <li><a class="reference internal" href="#testing-existing-os-environment-tests-without-act" id="id6">Testing existing OS environment - tests without <tt class="docutils literal">[act]</tt></a></li>
-<li><a class="reference internal" href="#testing-source-code-files" id="id7">Testing source code files</a></li>
-<li><a class="reference internal" href="#testing-source-code" id="id8">Testing source code</a></li>
-<li><a class="reference internal" href="#print-output-from-the-tested-program" id="id9">Print output from the tested program</a></li>
-<li><a class="reference internal" href="#testing-a-git-commit-hook" id="id10">Testing a git commit hook</a></li>
+<li><a class="reference internal" href="#testing-a-git-commit-hook" id="id7">Testing a git commit hook</a></li>
+<li><a class="reference internal" href="#testing-source-code-files" id="id8">Testing source code files</a></li>
+<li><a class="reference internal" href="#testing-source-code" id="id9">Testing source code</a></li>
+<li><a class="reference internal" href="#print-output-from-the-tested-program" id="id10">Print output from the tested program</a></li>
 <li><a class="reference internal" href="#referencing-files" id="id11">Referencing files</a></li>
 </ul>
 </li>
@@ -539,8 +539,8 @@ dir-contents output/bad  : matches -full
 <h2><a class="toc-backref" href="#id4">Testing and transforming the contents of files</a></h2>
 <p>Use <tt class="docutils literal">contents</tt> to test the contents of a file,
 or a transformed version of it,
-by applying a &quot;string transformer&quot;.</p>
-<p>Such a &quot;string transformer&quot; may be given a name
+by applying a &quot;text transformer&quot;.</p>
+<p>Such a &quot;text transformer&quot; may be given a name
 using the <tt class="docutils literal">def</tt> instruction
 to make the test easier to read.</p>
 <p>The following case
@@ -549,16 +549,16 @@ tests that &quot;timing lines&quot; are output as part of a log file &quot;log.t
 non-timing lines that the test is not interested in,
 and that timing lines contains a time stamp of the form
 &quot;NN:NN&quot;, who's exact value also is not interesting.</p>
-<p>A &quot;string transformer&quot; is used to extract all timing lines
+<p>A &quot;text transformer&quot; is used to extract all timing lines
 and to replace &quot;NN:NN&quot; time stamps with the constant string <tt class="docutils literal">TIMESTAMP</tt>:</p>
 <pre class="literal-block">
 [setup]
 
-def line-matcher       IS_TIMING_LINE     = contents matches ^timing
+def line-matcher     IS_TIMING_LINE     = contents matches ^timing
 
-def string-transformer REPLACE_TIMESTAMPS = replace [0-9]{2}:[0-9]{2} TIMESTAMP
+def text-transformer REPLACE_TIMESTAMPS = replace [0-9]{2}:[0-9]{2} TIMESTAMP
 
-def string-transformer GET_TIMING_LINES   = filter IS_TIMING_LINE | REPLACE_TIMESTAMPS
+def text-transformer GET_TIMING_LINES   = filter IS_TIMING_LINE | REPLACE_TIMESTAMPS
 
 [act]
 
@@ -616,7 +616,7 @@ $ ls *.txt
 file root-files.txt =
      -stdout-from % ls /
        -transformed-by
-         run my-string-transformer-program
+         run my-text-transformer-program
 
 file interesting-pgm-output.txt =
      -stdout-from
@@ -647,7 +647,7 @@ exists output.txt : (
        &amp;&amp;
        run -python &#64;[EXACTLY_HOME]&#64;/my-file-matcher.py arg1
        &amp;&amp;
-       contents run -python &#64;[EXACTLY_HOME]&#64;/my-string-matcher.py arg1 &quot;arg 2&quot;
+       contents run -python &#64;[EXACTLY_HOME]&#64;/my-text-matcher.py arg1 &quot;arg 2&quot;
        )
 
 [cleanup]
@@ -667,7 +667,7 @@ run &#64; EXECUTE_SQL &quot;create table my_table(id int)&quot;
 
 [act]
 
-system-under-test
+&#64; EXECUTE_SQL :&gt; CALL MyStoredProcedure()
 
 [assert]
 
@@ -679,12 +679,8 @@ stdout -from
 
 run &#64; EXECUTE_SQL :&gt; drop table my_table
 </pre>
-<p>Programs can also be referenced in <tt class="docutils literal">[act]</tt>:</p>
-<pre class="literal-block">
-[act]
-
-&#64; EXECUTE_SQL :&gt; CALL MyStoredProcedure()
-</pre>
+<p><tt class="docutils literal">:&gt;</tt> treats the rest of the line as a single string.</p>
+<p>Thus <tt class="docutils literal">:&gt; a b c</tt> becomes the string <tt class="docutils literal">a b c</tt>.</p>
 </div>
 <div class="section" id="testing-existing-os-environment-tests-without-act">
 <h2><a class="toc-backref" href="#id6">Testing existing OS environment - tests without <tt class="docutils literal">[act]</tt></a></h2>
@@ -726,82 +722,13 @@ def file-matcher ALL_PROJECT_DIRS_ARE_VALID =
       -selection name &#64;[MY_PROJECT_DIR_NAME]&#64;
         every file : &#64;[IS_VALID_PROJECT_DIR]&#64;
 </pre>
-</div>
-<div class="section" id="testing-source-code-files">
-<h2><a class="toc-backref" href="#id7">Testing source code files</a></h2>
-<p>The <tt class="docutils literal">actor</tt> instruction can specify an interpreter to test a source code file:</p>
-<pre class="literal-block">
-[conf]
-
-actor = file % python
-
-[act]
-
-my-python-program.py 'an argument' second third
-
-[assert]
-
-stdout equals
-&lt;&lt;EOF
-Argument: an argument
-Argument: second
-Argument: third
-EOF
-</pre>
-</div>
-<div class="section" id="testing-source-code">
-<h2><a class="toc-backref" href="#id8">Testing source code</a></h2>
-<p>The <tt class="docutils literal">actor</tt> instruction can specify an interpreter to test source code in <tt class="docutils literal">[act]</tt>:</p>
-<pre class="literal-block">
-[conf]
-
-actor = source % python
-
-[act]
-
-import sys
-sys.stdout.write('Hello\n')
-sys.stdout.write('world!\n')
-
-[assert]
-
-stdout equals
-&lt;&lt;-
-Hello
-world!
--
-</pre>
-</div>
-<div class="section" id="print-output-from-the-tested-program">
-<h2><a class="toc-backref" href="#id9">Print output from the tested program</a></h2>
-<p>If <tt class="docutils literal"><span class="pre">--act</span></tt> is used, the output of the &quot;act&quot; phase (the &quot;action to check&quot;)
-will become the output of <tt class="docutils literal">exactly</tt> -
-stdout, stderr and exit code:</p>
-<pre class="literal-block">
-[setup]
-
-dir  a-dir
-file a-file
-
-[act]
-
-$ ls
-
-[assert]
-
-stdout num-lines == 314
-</pre>
-<pre class="terminal literal-block">
- &gt; exactly --act my-test.case
- a-dir
- a-file
-</pre>
-<p>The test case is executed in a temporary sandbox, as usual,
-but assertions are ignored.</p>
+<p>The <tt class="docutils literal">&#64;[SYMBOL_NAME]&#64;</tt> syntax is a reference to the &quot;symbol&quot; &quot;SYMBOL_NAME&quot;.
+This syntax can always be used.</p>
+<p>In some contexts, just <tt class="docutils literal">SYMBOL_NAME</tt> will also do.</p>
 </div>
 <div class="section" id="testing-a-git-commit-hook">
-<h2><a class="toc-backref" href="#id10">Testing a git commit hook</a></h2>
-<p>The following tests a git commit hook (<cite>prepare-commit-msg</cite>).</p>
+<h2><a class="toc-backref" href="#id7">Testing a git commit hook</a></h2>
+<p>The following tests a git commit hook (<tt class="docutils literal"><span class="pre">prepare-commit-msg</span></tt>).</p>
 <p>The hook should add the issue id in the branch name,
 to commit messages:</p>
 <pre class="literal-block">
@@ -840,6 +767,8 @@ file file-on-branch.txt
 [assert]
 
 
+exit-code == 0
+
 stdout -from
        &#64; GET_LOG_MESSAGE_OF_LAST_COMMIT
        equals
@@ -847,6 +776,79 @@ stdout -from
 &#64;[ISSUE_ID]&#64; : &#64;[MESSAGE_WO_ISSUE_ID]&#64;
 -
 </pre>
+<p><tt class="docutils literal">% ...</tt> runs a program in the OS PATH.</p>
+</div>
+<div class="section" id="testing-source-code-files">
+<h2><a class="toc-backref" href="#id8">Testing source code files</a></h2>
+<p>The <tt class="docutils literal">actor</tt> instruction can specify an interpreter to test a source code file:</p>
+<pre class="literal-block">
+[conf]
+
+actor = file % python
+
+[act]
+
+my-python-program.py 'an argument' second third
+
+[assert]
+
+stdout equals
+&lt;&lt;EOF
+Argument: an argument
+Argument: second
+Argument: third
+EOF
+</pre>
+</div>
+<div class="section" id="testing-source-code">
+<h2><a class="toc-backref" href="#id9">Testing source code</a></h2>
+<p>The <tt class="docutils literal">actor</tt> instruction can specify an interpreter to test source code in <tt class="docutils literal">[act]</tt>:</p>
+<pre class="literal-block">
+[conf]
+
+actor = source % python
+
+[act]
+
+import sys
+sys.stdout.write('Hello\n')
+sys.stdout.write('world!\n')
+
+[assert]
+
+stdout equals
+&lt;&lt;-
+Hello
+world!
+-
+</pre>
+</div>
+<div class="section" id="print-output-from-the-tested-program">
+<h2><a class="toc-backref" href="#id10">Print output from the tested program</a></h2>
+<p>If <tt class="docutils literal"><span class="pre">--act</span></tt> is used, the output of the &quot;act&quot; phase (the &quot;action to check&quot;)
+will become the output of <tt class="docutils literal">exactly</tt> -
+stdout, stderr and exit code:</p>
+<pre class="literal-block">
+[setup]
+
+dir  a-dir
+file a-file
+
+[act]
+
+$ ls
+
+[assert]
+
+stdout num-lines == 314
+</pre>
+<pre class="terminal literal-block">
+ &gt; exactly --act my-test.case
+ a-dir
+ a-file
+</pre>
+<p>The test case is executed in a temporary sandbox, as usual,
+but assertions are ignored.</p>
 </div>
 <div class="section" id="referencing-files">
 <h2><a class="toc-backref" href="#id11">Referencing files</a></h2>
@@ -861,6 +863,7 @@ predefined files involved in a test case:</p>
 <p>Both of them defaults to the directory
 that contains the test case file,
 but can be changed via <tt class="docutils literal">[conf]</tt>.</p>
+<p>Exactly does it's best to prevent files in these directories from being modified.</p>
 <p>The <strong>sandbox directory structure</strong> is temporary directories for
 files involved in a single execution of a test case:</p>
 <dl class="docutils">
@@ -895,6 +898,7 @@ contents -rel-act actual.txt :
          equals
          -contents-of -rel-home expected.txt
 </pre>
+<p><tt class="docutils literal"><span class="pre">-rel-home</span> input.txt</tt> becomes a single path argument.</p>
 <p>These &quot;relativity&quot; options have defaults designed to minimize the
 need for them.
 The following case does the same thing as the one above:</p>
@@ -996,7 +1000,7 @@ EOF
 <div class="section" id="installing">
 <h1><a class="toc-backref" href="#id16">INSTALLING</a></h1>
 <p>Exactly is written in Python and does not require any external libraries.</p>
-<p>Exactly requires Python &gt;= 3.5.4.</p>
+<p>Exactly requires Python &gt;= 3.6.</p>
 <p>Use <tt class="docutils literal">pip</tt> or <tt class="docutils literal">pip3</tt> to install:</p>
 <pre class="terminal literal-block">
  &gt; pip3 install exactly
@@ -1020,14 +1024,13 @@ EOF
 <p>More functionality is needed, smaller and larger.
 Including (but by no means limited to):</p>
 <ul class="simple">
-<li>Separate environment variables for <tt class="docutils literal">[act]</tt> and other phases</li>
 <li>Improved string character escaping</li>
 <li>Improved syntax using parentheses</li>
 <li>Concurrent execution of processes</li>
 <li>Support for non-terminating processes</li>
 <li>Windows port (most features work, but have not been thoroughly tested)</li>
 <li>Symbol substitution in files</li>
-<li>More matchers, string transformers, etc</li>
+<li>More matchers, text transformers, etc</li>
 <li>Long term goals<ul>
 <li>Dynamic symbol values (contents of dir, current date, e.g.)</li>
 <li>Macros and functions</li>

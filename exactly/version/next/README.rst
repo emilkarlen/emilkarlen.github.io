@@ -159,9 +159,9 @@ Testing and transforming the contents of files
 
 Use ``contents`` to test the contents of a file,
 or a transformed version of it,
-by applying a "string transformer".
+by applying a "text transformer".
 
-Such a "string transformer" may be given a name
+Such a "text transformer" may be given a name
 using the ``def`` instruction
 to make the test easier to read.
 
@@ -173,17 +173,17 @@ non-timing lines that the test is not interested in,
 and that timing lines contains a time stamp of the form
 "NN:NN", who's exact value also is not interesting.
 
-A "string transformer" is used to extract all timing lines
+A "text transformer" is used to extract all timing lines
 and to replace "NN:NN" time stamps with the constant string ``TIMESTAMP``::
 
 
     [setup]
 
-    def line-matcher       IS_TIMING_LINE     = contents matches ^timing
+    def line-matcher     IS_TIMING_LINE     = contents matches ^timing
 
-    def string-transformer REPLACE_TIMESTAMPS = replace [0-9]{2}:[0-9]{2} TIMESTAMP
+    def text-transformer REPLACE_TIMESTAMPS = replace [0-9]{2}:[0-9]{2} TIMESTAMP
 
-    def string-transformer GET_TIMING_LINES   = filter IS_TIMING_LINE | REPLACE_TIMESTAMPS
+    def text-transformer GET_TIMING_LINES   = filter IS_TIMING_LINE | REPLACE_TIMESTAMPS
 
     [act]
 
@@ -246,7 +246,7 @@ The following case shows some examples, but **doesn't make sense** as a realisti
     file root-files.txt =
          -stdout-from % ls /
            -transformed-by
-             run my-string-transformer-program
+             run my-text-transformer-program
 
     file interesting-pgm-output.txt =
          -stdout-from
@@ -277,7 +277,7 @@ The following case shows some examples, but **doesn't make sense** as a realisti
            &&
            run -python @[EXACTLY_HOME]@/my-file-matcher.py arg1
            &&
-           contents run -python @[EXACTLY_HOME]@/my-string-matcher.py arg1 "arg 2"
+           contents run -python @[EXACTLY_HOME]@/my-text-matcher.py arg1 "arg 2"
            )
 
     [cleanup]
@@ -300,7 +300,7 @@ Program values can be defined for reuse using ``def``, and referenced using ``@`
 
     [act]
 
-    system-under-test
+    @ EXECUTE_SQL :> CALL MyStoredProcedure()
 
     [assert]
 
@@ -313,12 +313,10 @@ Program values can be defined for reuse using ``def``, and referenced using ``@`
     run @ EXECUTE_SQL :> drop table my_table
 
 
-Programs can also be referenced in ``[act]``::
+``:>`` treats the rest of the line as a single string.
 
+Thus ``:> a b c`` becomes the string ``a b c``.
 
-    [act]
-
-    @ EXECUTE_SQL :> CALL MyStoredProcedure()
 
 Testing existing OS environment - tests without ``[act]``
 ----------------------------------------------------------------------
@@ -362,6 +360,67 @@ and must contain a 'Makefile' with a target 'all'::
         dir-contents -recursive
           -selection name @[MY_PROJECT_DIR_NAME]@
             every file : @[IS_VALID_PROJECT_DIR]@
+
+
+The ``@[SYMBOL_NAME]@`` syntax is a reference to the "symbol" "SYMBOL_NAME".
+This syntax can always be used.
+
+In some contexts, just ``SYMBOL_NAME`` will also do.
+
+
+Testing a git commit hook
+------------------------------------------------------------
+
+The following tests a git commit hook (``prepare-commit-msg``).
+
+The hook should add the issue id in the branch name,
+to commit messages::
+
+    [setup]
+
+
+    def string ISSUE_ID            = ABC-123
+    def string MESSAGE_WO_ISSUE_ID = "commit message without issue id"
+
+    def program GET_LOG_MESSAGE_OF_LAST_COMMIT = % git log -1 --format=%s
+
+
+    #### Setup a git repo with the commit hook to test
+
+    % git init
+
+    copy prepare-commit-msg .git/hooks
+
+
+    #### Setup a branch, with issue number in its name,
+    # and a file to commit
+
+    % git checkout -b @[ISSUE_ID]@-branch-with-issue-id
+
+    file file-on-branch.txt
+
+    % git add file-on-branch.txt
+
+
+    [act]
+
+
+    % git commit -m @[MESSAGE_WO_ISSUE_ID]@
+
+
+    [assert]
+
+
+    exit-code == 0
+
+    stdout -from
+           @ GET_LOG_MESSAGE_OF_LAST_COMMIT
+           equals
+    <<-
+    @[ISSUE_ID]@ : @[MESSAGE_WO_ISSUE_ID]@
+    -
+
+``% ...`` runs a program in the OS PATH.
 
 
 Testing source code files
@@ -446,57 +505,6 @@ The test case is executed in a temporary sandbox, as usual,
 but assertions are ignored.
 
 
-Testing a git commit hook
-------------------------------------------------------------
-
-The following tests a git commit hook (`prepare-commit-msg`).
-
-The hook should add the issue id in the branch name,
-to commit messages::
-
-    [setup]
-
-
-    def string ISSUE_ID            = ABC-123
-    def string MESSAGE_WO_ISSUE_ID = "commit message without issue id"
-
-    def program GET_LOG_MESSAGE_OF_LAST_COMMIT = % git log -1 --format=%s
-
-
-    #### Setup a git repo with the commit hook to test
-
-    % git init
-
-    copy prepare-commit-msg .git/hooks
-
-
-    #### Setup a branch, with issue number in its name,
-    # and a file to commit
-
-    % git checkout -b @[ISSUE_ID]@-branch-with-issue-id
-
-    file file-on-branch.txt
-
-    % git add file-on-branch.txt
-
-
-    [act]
-
-
-    % git commit -m @[MESSAGE_WO_ISSUE_ID]@
-
-
-    [assert]
-
-
-    stdout -from
-           @ GET_LOG_MESSAGE_OF_LAST_COMMIT
-           equals
-    <<-
-    @[ISSUE_ID]@ : @[MESSAGE_WO_ISSUE_ID]@
-    -
-
-
 Referencing files
 ------------------------------------------------------------
 
@@ -513,6 +521,8 @@ predefined files involved in a test case:
 Both of them defaults to the directory
 that contains the test case file,
 but can be changed via ``[conf]``.
+
+Exactly does it's best to prevent files in these directories from being modified.
 
 
 The **sandbox directory structure** is temporary directories for
@@ -554,6 +564,8 @@ and ``-rel-act`` to the *act* directory, for example::
              equals
              -contents-of -rel-home expected.txt
 
+
+``-rel-home input.txt`` becomes a single path argument.
 
 These "relativity" options have defaults designed to minimize the
 need for them.
@@ -676,7 +688,7 @@ INSTALLING
 
 Exactly is written in Python and does not require any external libraries.
 
-Exactly requires Python >= 3.5.4.
+Exactly requires Python >= 3.6.
 
 Use ``pip`` or ``pip3`` to install:
 
@@ -714,14 +726,13 @@ Future development
 More functionality is needed, smaller and larger.
 Including (but by no means limited to):
 
-* Separate environment variables for ``[act]`` and other phases
 * Improved string character escaping
 * Improved syntax using parentheses
 * Concurrent execution of processes
 * Support for non-terminating processes
 * Windows port (most features work, but have not been thoroughly tested)
 * Symbol substitution in files
-* More matchers, string transformers, etc
+* More matchers, text transformers, etc
 * Long term goals
 
   - Dynamic symbol values (contents of dir, current date, e.g.)
