@@ -17,9 +17,7 @@ Supports execution of arbitrary programs, as well as checking their result.
 Exactly has a  built in help system,
 which can, among other things,
 generate this `Reference Manual
-<https://emilkarlen.github.io/exactly/version/0-14-0/reference-manual.html>`_
-(`unreleased
-<https://emilkarlen.github.io/exactly/version/next/reference-manual.html>`_).
+<https://emilkarlen.github.io/exactly/version/0-15-0/reference-manual.html>`_.
 
 
 .. contents::
@@ -367,11 +365,13 @@ and must contain a 'Makefile' with a target 'all'::
             every file : IS_VALID_PROJECT_DIR
 
 
-The ``@[SYMBOL_NAME]@`` syntax is a reference to the "symbol" "SYMBOL_NAME".
+The ``@[symbol_name]@`` syntax is a reference to the "symbol" *symbol_name*.
 This syntax must be used wherever a string value is accepted,
 as in ``@[MY_PROJECTS_ROOT_DIR]@``, where a file name string is accepted.
 
-Just ``SYMBOL_NAME`` will do in all other contexts.
+Just ``symbol_name`` will do in all other contexts.
+
+The ``@[symbol_name]@`` syntax can be used in any context.
 
 
 Testing a git commit hook

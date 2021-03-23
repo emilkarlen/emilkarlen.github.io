@@ -388,8 +388,7 @@ pre.literal-block.terminal {
 <p>Supports execution of arbitrary programs, as well as checking their result.</p>
 <p>Exactly has a  built in help system,
 which can, among other things,
-generate this <a class="reference external" href="https://emilkarlen.github.io/exactly/version/0-14-0/reference-manual.html">Reference Manual</a>
-(<a class="reference external" href="https://emilkarlen.github.io/exactly/version/next/reference-manual.html">unreleased</a>).</p>
+generate this <a class="reference external" href="https://emilkarlen.github.io/exactly/version/0-15-0/reference-manual.html">Reference Manual</a>.</p>
 <div class="contents topic" id="contents">
 <p class="topic-title first">Contents</p>
 <ul class="simple">
@@ -726,10 +725,11 @@ def file-matcher ALL_PROJECT_DIRS_ARE_VALID =
       -selection name MY_PROJECT_DIR_NAME
         every file : IS_VALID_PROJECT_DIR
 </pre>
-<p>The <tt class="docutils literal">&#64;[SYMBOL_NAME]&#64;</tt> syntax is a reference to the &quot;symbol&quot; &quot;SYMBOL_NAME&quot;.
+<p>The <tt class="docutils literal">&#64;[symbol_name]&#64;</tt> syntax is a reference to the &quot;symbol&quot; <em>symbol_name</em>.
 This syntax must be used wherever a string value is accepted,
 as in <tt class="docutils literal">&#64;[MY_PROJECTS_ROOT_DIR]&#64;</tt>, where a file name string is accepted.</p>
-<p>Just <tt class="docutils literal">SYMBOL_NAME</tt> will do in all other contexts.</p>
+<p>Just <tt class="docutils literal">symbol_name</tt> will do in all other contexts.</p>
+<p>The <tt class="docutils literal">&#64;[symbol_name]&#64;</tt> syntax can be used in any context.</p>
 </div>
 <div class="section" id="testing-a-git-commit-hook">
 <h2><a class="toc-backref" href="#id7">Testing a git commit hook</a></h2>
