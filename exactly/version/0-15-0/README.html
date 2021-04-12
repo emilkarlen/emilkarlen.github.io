@@ -723,7 +723,7 @@ def file-matcher IS_VALID_PROJECT_DIR =
 def file-matcher ALL_PROJECT_DIRS_ARE_VALID =
 
     dir-contents -recursive
-      -selection name MY_PROJECT_DIR_NAME
+      -selection name &#64;[MY_PROJECT_DIR_NAME]&#64;
         every file : IS_VALID_PROJECT_DIR
 </pre>
 <p>The <tt class="docutils literal">&#64;[symbol_name]&#64;</tt> syntax is a reference to the &quot;symbol&quot; <em>symbol_name</em>.
